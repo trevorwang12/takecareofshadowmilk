@@ -68,7 +68,7 @@ const checks = [
   {
     name: 'Critical images',
     check: () => {
-      const logo = fs.existsSync('public/assets/img/shadow-milk-logo-512-v3.svg');
+      const logo = fs.existsSync('public/assets/img/android-chrome-512x512.png');
       const ogImage = fs.existsSync('public/assets/img/take-care-of-shadow-milk-og-image.svg');
       
       if (!logo) console.warn('⚠️  Main logo not found');

@@ -35,7 +35,7 @@ export function WhatIs({ content = defaultContent }: WhatIsProps) {
         <div className={cn(theme.whatIs.colors.card, theme.whatIs.layout.card, theme.whatIs.spacing.card)}>
           <div className={layout.whatIs.grid.columns}>
             <div className={theme.whatIs.layout.logoWrapper}>
-              {imageError && fallbackError ? (
+              {content.whatIs.logo.useInlineSvg ? (
                 <ShadowMilkLogo 
                   className={cn(
                     layout.whatIs.logo.size.width,
@@ -45,24 +45,15 @@ export function WhatIs({ content = defaultContent }: WhatIsProps) {
                 />
               ) : (
                 <img
-                  src={imageError && content.whatIs.logo.fallback ? content.whatIs.logo.fallback : content.whatIs.logo.src}
+                  src={content.whatIs.logo.src}
                   alt={content.whatIs.logo.alt}
                   className={cn(
                     layout.whatIs.logo.size.width,
                     layout.whatIs.logo.size.height,
                     theme.whatIs.layout.logo
                   )}
-                  onError={() => {
-                    if (imageError && content.whatIs.logo.fallback) {
-                      setFallbackError(true);
-                    } else {
-                      setImageError(true);
-                    }
-                  }}
-                  onLoad={() => {
-                    setImageError(false);
-                    setFallbackError(false);
-                  }}
+                  onError={() => setImageError(true)}
+                  onLoad={() => setImageError(false)}
                 />
               )}
             </div>

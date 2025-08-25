@@ -106,9 +106,9 @@ export const content = {
       "Experience the viral sensation that has taken TikTok by storm with this innovative Scratch-based game created by GPE_sb3. Take Care of Shadow Milk offers a unique blend of cute aesthetics with mischievous undertones, perfectly reflecting Shadow Milk Cookie's deceitful yet adorable persona from the popular mobile game.\n\n" +
       "Whether you're a Cookie Run fan or just looking for a fun virtual pet experience, Take Care of Shadow Milk provides endless entertainment with no rules or restrictions. Play this free online pet simulator directly in your browser - no downloads needed, just pure chaotic fun that's both adorable and unpredictable.",
     logo: {
-      src: "/assets/img/shadow-milk-logo-512-v4.svg?v=20250825",
+      src: "/assets/img/android-chrome-512x512.png",
       alt: "Take Care of Shadow Milk - Ultimate Free Online Virtual Pet Simulator Logo",
-      fallback: "/assets/img/android-chrome-512x512.png"
+      useInlineSvg: true
     }
   },
   faq: {
