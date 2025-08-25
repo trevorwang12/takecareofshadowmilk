@@ -19,7 +19,10 @@
             'does not match the recipient window\'s origin',
             'SecurityError',
             'SyntaxError: Identifier',
-            'has already been declared'
+            'has already been declared',
+            'WebSocket connection to',
+            'failed: WebSocket is closed',
+            'gamedistribution.com'
         ];
         
         // Check if the error should be suppressed
