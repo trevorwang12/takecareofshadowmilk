@@ -20,8 +20,8 @@
         "purpose": "any maskable"
       }
     ],
-    "start_url": "https://takecareofshadowmilk.cc/",
-    "scope": "https://takecareofshadowmilk.cc/",
+    "start_url": "/",
+    "scope": "/",
     "theme_color": "#8B4513",
     "background_color": "#FFF8DC",
     "display": "standalone",

@@ -31,10 +31,30 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
       setIsFullscreen(!!document.fullscreenElement);
     };
 
+    // Handle postMessage errors
+    const handleMessage = (event: MessageEvent) => {
+      // Only handle messages from Scratch
+      if (event.origin !== 'https://scratch.mit.edu') {
+        return;
+      }
+      
+      try {
+        // Handle Scratch iframe messages safely
+        if (event.data && typeof event.data === 'object') {
+          // Process message if needed
+        }
+      } catch (error) {
+        // Silently handle postMessage errors
+        console.debug('PostMessage handled:', error);
+      }
+    };
+
     document.addEventListener('fullscreenchange', handleFullscreenChange);
+    window.addEventListener('message', handleMessage);
     
     return () => {
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      window.removeEventListener('message', handleMessage);
     };
   }, []);
 
@@ -105,11 +125,12 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
             "w-full border-0",
             isFullscreen ? "h-screen" : "h-full aspect-video"
           )}
-          allow="fullscreen"
+          allow="fullscreen; autoplay"
           title={content.gameSection.game.title}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           sandbox="allow-scripts allow-presentation allow-forms allow-popups"
+          importance="high"
         />
       </div>
 

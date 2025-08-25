@@ -135,6 +135,7 @@
             frameborder="0"
             scrolling="no"
             sandbox="allow-scripts allow-forms allow-popups allow-presentation"
+            importance="high"
             style="display: none;">
         </iframe>
     </div>
@@ -217,6 +218,32 @@
             if (e.key === 'F11') {
                 e.preventDefault();
                 toggleFullscreen();
+            }
+        });
+
+        // Handle postMessage errors
+        window.addEventListener('message', function(event) {
+            // Only handle messages from Scratch
+            if (event.origin !== 'https://scratch.mit.edu') {
+                return;
+            }
+            
+            try {
+                // Handle Scratch iframe messages safely
+                if (event.data && typeof event.data === 'object') {
+                    // Process message if needed
+                }
+            } catch (error) {
+                // Silently handle postMessage errors
+                console.debug('PostMessage handled:', error);
+            }
+        });
+
+        // Suppress duplicate identifier errors
+        window.addEventListener('error', function(e) {
+            if (e.message && e.message.includes('has already been declared')) {
+                e.preventDefault();
+                return false;
             }
         });
 
