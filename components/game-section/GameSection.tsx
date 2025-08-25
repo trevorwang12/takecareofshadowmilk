@@ -193,7 +193,8 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
             "w-full border-0",
             isFullscreen ? "h-screen" : "h-full aspect-video"
           )}
-          allow="fullscreen; autoplay; storage-access"
+          allow="fullscreen; autoplay; storage-access; camera; microphone; geolocation"
+          allowFullScreen
           title={content.gameSection.game.title}
           loading="eager"
           referrerPolicy="no-referrer-when-downgrade"

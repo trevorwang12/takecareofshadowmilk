@@ -163,7 +163,7 @@
                 console.log('Game loaded successfully');
                 setTimeout(() => {
                     hideLoadingScreen();
-                }, 1000); // Small delay to ensure game is ready
+                }, 1000);
             };
             
             gameFrame.onerror = function() {
@@ -176,7 +176,7 @@
                 if (loadingScreen.style.display !== 'none') {
                     hideLoadingScreen();
                 }
-            }, 8000); // Increased to 8 seconds
+            }, 5000);
         }
         
         function hideLoadingScreen() {
