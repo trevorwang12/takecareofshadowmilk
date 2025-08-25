@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incredibox Vitals - Mild As Spring</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2EA3F2, #87CEEB);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .game-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .title {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .play-area {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .character {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-size: 1.5em;
+        }
+        .character:hover {
+            transform: scale(1.1);
+        }
+        .character.active {
+            background: linear-gradient(45deg, #FF9800, #FFC107);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .btn {
+            background: #FF6B6B;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #FF5252;
+        }
+        .status {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="title">🎵 Incredibox Vitals</h1>
+        <p class="subtitle">Mild As Spring Theme</p>
+        
+        <div class="play-area">
+            <p>Drag and drop characters to create your musical composition!</p>
+            
+            <div class="character-grid">
+                <div class="character" data-sound="beat1" onclick="playSound(this)">🥁</div>
+                <div class="character" data-sound="melody1" onclick="playSound(this)">🎹</div>
+                <div class="character" data-sound="voice1" onclick="playSound(this)">🎤</div>
+                <div class="character" data-sound="effect1" onclick="playSound(this)">✨</div>
+                <div class="character" data-sound="beat2" onclick="playSound(this)">🪘</div>
+                <div class="character" data-sound="melody2" onclick="playSound(this)">🎸</div>
+                <div class="character" data-sound="voice2" onclick="playSound(this)">🎵</div>
+                <div class="character" data-sound="effect2" onclick="playSound(this)">🌸</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn" onclick="playAll()">▶️ Play All</button>
+                <button class="btn" onclick="stopAll()">⏹️ Stop</button>
+                <button class="btn" onclick="clearAll()">🗑️ Clear</button>
+            </div>
+            
+            <div class="status" id="status">Click characters to add them to your composition!</div>
+        </div>
+    </div>
+
+    <script>
+        let activeCharacters = new Set();
+        let isPlaying = false;
+
+        function playSound(element) {
+            const soundType = element.getAttribute('data-sound');
+            
+            if (element.classList.contains('active')) {
+                element.classList.remove('active');
+                activeCharacters.delete(soundType);
+            } else {
+                element.classList.add('active');
+                activeCharacters.add(soundType);
+            }
+            
+            updateStatus();
+        }
+
+        function playAll() {
+            if (activeCharacters.size === 0) {
+                document.getElementById('status').textContent = 'Add some characters first!';
+                return;
+            }
+            
+            isPlaying = true;
+            document.getElementById('status').textContent = `🎵 Playing your composition with ${activeCharacters.size} sounds!`;
+        }
+
+        function stopAll() {
+            isPlaying = false;
+            document.getElementById('status').textContent = 'Music stopped. Ready to create!';
+        }
+
+        function clearAll() {
+            activeCharacters.clear();
+            document.querySelectorAll('.character').forEach(char => {
+                char.classList.remove('active');
+            });
+            isPlaying = false;
+            updateStatus();
+        }
+
+        function updateStatus() {
+            const count = activeCharacters.size;
+            if (count === 0) {
+                document.getElementById('status').textContent = 'Click characters to add them to your composition!';
+            } else {
+                document.getElementById('status').textContent = `${count} sound${count > 1 ? 's' : ''} selected. Click Play All to hear your creation!`;
+            }
+        }
+
+        // Simulate the Mild As Spring theme with gentle animations
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                const container = document.querySelector('.game-container');
+                container.style.filter = 'hue-rotate(10deg)';
+                setTimeout(() => {
+                    container.style.filter = 'hue-rotate(0deg)';
+                }, 500);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

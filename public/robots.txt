@@ -1,0 +1,87 @@
+# *
+User-agent: *
+Allow: /
+
+# GPTBot
+User-agent: GPTBot
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# ChatGPT-User
+User-agent: ChatGPT-User
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# OAI-SearchBot
+User-agent: OAI-SearchBot
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# Claude-Web
+User-agent: Claude-Web
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# Anthropic-AI
+User-agent: Anthropic-AI
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# ClaudeBot
+User-agent: ClaudeBot
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# PerplexityBot
+User-agent: PerplexityBot
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# DeepseekBot
+User-agent: DeepseekBot
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# cohere-ai
+User-agent: cohere-ai
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# YouBot
+User-agent: YouBot
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# GoogleOther
+User-agent: GoogleOther
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# DuckAssistBot
+User-agent: DuckAssistBot
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# Bytespider
+User-agent: Bytespider
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /
+
+# Host
+Host: https://takecareofshadowmilk.cc
+
+# Sitemaps
+Sitemap: https://takecareofshadowmilk.cc/sitemap.xml

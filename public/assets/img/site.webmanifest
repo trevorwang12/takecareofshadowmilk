@@ -1,0 +1,32 @@
+{
+    "name": "Take Care of Shadow Milk - Virtual Pet Game",
+    "short_name": "Shadow Milk",
+    "description": "Play Take Care of Shadow Milk - the ultimate virtual pet simulator featuring Shadow Milk Cookie from Cookie Run: Kingdom",
+    "icons": [
+      {
+        "src": "/assets/img/android-chrome-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/assets/img/android-chrome-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "/assets/img/shadow-milk-favicon.svg",
+        "sizes": "any",
+        "type": "image/svg+xml",
+        "purpose": "any maskable"
+      }
+    ],
+    "start_url": "https://takecareofshadowmilk.cc/",
+    "scope": "https://takecareofshadowmilk.cc/",
+    "theme_color": "#8B4513",
+    "background_color": "#FFF8DC",
+    "display": "standalone",
+    "orientation": "any",
+    "categories": ["games", "entertainment", "pet", "virtual"]
+  }
+
+

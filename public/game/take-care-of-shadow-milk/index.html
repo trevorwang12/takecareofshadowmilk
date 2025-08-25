@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Care of Shadow Milk - Virtual Pet Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, Arial, Roboto, sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            background-color: #000;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .scratch-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(142deg, rgba(61, 99, 205, .5), rgba(100, 36, 219, .5)), rgba(0, 0, 0, .7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            text-align: center;
+        }
+
+        .loading-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .loading-subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .play-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .play-icon {
+            width: 60px;
+            height: 60px;
+        }
+
+        .play-text {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .background-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            .loading-title {
+                font-size: 2em;
+            }
+            .loading-subtitle {
+                font-size: 1em;
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="loading-screen" id="loadingScreen">
+            <img class="background-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQyIiBoZWlnaHQ9IjEzOCIgdmlld0JveD0iMCAwIDI0MiAxMzgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwhLS0gRGFyayBteXN0aWNhbCBiYWNrZ3JvdW5kIGZpdHRpbmcgU2hhZG93IE1pbGsgQ29va2llIHRoZW1lIC0tPgo8cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjEzOCIgZmlsbD0idXJsKCNzaGFkb3dHcmFkaWVudCkiLz4KCjwhLS0gTXlzdGljYWwgZGFyayBwYXR0ZXJucyAtLT4KPCEtLSBEYXJrIGNsb3Vkcy9taXN0IC0tPgo8ZWxsaXBzZSBjeD0iNTAiIGN5PSIzMCIgcng9IjQwIiByeT0iMTUiIGZpbGw9InJnYmEoMCwwLDAsMC4yKSIgb3BhY2l0eT0iMC42Ii8+CjxlbGxpcHNlIGN4PSIxOTAiIGN5PSIyNSIgcng9IjM1IiByeT0iMTIiIGZpbGw9InJnYmEoMCwwLDAsMC4xNSkiIG9wYWNpdHk9IjAuNSIvPgo8ZWxsaXBzZSBjeD0iMTIwIiBjeT0iMTUiIHJ4PSIzMCIgcnk9IjEwIiBmaWxsPSJyZ2JhKDAsMCwwLDAuMSkiIG9wYWNpdHk9IjAuNCIvPgoKPCEtLSBTaGFkb3cgTWlsayBDb29raWUgc2lsaG91ZXR0ZSBlbGVtZW50cyAtLT4KPCEtLSBEYXJrIGNvb2tpZSBzaGFwZXMgLS0+CjxjaXJjbGUgY3g9IjYwIiBjeT0iODAiIHI9IjEyIiBmaWxsPSJyZ2JhKDEzOSwgNjksIDE5LCAwLjMpIiBvcGFjaXR5PSIwLjciLz4KPGNpcmNsZSBjeD0iMTgwIiBjeT0iOTAiIHI9IjEwIiBmaWxsPSJyZ2JhKDEwNSwgMTA1LCAxMDUsIDAuNCkiIG9wYWNpdHk9IjAuNiIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSI1MCIgcj0iOCIgZmlsbD0icmdiYSg3NSwgODUsIDk5LCAwLjUpIiBvcGFjaXR5PSIwLjUiLz4KCjwhLS0gU3Bpa3kgaGFpciBzaWxob3VldHRlcyAtLT4KPHBhdGggZD0iTTQwIDcwIEw0NSA2MCBMNTAgNzAgTDU1IDU1IEw2MCA3MCBMNjUgNjAgTDcwIDcwIiBmaWxsPSJyZ2JhKDcwLCAxMzAsIDE4MCwgMC40KSIgb3BhY2l0eT0iMC42Ii8+CjxwYXRoIGQ9Ik0xNjAgMTAwIEwxNjUgOTAgTDE3MCAxMDAgTDE3NSA4NSBMMTgwIDEwMCIgZmlsbD0icmdiYSg3MCwgMTMwLCAxODAsIDAuMykiIG9wYWNpdHk9IjAuNSIvPgoKPCEtLSBNaXNjaGlldm91cyBlbGVtZW50cyAtLT4KPCEtLSBEYXJrIHNwYXJrbGVzL21hZ2ljIC0tPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjUwIiByPSIyIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNykiIG9wYWNpdHk9IjAuOCIvPgo8Y2lyY2xlIGN4PSIyMTAiIGN5PSI0MCIgcj0iMS41IiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNikiIG9wYWNpdHk9IjAuNyIvPgo8Y2lyY2xlIGN4PSI5MCIgY3k9IjM1IiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOCkiIG9wYWNpdHk9IjAuOSIvPgo8Y2lyY2xlIGN4PSIxNjAiIGN5PSIzMCIgcj0iMiIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjUpIiBvcGFjaXR5PSIwLjYiLz4KCjwhLS0gRGFyayBzdGFycyBmb3IgY2hhb3MgLS0+CjxwYXRoIGQ9Ik0yNSAxMDAgTDI2IDEwMyBMMjkgMTAzIEwyNyAxMDUgTDI4IDEwOCBMMjUgMTA2IEwyMiAxMDggTDIzIDEwNSBMMjEgMTAzIEwyNCAxMDMgWiIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjYpIiBvcGFjaXR5PSIwLjciLz4KPHBhdGggZD0iTTIxNSA4MCBMMjE2IDgzIEwyMTkgODMgTDIxNyA4NSBMMjE4IDg4IEwyMTUgODYgTDIxMiA4OCBMMjEzIDg1IEwyMTEgODMgTDIxNCA4MyBaIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNSkiIG9wYWNpdHk9IjAuNiIvPgoKPCEtLSBEZWNvcmF0aXZlIGNvb2tpZSBjcnVtYnMgLS0+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTEwIiByPSIzIiBmaWxsPSJyZ2JhKDEzOSwgNjksIDE5LCAwLjQpIiBvcGFjaXR5PSIwLjYiLz4KPGNpcmNsZSBjeD0iNTUiIGN5PSIxMTUiIHI9IjIiIGZpbGw9InJnYmEoMTYwLCA4MiwgNDUsIDAuNCkiIG9wYWNpdHk9IjAuNSIvPgo8Y2lyY2xlIGN4PSIxODUiIGN5PSIxMTUiIHI9IjIuNSIgZmlsbD0icmdiYSgxMzksIDY5LCAxOSwgMC4zKSIgb3BhY2l0eT0iMC40Ii8+CjxjaXJjbGUgY3g9IjE5NSIgY3k9IjEyMCIgcj0iMiIgZmlsbD0icmdiYSgxNjAsIDgyLCA0NSwgMC4zKSIgb3BhY2l0eT0iMC40Ii8+Cgo8IS0tIE15c3RlcmlvdXMgZmxvYXRpbmcgZWxlbWVudHMgLS0+CjwhLS0gRGFyayBvcmJzIC0tPgo8Y2lyY2xlIGN4PSI3NSIgY3k9IjYwIiByPSI0IiBmaWxsPSJyZ2JhKDc1LCA4NSwgOTksIDAuNCkiIG9wYWNpdHk9IjAuNiIvPgo8Y2lyY2xlIGN4PSIxNjUiIGN5PSI2NSIgcj0iMyIgZmlsbD0icmdiYSg1NSwgNjUsIDgxLCAwLjUpIiBvcGFjaXR5PSIwLjciLz4KCjwhLS0gU3VidGxlIHJvb20gc2lsaG91ZXR0ZXMgLS0+CjwhLS0gS2l0Y2hlbiBzaWxob3VldHRlIC0tPgo8cmVjdCB4PSIxNSIgeT0iMTA1IiB3aWR0aD0iMzAiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSJyZ2JhKDAsMCwwLDAuMSkiIG9wYWNpdHk9IjAuMyIvPgo8dGV4dCB4PSIzMCIgeT0iMTE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIGZvbnQtc2l6ZT0iOCIgb3BhY2l0eT0iMC43Ij5LaXRjaGVuPC90ZXh0PgoKPCEtLSBCZWRyb29tIHNpbGhvdWV0dGUgLS0+CjxyZWN0IHg9IjYwIiB5PSIxMDUiIHdpZHRoPSIzMCIgaGVpZ2h0PSIyMCIgcng9IjIiIGZpbGw9InJnYmEoMCwwLDAsMC4xKSIgb3BhY2l0eT0iMC4zIi8+Cjx0ZXh0IHg9Ijc1IiB5PSIxMTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgZm9udC1zaXplPSI4IiBvcGFjaXR5PSIwLjciPkJlZHJvb208L3RleHQ+Cgo8IS0tIEJhdGhyb29tIHNpbGhvdWV0dGUgLS0+CjxyZWN0IHg9IjEwNSIgeT0iMTA1IiB3aWR0aD0iMzAiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSJyZ2JhKDAsMCwwLDAuMSkiIG9wYWNpdHk9IjAuMyIvPgo8dGV4dCB4PSIxMjAiIHk9IjExNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiBmb250LXNpemU9IjgiIG9wYWNpdHk9IjAuNyI+QmF0aHJvb208L3RleHQ+Cgo8IS0tIFBsYXlmdWwgY2hhb3MgZWxlbWVudHMgLS0+CjwhLS0gTWlzY2hpZWYgaW5kaWNhdG9ycyAtLT4KPHBhdGggZD0iTTIwMCAxMDAgUTE5NSA5NSAxOTAgMTAwIFExODUgOTUgMTgwIDEwMCBRMTgwIDEwNSAxOTAgMTE1IFEyMDAgMTA1IDIwMCAxMDAiIGZpbGw9InJnYmEoMjU1LCAyMCwgMTQ3LCAwLjMpIiBvcGFjaXR5PSIwLjUiLz4KPHBhdGggZD0iTTcwIDQ1IFE2NyA0MiA2NCA0NSBRNjEgNDIgNTggNDUgUTU4IDQ4IDY0IDU1IFE3MCA0OCA3MCA0NSIgZmlsbD0icmdiYSgyNTUsIDEwNSwgMTgwLCAwLjQpIiBvcGFjaXR5PSIwLjYiLz4KCjwhLS0gTm8gcnVsZXMgYmFkZ2Ugc2lsaG91ZXR0ZSAtLT4KPGVsbGlwc2UgY3g9IjE4MCIgY3k9IjMwIiByeD0iMjUiIHJ5PSI4IiBmaWxsPSJyZ2JhKDI1NSwgNjksIDAsIDAuMykiIG9wYWNpdHk9IjAuNiIvPgo8dGV4dCB4PSIxODAiIHk9IjMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOCkiIGZvbnQtc2l6ZT0iNiIgZm9udC13ZWlnaHQ9ImJvbGQiPk5PIFJVTEVTPC90ZXh0PgoKPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0ic2hhZG93R3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMzc0MTUxIi8+CjxzdG9wIG9mZnNldD0iMzAlIiBzdG9wLWNvbG9yPSIjNEI1NTYzIi8+CjxzdG9wIG9mZnNldD0iNzAlIiBzdG9wLWNvbG9yPSIjNkI3MjgwIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzRCNTU2MyIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPg==" alt="Background">
+            <h1 class="loading-title">Take Care of Shadow Milk</h1>
+            <p class="loading-subtitle">Virtual Pet Simulator featuring Shadow Milk Cookie</p>
+            <button class="play-button" onclick="startGame()" id="playButton">
+                <svg class="play-icon" width="60" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M30 1.25C16.456 1.25 6.25 11.456 6.25 24S16.456 46.75 30 46.75 53.75 36.544 53.75 24 43.544 1.25 30 1.25Zm8.178 24.767L26.66 33.58a1.179 1.179 0 0 1-1.785-1.018V17.44a1.178 1.178 0 0 1 1.785-1.018l12.518 7.562a1.19 1.19 0 0 1 0 2.034Z" fill="#fff"></path>
+                </svg>
+                <span class="play-text">Play Now</span>
+            </button>
+        </div>
+        
+        <iframe 
+            class="scratch-embed" 
+            id="gameFrame"
+            src="https://scratch.mit.edu/projects/1206876997/embed"
+            allowfullscreen="true" 
+            webkitallowfullscreen="true" 
+            mozallowfullscreen="true"
+            allowtransparency="true"
+            frameborder="0"
+            scrolling="no"
+            sandbox="allow-scripts allow-forms allow-popups allow-presentation"
+            style="display: none;">
+        </iframe>
+    </div>
+
+    <script>
+        function startGame() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const gameFrame = document.getElementById('gameFrame');
+            const playButton = document.getElementById('playButton');
+            
+            // Show loading animation
+            playButton.innerHTML = `
+                <svg class="play-icon" width="60" height="60" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2M12 4a8 8 0 0 1 8 8a8 8 0 0 1-8 8a8 8 0 0 1-8-8a8 8 0 0 1 8-8m0 2a6 6 0 0 0-6 6a6 6 0 0 0 6 6a6 6 0 0 0 6-6a6 6 0 0 0-6-6m0 2a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4z"/>
+                    <animateTransform attributeName="transform" type="rotate" values="0 12 12;360 12 12" dur="1s" repeatCount="indefinite"/>
+                </svg>
+                <span class="play-text">Loading...</span>
+            `;
+            
+            playButton.disabled = true;
+            
+            // Add error handling for iframe loading
+            gameFrame.onload = function() {
+                console.log('Game loaded successfully');
+                hideLoadingScreen();
+            };
+            
+            gameFrame.onerror = function() {
+                console.log('Game loading failed, showing error message');
+                showErrorMessage();
+            };
+            
+            // Fallback timeout for loading
+            setTimeout(() => {
+                hideLoadingScreen();
+            }, 3000);
+        }
+        
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const gameFrame = document.getElementById('gameFrame');
+            
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                gameFrame.style.display = 'block';
+            }, 500);
+        }
+        
+        function showErrorMessage() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const playButton = document.getElementById('playButton');
+            
+            loadingScreen.innerHTML = `
+                <img class="background-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQyIiBoZWlnaHQ9IjEzOCIgdmlld0JveD0iMCAwIDI0MiAxMzgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwhLS0gRGFyayBteXN0aWNhbCBiYWNrZ3JvdW5kIGZpdHRpbmcgU2hhZG93IE1pbGsgQ29va2llIHRoZW1lIC0tPgo8cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjEzOCIgZmlsbD0idXJsKCNzaGFkb3dHcmFkaWVudCkiLz4KCjwhLS0gTXlzdGljYWwgZGFyayBwYXR0ZXJucyAtLT4KPCEtLSBEYXJrIGNsb3Vkcy9taXN0IC0tPgo8ZWxsaXBzZSBjeD0iNTAiIGN5PSIzMCIgcng9IjQwIiByeT0iMTUiIGZpbGw9InJnYmEoMCwwLDAsMC4yKSIgb3BhY2l0eT0iMC42Ii8+CjxlbGxpcHNlIGN4PSIxOTAiIGN5PSIyNSIgcng9IjM1IiByeT0iMTIiIGZpbGw9InJnYmEoMCwwLDAsMC4xNSkiIG9wYWNpdHk9IjAuNSIvPgo8ZWxsaXBzZSBjeD0iMTIwIiBjeT0iMTUiIHJ4PSIzMCIgcnk9IjEwIiBmaWxsPSJyZ2JhKDAsMCwwLDAuMSkiIG9wYWNpdHk9IjAuNCIvPgoKPCEtLSBTaGFkb3cgTWlsayBDb29raWUgc2lsaG91ZXR0ZSBlbGVtZW50cyAtLT4KPCEtLSBEYXJrIGNvb2tpZSBzaGFwZXMgLS0+CjxjaXJjbGUgY3g9IjYwIiBjeT0iODAiIHI9IjEyIiBmaWxsPSJyZ2JhKDEzOSwgNjksIDE5LCAwLjMpIiBvcGFjaXR5PSIwLjciLz4KPGNpcmNsZSBjeD0iMTgwIiBjeT0iOTAiIHI9IjEwIiBmaWxsPSJyZ2JhKDEwNSwgMTA1LCAxMDUsIDAuNCkiIG9wYWNpdHk9IjAuNiIvPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSI1MCIgcj0iOCIgZmlsbD0icmdiYSg3NSwgODUsIDk5LCAwLjUpIiBvcGFjaXR5PSIwLjUiLz4KCjwhLS0gU3Bpa3kgaGFpciBzaWxob3VldHRlcyAtLT4KPHBhdGggZD0iTTQwIDcwIEw0NSA2MCBMNTAgNzAgTDU1IDU1IEw2MCA3MCBMNjUgNjAgTDcwIDcwIiBmaWxsPSJyZ2JhKDcwLCAxMzAsIDE4MCwgMC40KSIgb3BhY2l0eT0iMC42Ii8+CjxwYXRoIGQ9Ik0xNjAgMTAwIEwxNjUgOTAgTDE3MCAxMDAgTDE3NSA4NSBMMTgwIDEwMCIgZmlsbD0icmdiYSg3MCwgMTMwLCAxODAsIDAuMykiIG9wYWNpdHk9IjAuNSIvPgoKPCEtLSBNaXNjaGlldm91cyBlbGVtZW50cyAtLT4KPCEtLSBEYXJrIHNwYXJrbGVzL21hZ2ljIC0tPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjUwIiByPSIyIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNykiIG9wYWNpdHk9IjAuOCIvPgo8Y2lyY2xlIGN4PSIyMTAiIGN5PSI0MCIgcj0iMS41IiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNikiIG9wYWNpdHk9IjAuNyIvPgo8Y2lyY2xlIGN4PSI5MCIgY3k9IjM1IiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOCkiIG9wYWNpdHk9IjAuOSIvPgo8Y2lyY2xlIGN4PSIxNjAiIGN5PSIzMCIgcj0iMiIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjUpIiBvcGFjaXR5PSIwLjYiLz4KCjwhLS0gRGFyayBzdGFycyBmb3IgY2hhb3MgLS0+CjxwYXRoIGQ9Ik0yNSAxMDAgTDI2IDEwMyBMMjkgMTAzIEwyNyAxMDUgTDI4IDEwOCBMMjUgMTA2IEwyMiAxMDggTDIzIDEwNSBMMjEgMTAzIEwyNCAxMDMgWiIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjYpIiBvcGFjaXR5PSIwLjciLz4KPHBhdGggZD0iTTIxNSA4MCBMMjE2IDgzIEwyMTkgODMgTDIxNyA4NSBMMjE4IDg4IEwyMTUgODYgTDIxMiA4OCBMMjEzIDg1IEwyMTEgODMgTDIxNCA4MyBaIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNSkiIG9wYWNpdHk9IjAuNiIvPgoKPCEtLSBEZWNvcmF0aXZlIGNvb2tpZSBjcnVtYnMgLS0+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTEwIiByPSIzIiBmaWxsPSJyZ2JhKDEzOSwgNjksIDE5LCAwLjQpIiBvcGFjaXR5PSIwLjYiLz4KPGNpcmNsZSBjeD0iNTUiIGN5PSIxMTUiIHI9IjIiIGZpbGw9InJnYmEoMTYwLCA4MiwgNDUsIDAuNCkiIG9wYWNpdHk9IjAuNSIvPgo8Y2lyY2xlIGN4PSIxODUiIGN5PSIxMTUiIHI9IjIuNSIgZmlsbD0icmdiYSgxMzksIDY5LCAxOSwgMC4zKSIgb3BhY2l0eT0iMC40Ii8+CjxjaXJjbGUgY3g9IjE5NSIgY3k9IjEyMCIgcj0iMiIgZmlsbD0icmdiYSgxNjAsIDgyLCA0NSwgMC4zKSIgb3BhY2l0eT0iMC40Ii8+Cgo8IS0tIE15c3RlcmlvdXMgZmxvYXRpbmcgZWxlbWVudHMgLS0+CjwhLS0gRGFyayBvcmJzIC0tPgo8Y2lyY2xlIGN4PSI3NSIgY3k9IjYwIiByPSI0IiBmaWxsPSJyZ2JhKDc1LCA4NSwgOTksIDAuNCkiIG9wYWNpdHk9IjAuNiIvPgo8Y2lyY2xlIGN4PSIxNjUiIGN5PSI2NSIgcj0iMyIgZmlsbD0icmdiYSg1NSwgNjUsIDgxLCAwLjUpIiBvcGFjaXR5PSIwLjciLz4KCjwhLS0gU3VidGxlIHJvb20gc2lsaG91ZXR0ZXMgLS0+CjwhLS0gS2l0Y2hlbiBzaWxob3VldHRlIC0tPgo8cmVjdCB4PSIxNSIgeT0iMTA1IiB3aWR0aD0iMzAiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSJyZ2JhKDAsMCwwLDAuMSkiIG9wYWNpdHk9IjAuMyIvPgo8dGV4dCB4PSIzMCIgeT0iMTE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNikiIGZvbnQtc2l6ZT0iOCIgb3BhY2l0eT0iMC43Ij5LaXRjaGVuPC90ZXh0PgoKPCEtLSBCZWRyb29tIHNpbGhvdWV0dGUgLS0+CjxyZWN0IHg9IjYwIiB5PSIxMDUiIHdpZHRoPSIzMCIgaGVpZ2h0PSIyMCIgcng9IjIiIGZpbGw9InJnYmEoMCwwLDAsMC4xKSIgb3BhY2l0eT0iMC4zIi8+Cjx0ZXh0IHg9Ijc1IiB5PSIxMTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIgZm9udC1zaXplPSI4IiBvcGFjaXR5PSIwLjciPkJlZHJvb208L3RleHQ+Cgo8IS0tIEJhdGhyb29tIHNpbGhvdWV0dGUgLS0+CjxyZWN0IHg9IjEwNSIgeT0iMTA1IiB3aWR0aD0iMzAiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSJyZ2JhKDAsMCwwLDAuMSkiIG9wYWNpdHk9IjAuMyIvPgo8dGV4dCB4PSIxMjAiIHk9IjExNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjYpIiBmb250LXNpemU9IjgiIG9wYWNpdHk9IjAuNyI+QmF0aHJvb208L3RleHQ+Cgo8IS0tIFBsYXlmdWwgY2hhb3MgZWxlbWVudHMgLS0+CjwhLS0gTWlzY2hpZWYgaW5kaWNhdG9ycyAtLT4KPHBhdGggZD0iTTIwMCAxMDAgUTE5NSA5NSAxOTAgMTAwIFExODUgOTUgMTgwIDEwMCBRMTgwIDEwNSAxOTAgMTE1IFEyMDAgMTA1IDIwMCAxMDAiIGZpbGw9InJnYmEoMjU1LCAyMCwgMTQ3LCAwLjMpIiBvcGFjaXR5PSIwLjUiLz4KPHBhdGggZD0iTTcwIDQ1IFE2NyA0MiA2NCA0NSBRNjEgNDIgNTggNDUgUTU4IDQ4IDY0IDU1IFE3MCA0OCA3MCA0NSIgZmlsbD0icmdiYSgyNTUsIDEwNSwgMTgwLCAwLjQpIiBvcGFjaXR5PSIwLjYiLz4KCjwhLS0gTm8gcnVsZXMgYmFkZ2Ugc2lsaG91ZXR0ZSAtLT4KPGVsbGlwc2UgY3g9IjE4MCIgY3k9IjMwIiByeD0iMjUiIHJ5PSI4IiBmaWxsPSJyZ2JhKDI1NSwgNjksIDAsIDAuMykiIG9wYWNpdHk9IjAuNiIvPgo8dGV4dCB4PSIxODAiIHk9IjMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOCkiIGZvbnQtc2l6ZT0iNiIgZm9udC13ZWlnaHQ9ImJvbGQiPk5PIFJVTEVTPC90ZXh0PgoKPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0ic2hhZG93R3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMzc0MTUxIi8+CjxzdG9wIG9mZnNldD0iMzAlIiBzdG9wLWNvbG9yPSIjNEI1NTYzIi8+CjxzdG9wIG9mZnNldD0iNzAlIiBzdG9wLWNvbG9yPSIjNkI3MjgwIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzRCNTU2MyIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPg==" alt="Background">
+                <h1 class="loading-title">Connection Issue</h1>
+                <p class="loading-subtitle">Scratch server temporarily unavailable, please try again later</p>
+                <button class="play-button" onclick="location.reload()" id="retryButton">
+                    <svg class="play-icon" width="60" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 1.25C16.456 1.25 6.25 11.456 6.25 24S16.456 46.75 30 46.75 53.75 36.544 53.75 24 43.544 1.25 30 1.25Zm8.178 24.767L26.66 33.58a1.179 1.179 0 0 1-1.785-1.018V17.44a1.178 1.178 0 0 1 1.785-1.018l12.518 7.562a1.19 1.19 0 0 1 0 2.034Z" fill="#fff"></path>
+                    </svg>
+                    <span class="play-text">Retry</span>
+                </button>
+            `;
+        }
+
+        // Auto-play on mobile after 3 seconds
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                if (document.getElementById('loadingScreen').style.display !== 'none') {
+                    startGame();
+                }
+            }, 3000);
+        }
+
+        // Handle fullscreen
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+        });
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Prevent context menu on game
+        document.getElementById('gameFrame').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>

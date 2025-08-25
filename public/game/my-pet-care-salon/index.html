@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Pet Care Salon - Virtual Pet Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, Arial, Roboto, sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            background-color: #000;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .scratch-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(142deg, rgba(61, 99, 205, .5), rgba(100, 36, 219, .5)), rgba(0, 0, 0, .7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            text-align: center;
+        }
+
+        .loading-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .loading-subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .play-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .play-icon {
+            width: 60px;
+            height: 60px;
+        }
+
+        .play-text {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .background-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            .loading-title {
+                font-size: 2em;
+            }
+            .loading-subtitle {
+                font-size: 1em;
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="loading-screen" id="loadingScreen">
+            <img class="background-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQyIiBoZWlnaHQ9IjEzOCIgdmlld0JveD0iMCAwIDI0MiAxMzgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjwhLS0gQmVhdXRpZnVsIHBldCBzcGEgZ3JhZGllbnQgYmFja2dyb3VuZCAtLT4KPHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIxMzgiIGZpbGw9InVybCgjc3BhR3JhZGllbnQpIi8+Cgo8IS0tIERlY29yYXRpdmUgcGV0IHNwYSBlbGVtZW50cyAtLT4KPCEtLSBMdXh1cnkgYnViYmxlcyAtLT4KPGNpcmNsZSBjeD0iNDAiIGN5PSIyNSIgcj0iNiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjMpIi8+CjxjaXJjbGUgY3g9IjU1IiBjeT0iMTgiIHI9IjQiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4yNSkiLz4KPGNpcmNsZSBjeD0iMjUiIGN5PSIzNSIgcj0iMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjQpIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwIiByPSI1IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMzUpIi8+CjxjaXJjbGUgY3g9IjIxNSIgY3k9IjMwIiByPSIzIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMykiLz4KPGNpcmNsZSBjeD0iMTg1IiBjeT0iMTUiIHI9IjQiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4yNSkiLz4KCjwhLS0gUGF3IHByaW50cyBwYXR0ZXJuIC0tPgo8ZyBvcGFjaXR5PSIwLjE1Ij4KICA8IS0tIFBhdyBwcmludCAxIC0tPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjUwIiByeD0iMyIgcnk9IjIiIGZpbGw9IiM0NjgyQjQiLz4KICA8Y2lyY2xlIGN4PSI1OCIgY3k9IjQ4IiByPSIxIiBmaWxsPSIjNDY4MkI0Ii8+CiAgPGNpcmNsZSBjeD0iNjIiIGN5PSI0OCIgcj0iMSIgZmlsbD0iIzQ2ODJCNCIvPgogIDxjaXJjbGUgY3g9IjYwIiBjeT0iNDUiIHI9IjEiIGZpbGw9IiM0NjgyQjQiLz4KICAKICA8IS0tIFBhdyBwcmludCAyIC0tPgogIDxlbGxpcHNlIGN4PSIxODAiIGN5PSI4MCIgcng9IjMiIHJ5PSIyIiBmaWxsPSIjMjBCMkFBIi8+CiAgPGNpcmNsZSBjeD0iMTc4IiBjeT0iNzgiIHI9IjEiIGZpbGw9IiMyMEIyQUEiLz4KICA8Y2lyY2xlIGN4PSIxODIiIGN5PSI3OCIgcj0iMSIgZmlsbD0iIzIwQjJBQSIvPgogIDxjaXJjbGUgY3g9IjE4MCIgY3k9Ijc1IiByPSIxIiBmaWxsPSIjMjBCMkFBIi8+CiAgCiAgPCEtLSBQYXcgcHJpbnQgMyAtLT4KICA8ZWxsaXBzZSBjeD0iODAiIGN5PSIxMDAiIHJ4PSIzIiByeT0iMiIgZmlsbD0iI0ZGNjlCNCIvPgogIDxjaXJjbGUgY3g9Ijc4IiBjeT0iOTgiIHI9IjEiIGZpbGw9IiNGRjY5QjQiLz4KICA8Y2lyY2xlIGN4PSI4MiIgY3k9Ijk4IiByPSIxIiBmaWxsPSIjRkY2OUI0Ii8+CiAgPGNpcmNsZSBjeD0iODAiIGN5PSI5NSIgcj0iMSIgZmlsbD0iI0ZGNjlCNCIvPgo8L2c+Cgo8IS0tIEN1dGUgcGV0IHNpbGhvdWV0dGVzIC0tPgo8ZyBvcGFjaXR5PSIwLjEiPgogIDwhLS0gQ3V0ZSBwdXBweSBzaWxob3VldHRlIC0tPgogIDxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxMDAiIHJ4PSIxMiIgcnk9IjEwIiBmaWxsPSIjNDY4MkI0Ii8+CiAgPGVsbGlwc2UgY3g9IjIwMCIgY3k9IjkyIiByeD0iOCIgcnk9IjciIGZpbGw9IiM0NjgyQjQiLz4KICA8ZWxsaXBzZSBjeD0iMTk0IiBjeT0iODciIHJ4PSIzIiByeT0iNSIgZmlsbD0iIzQ2ODJCNCIvPgogIDxlbGxpcHNlIGN4PSIyMDYiIGN5PSI4NyIgcng9IjMiIHJ5PSI1IiBmaWxsPSIjNDY4MkI0Ii8+CiAgCiAgPCEtLSBDdXRlIGtpdHRlbiBzaWxob3VldHRlIC0tPgogIDxlbGxpcHNlIGN4PSI1MCIgY3k9IjExMCIgcng9IjEwIiByeT0iOCIgZmlsbD0iIzIwQjJBQSIvPgogIDxlbGxpcHNlIGN4PSI1MCIgY3k9IjEwNSIgcng9IjciIHJ5PSI2IiBmaWxsPSIjMjBCMkFBIi8+CiAgPHBhdGggZD0iTTQ1IDEwMCBMNDggOTUgTDUwIDEwMCBaIiBmaWxsPSIjMjBCMkFBIi8+CiAgPHBhdGggZD0iTTUwIDEwMCBMNTIgOTUgTDU1IDEwMCBaIiBmaWxsPSIjMjBCMkFBIi8+CjwvZz4KCjwhLS0gU3BhIGx1eHVyeSBlbGVtZW50cyAtLT4KPCEtLSBIZWFydHMgZmxvYXRpbmcgLS0+CjxwYXRoIGQ9Ik0zMCA3MCBRMjcgNjcgMjQgNzAgUTIxIDY3IDE4IDcwIFExOCA3MyAyNCA4MCBRMzAgNzMgMzAgNzAiIGZpbGw9InJnYmEoMjU1LCAxMDUsIDE4MCwgMC40KSIvPgo8cGF0aCBkPSJNMjIwIDYwIFEyMTggNTggMjE2IDYwIFEyMTQgNTggMjEyIDYwIFEyMTIgNjIgMjE2IDY3IFEyMjAgNjIgMjIwIDYwIiBmaWxsPSJyZ2JhKDI1NSwgMjAsIDE0NywgMC40KSIvPgoKPCEtLSBTdGFycyBmb3IgcHJlbWl1bSBzZXJ2aWNlIC0tPgo8cGF0aCBkPSJNMTUgOTAgTDE2IDkzIEwxOSA5MyBMMTcgOTUgTDE4IDk4IEwxNSA5NiBMMTIgOTggTDEzIDk1IEwxMSA5MyBMMTQgOTMgWiIgZmlsbD0icmdiYSgyNTUsIDIxNSwgMCwgMC41KSIvPgo8cGF0aCBkPSJNMjI1IDQ1IEwyMjYgNDggTDIyOSA0OCBMMjI3IDUwIEwyMjggNTMgTDIyNSA1MSBMMjIyIDUzIEwyMjMgNTAgTDIyMSA0OCBMMjI0IDQ4IFoiIGZpbGw9InJnYmEoMjU1LCAyMTUsIDAsIDAuNSkiLz4KCjwhLS0gU3BhcmtsZXMgZm9yIG1hZ2ljYWwgZ3Jvb21pbmcgLS0+CjxjaXJjbGUgY3g9IjcwIiBjeT0iMzAiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIvPgo8Y2lyY2xlIGN4PSIxNjUiIGN5PSIyNSIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjcpIi8+CjxjaXJjbGUgY3g9IjM1IiBjeT0iMTE1IiByPSIxLjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC41KSIvPgo8Y2lyY2xlIGN4PSIyMDUiIGN5PSIxMjUiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC42KSIvPgoKPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0ic3BhR3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjRTBGRkZGIi8+CjxzdG9wIG9mZnNldD0iMjUlIiBzdG9wLWNvbG9yPSIjQUZFRUVFIi8+CjxzdG9wIG9mZnNldD0iNzUlIiBzdG9wLWNvbG9yPSIjNDBFMEQwIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJERDRCRiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPg==" alt="Pet Spa Background">
+            <h1 class="loading-title">My Pet Care Salon</h1>
+            <p class="loading-subtitle">Complete pet care and grooming</p>
+            <button class="play-button" onclick="startGame()" id="playButton">
+                <svg class="play-icon" width="60" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M30 1.25C16.456 1.25 6.25 11.456 6.25 24S16.456 46.75 30 46.75 53.75 36.544 53.75 24 43.544 1.25 30 1.25Zm8.178 24.767L26.66 33.58a1.179 1.179 0 0 1-1.785-1.018V17.44a1.178 1.178 0 0 1 1.785-1.018l12.518 7.562a1.19 1.19 0 0 1 0 2.034Z" fill="#fff"></path>
+                </svg>
+                <span class="play-text">Play Now</span>
+            </button>
+        </div>
+        
+        <iframe 
+            class="scratch-embed" 
+            id="gameFrame"
+            src="https://html5.gamedistribution.com/ca0dd2ea005944609eb4341ee98a9dfb/?gd_sdk_referrer_url=https://takecareofshadowmilk.org/my-pet-care-salon.embed"
+            allowfullscreen="true" 
+            webkitallowfullscreen="true" 
+            mozallowfullscreen="true"
+            allowtransparency="true"
+            frameborder="0"
+            scrolling="no"
+            style="display: none;">
+        </iframe>
+    </div>
+
+    <script>
+        function startGame() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const gameFrame = document.getElementById('gameFrame');
+            const playButton = document.getElementById('playButton');
+            
+            playButton.innerHTML = `
+                <svg class="play-icon" width="60" height="60" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2M12 4a8 8 0 0 1 8 8a8 8 0 0 1-8 8a8 8 0 0 1-8-8a8 8 0 0 1 8-8m0 2a6 6 0 0 0-6 6a6 6 0 0 0 6 6a6 6 0 0 0 6-6a6 6 0 0 0-6-6m0 2a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4z"/>
+                    <animateTransform attributeName="transform" type="rotate" values="0 12 12;360 12 12" dur="1s" repeatCount="indefinite"/>
+                </svg>
+                <span class="play-text">Loading...</span>
+            `;
+            
+            playButton.disabled = true;
+            
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.transition = 'opacity 0.5s ease';
+                
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    gameFrame.style.display = 'block';
+                }, 500);
+            }, 1500);
+        }
+
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                if (document.getElementById('loadingScreen').style.display !== 'none') {
+                    startGame();
+                }
+            }, 3000);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+        });
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        document.getElementById('gameFrame').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
