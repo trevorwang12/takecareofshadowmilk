@@ -130,7 +130,6 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           sandbox="allow-scripts allow-presentation allow-forms allow-popups"
-          importance="high"
         />
       </div>
 
