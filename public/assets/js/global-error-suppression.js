@@ -22,7 +22,12 @@
             'has already been declared',
             'WebSocket connection to',
             'failed: WebSocket is closed',
-            'gamedistribution.com'
+            'gamedistribution.com',
+            'BackgroundUtils',
+            'StringUtils',
+            'CommonUtils',
+            'The document is sandboxed',
+            'allow-same-origin'
         ];
         
         // Check if the error should be suppressed
@@ -66,7 +71,12 @@
             'SecurityError',
             'SyntaxError: Identifier',
             'has already been declared',
-            'sandboxed'
+            'sandboxed',
+            'BackgroundUtils',
+            'StringUtils', 
+            'CommonUtils',
+            'The document is sandboxed',
+            'allow-same-origin'
         ];
         
         const shouldSuppress = suppressedErrors.some(errorText => 
