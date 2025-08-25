@@ -9,9 +9,9 @@ export const myPetCareSalonContent = {
     ...globalContent.gameSection,
     title: "My Pet Care Salon",
     game: {
-      url: 'https://html5.gamedistribution.com/d25314c77d8a4931b7d3c7a8d7ee35ea/?gd_sdk_referrer_url=https://www.example.com/games/my-pet-care-salon',
-      title: "my-pet-care-salon",
-      externalUrl: 'https://html5.gamedistribution.com/d25314c77d8a4931b7d3c7a8d7ee35ea/?gd_sdk_referrer_url=https://www.example.com/games/my-pet-care-salon'
+      url: '/game/my-pet-care-salon/index.html',
+      title: "My Pet Care Salon - Complete Pet Spa Experience",
+      externalUrl: 'https://html5.gamedistribution.com/d25314c77d8a4931b7d3c7a8d7ee35ea/?gd_sdk_referrer_url=https://takecareofshadowmilk.cc/my-pet-care-salon'
     }
   },
 

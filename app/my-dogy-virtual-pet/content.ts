@@ -9,9 +9,9 @@ export const myDogyVirtualPetContent = {
     ...globalContent.gameSection,
     title: "My DOGY Virtual Pet",
     game: {
-      url: 'https://html5.gamedistribution.com/0aa201caffd44d389a6e4fd64de06306/?gd_sdk_referrer_url=https://www.example.com/games/my-dogy-virtual-pet',
-      title: "my-dogy-virtual-pet",
-      externalUrl: 'https://html5.gamedistribution.com/0aa201caffd44d389a6e4fd64de06306/?gd_sdk_referrer_url=https://www.example.com/games/my-dogy-virtual-pet'
+      url: '/game/my-dogy-virtual-pet/index.html',
+      title: "My DOGY Virtual Pet - Virtual Dog Care Game",
+      externalUrl: 'https://html5.gamedistribution.com/0aa201caffd44d389a6e4fd64de06306/?gd_sdk_referrer_url=https://takecareofshadowmilk.cc/my-dogy-virtual-pet'
     }
   },
 

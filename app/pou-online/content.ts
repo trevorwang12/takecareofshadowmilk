@@ -9,9 +9,9 @@ export const pouOnlineContent = {
     ...globalContent.gameSection,
     title: "Pou Online",
     game: {
-      url: 'https://html5.gamedistribution.com/d1362abc246f43bdb5c26643aec2b61b/?gd_sdk_referrer_url=https://www.example.com/games/pou-online',
-      title: "pou-online",
-      externalUrl: 'https://html5.gamedistribution.com/d1362abc246f43bdb5c26643aec2b61b/?gd_sdk_referrer_url=https://www.example.com/games/pou-online'
+      url: '/game/pou-online/index.html',
+      title: "Pou Online - Virtual Pet Game",
+      externalUrl: 'https://html5.gamedistribution.com/d1362abc246f43bdb5c26643aec2b61b/?gd_sdk_referrer_url=https://takecareofshadowmilk.cc/pou-online'
     }
   },
 

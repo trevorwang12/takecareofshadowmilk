@@ -9,9 +9,9 @@ export const petSalon2Content = {
     ...globalContent.gameSection,
     title: "Pet Salon 2",
     game: {
-      url: 'https://html5.gamedistribution.com/58dbb84a1af142eb96003ca794cd6861/?gd_sdk_referrer_url=https://www.example.com/games/pet-salon-2',
-      title: "pet-salon-2",
-      externalUrl: 'https://html5.gamedistribution.com/58dbb84a1af142eb96003ca794cd6861/?gd_sdk_referrer_url=https://www.example.com/games/pet-salon-2'
+      url: '/game/pet-salon-2/index.html',
+      title: "Pet Salon 2 - Advanced Pet Grooming Game",
+      externalUrl: 'https://html5.gamedistribution.com/58dbb84a1af142eb96003ca794cd6861/?gd_sdk_referrer_url=https://takecareofshadowmilk.cc/pet-salon-2'
     }
   },
 
