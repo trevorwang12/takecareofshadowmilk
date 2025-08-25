@@ -43,7 +43,14 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
     setIsLoading(true);
     setLoadError(false);
     if (iframeRef.current) {
-      iframeRef.current.src = iframeRef.current.src;
+      // Force reload by changing src
+      const originalSrc = iframeRef.current.src;
+      iframeRef.current.src = '';
+      setTimeout(() => {
+        if (iframeRef.current) {
+          iframeRef.current.src = originalSrc;
+        }
+      }, 100);
     }
   };
 
@@ -64,10 +71,30 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
       setIsFullscreen(!!document.fullscreenElement);
     };
 
-    // Handle postMessage errors and suppress console spam
+    // Handle postMessage from game iframe
     const handleMessage = (event: MessageEvent) => {
-      // Suppress all postMessage errors to prevent console spam
-      event.stopPropagation();
+      // Allow messages from trusted sources
+      const trustedOrigins = [
+        'https://scratch.mit.edu',
+        'https://turbowarp.org',
+        location.origin
+      ];
+      
+      if (trustedOrigins.includes(event.origin)) {
+        // Handle game-specific messages
+        if (event.data && typeof event.data === 'object') {
+          switch(event.data.type) {
+            case 'gameLoaded':
+              setIsLoading(false);
+              setLoadError(false);
+              break;
+            case 'gameError':
+              setIsLoading(false);
+              setLoadError(true);
+              break;
+          }
+        }
+      }
     };
 
     // Override console.error temporarily to suppress iframe-related errors
@@ -193,13 +220,14 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
             "w-full border-0",
             isFullscreen ? "h-screen" : "h-full aspect-video"
           )}
-          allow="fullscreen; autoplay; storage-access; camera; microphone; geolocation"
-          allowFullScreen
+          allow="fullscreen; autoplay; storage-access"
+          allowFullScreen={true}
           title={content.gameSection.game.title}
           loading="eager"
           referrerPolicy="no-referrer-when-downgrade"
           onLoad={handleIframeLoad}
           onError={handleIframeError}
+          sandbox="allow-scripts allow-forms allow-popups allow-presentation"
         />
       </div>
 
