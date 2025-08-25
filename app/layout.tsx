@@ -86,7 +86,7 @@ export default function RootLayout({
         <meta name="theme-color" content={siteConfig.metadata.themeColor} />
         
         {/* Error Handlers */}
-        <script src="/assets/js/global-error-suppression.js" defer></script>
+        <Script src="/assets/js/global-error-suppression.js" strategy="afterInteractive" />
         <script src="/assets/js/iframe-error-handler.js" defer></script>
         
         {/* Google Analytics - 只在有GA ID时加载 */}
