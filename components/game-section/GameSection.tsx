@@ -220,6 +220,7 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
             "w-full border-0",
             isFullscreen ? "h-screen" : "h-full aspect-video"
           )}
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock"
           allow="fullscreen; autoplay; storage-access; microphone; camera"
           allowFullScreen={true}
           title={content.gameSection.game.title}
