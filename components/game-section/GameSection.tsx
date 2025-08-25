@@ -101,7 +101,7 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
         )}
       >
         <iframe
-          src={content.gameSection.game.url}
+          src="https://scratch.mit.edu/projects/1206876997/embed"
           className={cn(
             "w-full border-0",
             isFullscreen ? "h-screen" : "h-full aspect-video"
