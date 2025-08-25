@@ -238,9 +238,53 @@
             }
         });
 
-        // Suppress duplicate identifier errors
+        // Comprehensive error suppression for Scratch platform
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        // Suppress common Scratch/iframe errors
+        console.error = function(...args) {
+            const message = args.join(' ');
+            if (message.includes('Failed to read the \'cookie\'') ||
+                message.includes('sandboxed') ||
+                message.includes('postMessage') ||
+                message.includes('target origin') ||
+                message.includes('SecurityError')) {
+                return; // Suppress these errors
+            }
+            originalError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            const message = args.join(' ');
+            if (message.includes('sandbox') ||
+                message.includes('allow-same-origin') ||
+                message.includes('escape its sandboxing')) {
+                return; // Suppress these warnings
+            }
+            originalWarn.apply(console, args);
+        };
+
+        // Suppress JavaScript errors
         window.addEventListener('error', function(e) {
-            if (e.message && e.message.includes('has already been declared')) {
+            if (e.message && (
+                e.message.includes('has already been declared') ||
+                e.message.includes('Failed to read the \'cookie\'') ||
+                e.message.includes('SecurityError') ||
+                e.message.includes('sandboxed')
+            )) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Suppress unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(e) {
+            if (e.reason && (
+                e.reason.message.includes('cookie') ||
+                e.reason.message.includes('SecurityError') ||
+                e.reason.message.includes('sandboxed')
+            )) {
                 e.preventDefault();
                 return false;
             }

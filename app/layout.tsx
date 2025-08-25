@@ -85,7 +85,8 @@ export default function RootLayout({
         <link rel="shortcut icon" href={siteConfig.images.icon.favicon} />
         <meta name="theme-color" content={siteConfig.metadata.themeColor} />
         
-        {/* Iframe Error Handler */}
+        {/* Error Handlers */}
+        <script src="/assets/js/global-error-suppression.js" defer></script>
         <script src="/assets/js/iframe-error-handler.js" defer></script>
         
         {/* Google Analytics - 只在有GA ID时加载 */}
