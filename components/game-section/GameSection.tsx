@@ -129,7 +129,7 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           title={content.gameSection.game.title}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          sandbox="allow-scripts allow-presentation allow-forms allow-popups"
+          sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-popups allow-storage-access-by-user-activation"
         />
       </div>
 
