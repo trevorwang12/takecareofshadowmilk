@@ -13,10 +13,7 @@ interface GameSectionProps {
 
 export function GameSection({ content = defaultContent }: GameSectionProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const toggleFullscreen = async () => {
     if (!document.fullscreenElement) {
@@ -28,99 +25,17 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
     }
   };
 
-  // Handle iframe loading
-  const handleIframeLoad = () => {
-    setIsLoading(false);
-    setLoadError(false);
-  };
-
-  const handleIframeError = () => {
-    setIsLoading(false);
-    setLoadError(true);
-  };
-
-  const retryLoad = () => {
-    setIsLoading(true);
-    setLoadError(false);
-    if (iframeRef.current) {
-      // Force reload by changing src
-      const originalSrc = iframeRef.current.src;
-      iframeRef.current.src = '';
-      setTimeout(() => {
-        if (iframeRef.current) {
-          iframeRef.current.src = originalSrc;
-        }
-      }, 100);
-    }
-  };
-
-  // Add timeout fallback for loading
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (isLoading) {
-        setIsLoading(false);
-      }
-    }, 10000); // 10 second timeout
-
-    return () => clearTimeout(timeout);
-  }, [isLoading]);
 
   // Listen for fullscreen changes to update state
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
-
-    // Handle postMessage from game iframe
-    const handleMessage = (event: MessageEvent) => {
-      // Allow messages from trusted sources
-      const trustedOrigins = [
-        'https://scratch.mit.edu',
-        'https://turbowarp.org',
-        location.origin
-      ];
-      
-      if (trustedOrigins.includes(event.origin)) {
-        // Handle game-specific messages
-        if (event.data && typeof event.data === 'object') {
-          switch(event.data.type) {
-            case 'gameLoaded':
-              setIsLoading(false);
-              setLoadError(false);
-              break;
-            case 'gameError':
-              setIsLoading(false);
-              setLoadError(true);
-              break;
-          }
-        }
-      }
-    };
-
-    // Override console.error temporarily to suppress iframe-related errors
-    const originalError = console.error;
-    const suppressError = (...args: any[]) => {
-      const message = args.join(' ');
-      if (message.includes('postMessage') || 
-          message.includes('target origin') || 
-          message.includes('sandboxed') ||
-          message.includes('cookie')) {
-        return; // Suppress these specific errors
-      }
-      originalError.apply(console, args);
-    };
-
-    // Apply error suppression
-    console.error = suppressError;
     
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    window.addEventListener('message', handleMessage);
     
     return () => {
-      // Restore original console.error
-      console.error = originalError;
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
-      window.removeEventListener('message', handleMessage);
     };
   }, []);
 
@@ -185,50 +100,62 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           "mb-0 rounded-none" // 移除底部边距，移除圆角
         )}
       >
-        {/* Loading indicator */}
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80 z-10">
-            <div className="text-center text-white">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-              <p className="text-lg font-medium">Loading Take Care of Shadow Milk...</p>
-              <p className="text-sm opacity-75">Please wait while the game loads</p>
+        {/* Game Launch Interface */}
+        <div className="relative w-full aspect-video bg-gradient-to-br from-purple-600 via-blue-600 to-teal-500 overflow-hidden">
+          {/* Animated background elements */}
+          <div className="absolute top-8 left-8 w-16 h-16 bg-white/10 rounded-full animate-pulse"></div>
+          <div className="absolute top-16 right-12 w-12 h-12 bg-white/8 rounded-full animate-bounce" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-12 left-12 w-14 h-14 bg-white/6 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+          
+          <div className="flex flex-col items-center justify-center h-full p-8 text-center relative z-10">
+            {/* Cookie icon with glow effect */}
+            <div className="w-32 h-32 mb-6 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-full flex items-center justify-center animate-pulse shadow-2xl">
+              <div className="w-24 h-24 bg-gray-800 rounded-full flex items-center justify-center shadow-inner">
+                <span className="text-4xl">🍪</span>
+              </div>
             </div>
-          </div>
-        )}
-        
-        {/* Error state */}
-        {loadError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80 z-10">
-            <div className="text-center text-white">
-              <div className="text-6xl mb-4">⚠️</div>
-              <p className="text-lg font-medium mb-2">Game Loading Failed</p>
-              <p className="text-sm opacity-75 mb-4">Unable to load Take Care of Shadow Milk</p>
-              <Button 
-                onClick={retryLoad}
-                className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-lg"
-              >
-                Retry Loading
-              </Button>
+            
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 text-shadow-lg">
+              Take Care of Shadow Milk
+            </h1>
+            <p className="text-lg text-white/90 mb-6 max-w-2xl leading-relaxed">
+              🎮 Experience the viral virtual pet simulator featuring Shadow Milk Cookie! Feed, care for, or playfully prank your digital companion in this TikTok sensation.
+            </p>
+            
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 mb-8 border border-white/20">
+              <h3 className="text-amber-300 font-semibold mb-4 text-lg">✨ Game Highlights:</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-white/90">
+                <div className="flex items-center gap-2">
+                  <span className="text-green-400">🏠</span>
+                  <span>Multiple interactive rooms</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-blue-400">🍯</span>
+                  <span>Feed & interact freely</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-red-400">😈</span>
+                  <span>No rules - pure chaos!</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-purple-400">📱</span>
+                  <span>TikTok viral sensation</span>
+                </div>
+              </div>
             </div>
+            
+            <button
+              onClick={() => window.open('https://scratch.mit.edu/projects/1054692111/', '_blank')}
+              className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-full text-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
+            >
+              🚀 Play Take Care of Shadow Milk
+            </button>
+            
+            <p className="text-white/70 text-sm mt-4">
+              Opens in new window • Free to play • No downloads required
+            </p>
           </div>
-        )}
-
-        <iframe
-          ref={iframeRef}
-          src={content.gameSection.game.url}
-          className={cn(
-            "w-full border-0",
-            isFullscreen ? "h-screen" : "h-full aspect-video"
-          )}
-          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock"
-          allow="fullscreen; autoplay; storage-access; microphone; camera"
-          allowFullScreen={true}
-          title={content.gameSection.game.title}
-          loading="eager"
-          referrerPolicy="no-referrer-when-downgrade"
-          onLoad={handleIframeLoad}
-          onError={handleIframeError}
-        />
+        </div>
       </div>
 
       {/* 按钮行 - 在游戏区域下方，带暗色背景，移除上部圆角 */}
