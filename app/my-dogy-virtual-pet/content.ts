@@ -6,8 +6,8 @@ export const myDogyVirtualPetContent = {
 
   // game section config
   gameSection: {
-    ...globalContent.gameSection,
     title: "My DOGY Virtual Pet",
+    description: "Take care of the cutest virtual puppy! Feed, play, bathe, and watch your adorable DOGY grow in this delightful pet care simulation.",
     game: {
       url: '/game/my-dogy-virtual-pet/index.html',
       title: "My DOGY Virtual Pet - Virtual Dog Care Game",

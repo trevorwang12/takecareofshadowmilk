@@ -6,8 +6,8 @@ export const myPetCareSalonContent = {
 
   // game section config
   gameSection: {
-    ...globalContent.gameSection,
     title: "My Pet Care Salon",
+    description: "Run your own luxurious pet spa and care salon! Provide complete beauty treatments, health care, and relaxing spa services for adorable pets.",
     game: {
       url: '/game/my-pet-care-salon/index.html',
       title: "My Pet Care Salon - Complete Pet Spa Experience",

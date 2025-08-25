@@ -6,11 +6,11 @@ export const petSalonContent = {
 
   // game section config
   gameSection: {
-    ...globalContent.gameSection,
     title: "Pet Salon",
+    description: "Play Pet Salon - run your own pet grooming business! Wash, cut, style, and accessorize pets to create amazing makeovers.",
     game: {
       url: '/game/pet-salon/index.html',
-      title: "Pet Salon - Virtual Pet Grooming Game",
+      title: "Pet Salon - Virtual Pet Grooming Game", 
       externalUrl: 'https://html5.gamedistribution.com/ca0dd2ea005944609eb4341ee98a9dfb/?gd_sdk_referrer_url=https://takecareofshadowmilk.cc/pet-salon'
     }
   },

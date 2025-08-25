@@ -6,8 +6,8 @@ export const pouOnlineContent = {
 
   // game section config
   gameSection: {
-    ...globalContent.gameSection,
     title: "Pou Online",
+    description: "Have you ever taken care of Pou as a pet? Feed it, clean it, play with it and watch it grow up while leveling up!",
     game: {
       url: '/game/pou-online/index.html',
       title: "Pou Online - Virtual Pet Game",
