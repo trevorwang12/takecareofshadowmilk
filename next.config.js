@@ -54,6 +54,23 @@ const nextConfig = {
             key: 'Cache-Control',
             value: 'public, max-age=86400',
           },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-src 'self' https://scratch.mit.edu https://turbowarp.org https://*.scratch.mit.edu https://html5.gamedistribution.com https://*.gamedistribution.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://scratch.mit.edu https://turbowarp.org https://html5.gamedistribution.com;",
+          },
+        ],
+      },
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-src 'self' https://scratch.mit.edu https://turbowarp.org https://*.scratch.mit.edu https://html5.gamedistribution.com https://*.gamedistribution.com https://www.googletagmanager.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://scratch.mit.edu https://html5.gamedistribution.com;",
+          },
         ],
       },
     ];
