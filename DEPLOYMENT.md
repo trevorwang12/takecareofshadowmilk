@@ -85,11 +85,26 @@ Point your domain to Vercel:
 
 ### Vercel Configuration
 
-The `vercel.json` file includes:
-- ✅ **Performance optimizations**: Caching, compression
-- ✅ **Security headers**: CSP, XSS protection
-- ✅ **SEO redirects**: Common variations to main domain
-- ✅ **Asset optimization**: Long-term caching for static assets
+We provide two configuration files:
+
+#### Free Plan (`vercel.json`)
+- ✅ **Basic caching**: Assets and game files
+- ✅ **Essential redirects**: SEO-friendly URLs
+- ✅ **Game iframe support**: X-Frame-Options for games
+- ⚠️ **Single region**: Default deployment region
+
+#### Pro Plan (`vercel.pro.json`)
+- ✅ **Advanced performance**: Multi-region deployment
+- ✅ **Enhanced security**: Full CSP headers, XSS protection
+- ✅ **Custom functions**: Extended timeout and runtime settings
+- ✅ **Complete optimization**: All performance features
+
+**To use Pro configuration:**
+```bash
+# Rename files
+mv vercel.json vercel.free.json
+mv vercel.pro.json vercel.json
+```
 
 ### Build Scripts
 
