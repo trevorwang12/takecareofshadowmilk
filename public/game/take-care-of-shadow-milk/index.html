@@ -156,10 +156,15 @@
             
             playButton.disabled = true;
             
+            // Show game frame immediately to start loading
+            gameFrame.style.display = 'block';
+            
             // Add error handling for iframe loading
             gameFrame.onload = function() {
                 console.log('Game loaded successfully');
-                hideLoadingScreen();
+                setTimeout(() => {
+                    hideLoadingScreen();
+                }, 1000); // Small delay to ensure game is ready
             };
             
             gameFrame.onerror = function() {
@@ -167,10 +172,12 @@
                 showErrorMessage();
             };
             
-            // Fallback timeout for loading
+            // Extended fallback timeout for loading
             setTimeout(() => {
-                hideLoadingScreen();
-            }, 3000);
+                if (loadingScreen.style.display !== 'none') {
+                    hideLoadingScreen();
+                }
+            }, 8000); // Increased to 8 seconds
         }
         
         function hideLoadingScreen() {

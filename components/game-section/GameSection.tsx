@@ -13,7 +13,10 @@ interface GameSectionProps {
 
 export function GameSection({ content = defaultContent }: GameSectionProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const toggleFullscreen = async () => {
     if (!document.fullscreenElement) {
@@ -24,6 +27,36 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
       setIsFullscreen(false);
     }
   };
+
+  // Handle iframe loading
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+    setLoadError(false);
+  };
+
+  const handleIframeError = () => {
+    setIsLoading(false);
+    setLoadError(true);
+  };
+
+  const retryLoad = () => {
+    setIsLoading(true);
+    setLoadError(false);
+    if (iframeRef.current) {
+      iframeRef.current.src = iframeRef.current.src;
+    }
+  };
+
+  // Add timeout fallback for loading
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isLoading) {
+        setIsLoading(false);
+      }
+    }, 10000); // 10 second timeout
+
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
 
   // Listen for fullscreen changes to update state
   useEffect(() => {
@@ -125,7 +158,36 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           "mb-0 rounded-none" // 移除底部边距，移除圆角
         )}
       >
+        {/* Loading indicator */}
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80 z-10">
+            <div className="text-center text-white">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+              <p className="text-lg font-medium">Loading Take Care of Shadow Milk...</p>
+              <p className="text-sm opacity-75">Please wait while the game loads</p>
+            </div>
+          </div>
+        )}
+        
+        {/* Error state */}
+        {loadError && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80 z-10">
+            <div className="text-center text-white">
+              <div className="text-6xl mb-4">⚠️</div>
+              <p className="text-lg font-medium mb-2">Game Loading Failed</p>
+              <p className="text-sm opacity-75 mb-4">Unable to load Take Care of Shadow Milk</p>
+              <Button 
+                onClick={retryLoad}
+                className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-lg"
+              >
+                Retry Loading
+              </Button>
+            </div>
+          </div>
+        )}
+
         <iframe
+          ref={iframeRef}
           src={content.gameSection.game.url}
           className={cn(
             "w-full border-0",
@@ -133,8 +195,10 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           )}
           allow="fullscreen; autoplay; storage-access"
           title={content.gameSection.game.title}
-          loading="lazy"
+          loading="eager"
           referrerPolicy="no-referrer-when-downgrade"
+          onLoad={handleIframeLoad}
+          onError={handleIframeError}
         />
       </div>
 
