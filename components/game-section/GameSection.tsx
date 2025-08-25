@@ -16,12 +16,20 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const toggleFullscreen = async () => {
-    if (!document.fullscreenElement) {
-      await containerRef.current?.requestFullscreen();
-      setIsFullscreen(true);
-    } else {
-      await document.exitFullscreen();
-      setIsFullscreen(false);
+    try {
+      if (!isFullscreen) {
+        // Enter fullscreen mode - use document.body for better compatibility
+        await document.documentElement.requestFullscreen();
+        setIsFullscreen(true);
+      } else {
+        // Exit fullscreen mode
+        await document.exitFullscreen();
+        setIsFullscreen(false);
+      }
+    } catch (error) {
+      console.warn('Fullscreen request failed:', error);
+      // Fallback: toggle state manually for styling
+      setIsFullscreen(!isFullscreen);
     }
   };
 
@@ -95,16 +103,19 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
       <div
         ref={containerRef}
         className={cn(
-          "w-full max-w-4xl mx-auto overflow-hidden shadow-xl relative",
+          "w-full max-w-4xl mx-auto overflow-hidden shadow-xl relative transition-all duration-300",
           theme.gameSection.colors.container,
-          "mb-0 rounded-none" // 移除底部边距，移除圆角
+          "mb-0 rounded-none", // 移除底部边距，移除圆角
+          isFullscreen && "!max-w-none !w-full !h-full"
         )}
       >
         <iframe
           src="https://scratch.mit.edu/projects/1206876997/embed"
           className={cn(
             "w-full border-0",
-            isFullscreen ? "h-screen" : "h-full aspect-video"
+            isFullscreen 
+              ? "!fixed !top-0 !left-0 !w-screen !h-screen !z-50 !max-w-none" 
+              : "h-full aspect-video"
           )}
           allowFullScreen
           title={content.gameSection.game.title}
@@ -112,7 +123,10 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
       </div>
 
       {/* 按钮行 - 在游戏区域下方，带暗色背景，移除上部圆角 */}
-      <div className="flex justify-between items-center w-full max-w-4xl mx-auto mb-16 bg-gray-700/70 dark:bg-gray-800/70 text-white rounded-none p-2 shadow-md">
+      <div className={cn(
+        "flex justify-between items-center w-full max-w-4xl mx-auto mb-16 bg-gray-700/70 dark:bg-gray-800/70 text-white rounded-none p-2 shadow-md transition-all duration-300",
+        isFullscreen && "!fixed !bottom-4 !left-1/2 !transform !-translate-x-1/2 !z-[60] !max-w-md !rounded-lg"
+      )}>
         {/* 分享按钮组 */}
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium mr-2">Share:</span>
@@ -179,12 +193,17 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           className="hover:bg-white/20 text-white rounded-full p-1.5 transition-colors"
           aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 9L4 4m0 0l5 0M4 4l0 5" />
-            <path d="M15 9l5-5m0 0h-5m5 0v5" />
-            <path d="M9 15l-5 5m0 0h5m-5 0v-5" />
-            <path d="M15 15l5 5m0 0v-5m0 5h-5" />
-          </svg>
+          {isFullscreen ? (
+            // Exit fullscreen icon
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+            </svg>
+          ) : (
+            // Enter fullscreen icon  
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
+            </svg>
+          )}
         </Button>
       </div>
     </section>
