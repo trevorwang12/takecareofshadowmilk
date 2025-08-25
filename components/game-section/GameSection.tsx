@@ -220,14 +220,13 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
             "w-full border-0",
             isFullscreen ? "h-screen" : "h-full aspect-video"
           )}
-          allow="fullscreen; autoplay; storage-access"
+          allow="fullscreen; autoplay; storage-access; microphone; camera"
           allowFullScreen={true}
           title={content.gameSection.game.title}
           loading="eager"
           referrerPolicy="no-referrer-when-downgrade"
           onLoad={handleIframeLoad}
           onError={handleIframeError}
-          sandbox="allow-scripts allow-forms allow-popups allow-presentation"
         />
       </div>
 

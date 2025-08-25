@@ -17,6 +17,7 @@
             'Failed to execute \'postMessage\' on \'DOMWindow\'',
             'The target origin provided',
             'does not match the recipient window\'s origin',
+            'recipient window\'s origin (\'null\')',
             'SecurityError',
             'SyntaxError: Identifier',
             'has already been declared',
@@ -27,12 +28,15 @@
             'StringUtils',
             'CommonUtils',
             'The document is sandboxed',
-            'allow-same-origin'
+            'allow-same-origin',
+            'postMessage',
+            'target origin',
+            'null'
         ];
         
         // Check if the error should be suppressed
         const shouldSuppress = suppressedErrors.some(errorText => 
-            message.includes(errorText)
+            message.toLowerCase().includes(errorText.toLowerCase())
         );
         
         if (!shouldSuppress) {
