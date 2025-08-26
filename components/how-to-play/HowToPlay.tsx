@@ -11,6 +11,7 @@ interface HowToPlayProps {
 
 export function HowToPlay({ content = defaultContent }: HowToPlayProps) {
   const paragraphs = content.howToPlay.description.split('\n\n');
+  const isMainPage = content === defaultContent;
 
   return (
     <section
@@ -42,73 +43,86 @@ export function HowToPlay({ content = defaultContent }: HowToPlayProps) {
             ))}
           </div>
           
-          {/* 添加游戏特点卡片 */}
-          <div className="mt-8 space-y-4">
-            <h3 className="text-xl font-semibold text-foreground mb-4">Game Features:</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-gradient-to-r from-amber-100 to-orange-100 p-4 rounded-lg border-2 border-amber-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">🎮</span>
-                  <h4 className="font-semibold text-amber-800">Interactive Gameplay</h4>
+          {/* 只在主页显示 Shadow Milk 特定内容 */}
+          {isMainPage && (
+            <>
+              {/* 添加游戏特点卡片 */}
+              <div className="mt-8 space-y-4">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Game Features:</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="bg-gradient-to-r from-amber-100 to-orange-100 p-4 rounded-lg border-2 border-amber-200">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl">🎮</span>
+                      <h4 className="font-semibold text-amber-800">Interactive Gameplay</h4>
+                    </div>
+                    <p className="text-sm text-amber-700">Drag and drop mechanics for intuitive pet interaction</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-r from-orange-100 to-amber-100 p-4 rounded-lg border-2 border-orange-200">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl">🍪</span>
+                      <h4 className="font-semibold text-amber-800">Shadow Milk Cookie</h4>
+                    </div>
+                    <p className="text-sm text-amber-700">Official Cookie Run: Kingdom character with unique reactions</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-r from-amber-100 to-orange-100 p-4 rounded-lg border-2 border-amber-200">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl">🚫</span>
+                      <h4 className="font-semibold text-amber-800">No Rules</h4>
+                    </div>
+                    <p className="text-sm text-amber-700">Complete freedom to care or prank your virtual pet</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-r from-orange-100 to-amber-100 p-4 rounded-lg border-2 border-orange-200">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl">📱</span>
+                      <h4 className="font-semibold text-amber-800">Cross-Platform</h4>
+                    </div>
+                    <p className="text-sm text-amber-700">Play on any device - desktop, tablet, or mobile</p>
+                  </div>
                 </div>
-                <p className="text-sm text-amber-700">Drag and drop mechanics for intuitive pet interaction</p>
               </div>
-              
-              <div className="bg-gradient-to-r from-orange-100 to-amber-100 p-4 rounded-lg border-2 border-orange-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">🍪</span>
-                  <h4 className="font-semibold text-amber-800">Shadow Milk Cookie</h4>
-                </div>
-                <p className="text-sm text-amber-700">Official Cookie Run: Kingdom character with unique reactions</p>
-              </div>
-              
-              <div className="bg-gradient-to-r from-amber-100 to-orange-100 p-4 rounded-lg border-2 border-amber-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">🚫</span>
-                  <h4 className="font-semibold text-amber-800">No Rules</h4>
-                </div>
-                <p className="text-sm text-amber-700">Complete freedom to care or prank your virtual pet</p>
-              </div>
-              
-              <div className="bg-gradient-to-r from-orange-100 to-amber-100 p-4 rounded-lg border-2 border-orange-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">📱</span>
-                  <h4 className="font-semibold text-amber-800">Cross-Platform</h4>
-                </div>
-                <p className="text-sm text-amber-700">Play on any device - desktop, tablet, or mobile</p>
-              </div>
-            </div>
-          </div>
 
-          {/* 添加提示区域 */}
-          <div className="mt-6 bg-gradient-to-r from-yellow-100 to-amber-100 p-6 rounded-lg border-2 border-yellow-300">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-3xl">💡</span>
-              <h4 className="text-lg font-semibold text-amber-800">Pro Tips for New Players</h4>
-            </div>
-            <ul className="space-y-2 text-amber-700">
-              <li className="flex items-start gap-2">
-                <span className="text-amber-600 mt-1">•</span>
-                <span className="text-sm">Start with basic feeding and caring actions to understand Shadow Milk's reactions</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-amber-600 mt-1">•</span>
-                <span className="text-sm">Experiment with different room combinations for unique interactions</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-amber-600 mt-1">•</span>
-                <span className="text-sm">Watch the status bars to understand your pet's current mood and needs</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-amber-600 mt-1">•</span>
-                <span className="text-sm">Remember: there's no wrong way to play - embrace the chaos!</span>
-              </li>
-            </ul>
-          </div>
+              {/* 添加提示区域 */}
+              <div className="mt-6 bg-gradient-to-r from-yellow-100 to-amber-100 p-6 rounded-lg border-2 border-yellow-300">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-3xl">💡</span>
+                  <h4 className="text-lg font-semibold text-amber-800">Pro Tips for New Players</h4>
+                </div>
+                <ul className="space-y-2 text-amber-700">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span className="text-sm">Start with basic feeding and caring actions to understand Shadow Milk's reactions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span className="text-sm">Experiment with different room combinations for unique interactions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span className="text-sm">Watch the status bars to understand your pet's current mood and needs</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 mt-1">•</span>
+                    <span className="text-sm">Remember: there's no wrong way to play - embrace the chaos!</span>
+                  </li>
+                </ul>
+              </div>
+            </>
+          )}
         </div>
         
         <div className={cn(theme.howToPlay.layout.imageContainer, "relative h-full min-h-[600px]")}>
-          <HowToPlayGuide />
+          {isMainPage ? <HowToPlayGuide /> : (
+            <div className="flex items-center justify-center h-full">
+              <img 
+                src={content.howToPlay.image} 
+                alt={content.howToPlay.imageAlt || content.howToPlay.title}
+                className="max-w-full max-h-full object-contain rounded-lg"
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>
