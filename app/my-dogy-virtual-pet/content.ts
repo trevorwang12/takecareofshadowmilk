@@ -1,5 +1,9 @@
+import { content as globalContent } from "@/config/content";
+
 export const myDogyVirtualPetContent = {
-  // game section config - completely independent
+  // inherit basic content but override gameSection completely
+  ...globalContent,
+  // game section config - completely override global gameSection
   gameSection: {
     title: "My DOGY Virtual Pet",
     description: "Take care of the cutest virtual puppy! Feed, play, bathe, and watch your adorable DOGY grow in this delightful pet care simulation.",

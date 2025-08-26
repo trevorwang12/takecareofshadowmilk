@@ -128,6 +128,8 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
               : "h-full aspect-video"
           )}
           allowFullScreen
+          allow="autoplay; fullscreen; gamepad; microphone; camera"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
           title={content.gameSection.game.title}
           onLoad={() => console.log('GameSection Debug - Iframe loaded with src:', gameSrc)}
         />

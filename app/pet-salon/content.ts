@@ -1,5 +1,10 @@
+import { content as globalContent } from "@/config/content";
+
 export const petSalonContent = {
-  // game section config - completely independent
+  // inherit basic content but override gameSection completely
+  ...globalContent,
+  
+  // game section config - completely override global gameSection
   gameSection: {
     title: "Pet Salon",
     description: "Play Pet Salon - run your own pet grooming business! Wash, cut, style, and accessorize pets to create amazing makeovers.",
