@@ -1,10 +1,5 @@
-import { content as globalContent } from "@/config/content";
-
 export const pouOnlineContent = {
-  // inherit basic content from global config
-  ...globalContent,
-
-  // game section config
+  // game section config - completely independent
   gameSection: {
     title: "Pou Online",
     description: "Have you ever taken care of Pou as a pet? Feed it, clean it, play with it and watch it grow up while leveling up!",
