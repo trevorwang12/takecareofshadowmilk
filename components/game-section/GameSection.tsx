@@ -124,6 +124,7 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           )}
           allowFullScreen
           title={content.gameSection.game.title}
+          onLoad={() => console.log('GameSection Debug - Iframe loaded with src:', content.gameSection.game.externalUrl || content.gameSection.game.url)}
         />
       </div>
 
