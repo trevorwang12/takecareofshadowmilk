@@ -14,6 +14,11 @@ interface GameSectionProps {
 export function GameSection({ content = defaultContent }: GameSectionProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Debug logging
+  console.log('GameSection Debug - Game URL:', content.gameSection?.game?.url);
+  console.log('GameSection Debug - Game External URL:', content.gameSection?.game?.externalUrl);
+  console.log('GameSection Debug - Game Title:', content.gameSection?.game?.title);
 
   const toggleFullscreen = async () => {
     try {
@@ -110,7 +115,7 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
         )}
       >
         <iframe
-          src="https://scratch.mit.edu/projects/1206876997/embed"
+          src={content.gameSection.game.externalUrl || content.gameSection.game.url}
           className={cn(
             "w-full border-0",
             isFullscreen 
