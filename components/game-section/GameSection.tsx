@@ -19,6 +19,11 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
   console.log('GameSection Debug - Game URL:', content.gameSection?.game?.url);
   console.log('GameSection Debug - Game External URL:', content.gameSection?.game?.externalUrl);
   console.log('GameSection Debug - Game Title:', content.gameSection?.game?.title);
+  console.log('GameSection Debug - Full content object:', content);
+  
+  // Calculate the actual src
+  const gameSrc = content.gameSection?.game?.externalUrl || content.gameSection?.game?.url;
+  console.log('GameSection Debug - Calculated src:', gameSrc);
 
   const toggleFullscreen = async () => {
     try {
@@ -115,7 +120,7 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
         )}
       >
         <iframe
-          src={content.gameSection.game.externalUrl || content.gameSection.game.url}
+          src={gameSrc}
           className={cn(
             "w-full border-0",
             isFullscreen 
@@ -124,7 +129,7 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           )}
           allowFullScreen
           title={content.gameSection.game.title}
-          onLoad={() => console.log('GameSection Debug - Iframe loaded with src:', content.gameSection.game.externalUrl || content.gameSection.game.url)}
+          onLoad={() => console.log('GameSection Debug - Iframe loaded with src:', gameSrc)}
         />
       </div>
 
