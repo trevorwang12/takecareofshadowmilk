@@ -89,6 +89,9 @@ export default function RootLayout({
         <Script src="/assets/js/global-error-suppression.js" strategy="afterInteractive" />
         <script src="/assets/js/iframe-error-handler.js" defer></script>
         
+        {/* AudioContext Fix */}
+        <Script src="/assets/js/audio-context-fix.js" strategy="afterInteractive" />
+        
         {/* Google Analytics - 只在有GA ID时加载 */}
         {gaId && (
           <>

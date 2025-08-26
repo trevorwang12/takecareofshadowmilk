@@ -53,7 +53,10 @@
             'An iframe which has both allow-scripts and allow-same-origin',
             'can escape its sandboxing',
             'Immersive Translate WARN',
-            'sandbox attribute'
+            'sandbox attribute',
+            'The AudioContext was not allowed to start',
+            'It must be resumed (or created) after a user gesture',
+            'AudioContext'
         ];
         
         // Check if the warning should be suppressed

@@ -15,15 +15,8 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Debug logging
-  console.log('GameSection Debug - Game URL:', content.gameSection?.game?.url);
-  console.log('GameSection Debug - Game External URL:', content.gameSection?.game?.externalUrl);
-  console.log('GameSection Debug - Game Title:', content.gameSection?.game?.title);
-  console.log('GameSection Debug - Full content object:', content);
-  
   // Calculate the actual src
   const gameSrc = content.gameSection?.game?.externalUrl || content.gameSection?.game?.url;
-  console.log('GameSection Debug - Calculated src:', gameSrc);
 
   const toggleFullscreen = async () => {
     try {
@@ -131,7 +124,6 @@ export function GameSection({ content = defaultContent }: GameSectionProps) {
           allow="autoplay; fullscreen; gamepad; microphone; camera"
           sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
           title={content.gameSection.game.title}
-          onLoad={() => console.log('GameSection Debug - Iframe loaded with src:', gameSrc)}
         />
       </div>
 
