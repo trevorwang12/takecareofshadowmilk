@@ -11,6 +11,7 @@ export default function AdSlotSimple({ position, className = '' }: AdSlotProps) 
   const [htmlContent, setHtmlContent] = useState<string>('')
   const [debugInfo, setDebugInfo] = useState<string>('Loading...')
   const hasLoaded = useRef(false)
+  const containerRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     // Only load once
@@ -30,8 +31,14 @@ export default function AdSlotSimple({ position, className = '' }: AdSlotProps) 
           const filteredAds = data.filter((ad: any) => ad.position === position)
           setDebugInfo(`Found ${filteredAds.length} ads for position ${position}`)
           if (filteredAds.length > 0) {
-            setHtmlContent(filteredAds[0].htmlContent)
-            setDebugInfo(`Ad loaded: ${filteredAds[0].id}`)
+            let adContent = filteredAds[0].htmlContent
+            
+            // Fix duplicate container ID issues by making them unique
+            const uniqueId = `${filteredAds[0].id}-${position}-${Date.now()}`
+            adContent = adContent.replace(/container-[a-f0-9]+/g, `container-${uniqueId}`)
+            
+            setHtmlContent(adContent)
+            setDebugInfo(`Ad loaded: ${filteredAds[0].id} (fixed IDs)`)
           } else {
             setDebugInfo(`No ads for position: ${position}`)
           }
@@ -46,6 +53,38 @@ export default function AdSlotSimple({ position, className = '' }: AdSlotProps) 
     
     loadAds()
   }, [position])
+  
+  // Execute scripts after content is set
+  useEffect(() => {
+    if (htmlContent && containerRef.current) {
+      const scripts = containerRef.current.querySelectorAll('script')
+      scripts.forEach((script) => {
+        const newScript = document.createElement('script')
+        if (script.src) {
+          newScript.src = script.src
+          newScript.async = script.async
+          newScript.defer = script.defer
+          if (script.getAttribute('data-cfasync')) {
+            newScript.setAttribute('data-cfasync', script.getAttribute('data-cfasync')!)
+          }
+        } else {
+          newScript.textContent = script.textContent
+        }
+        
+        // Add to document head to ensure execution
+        document.head.appendChild(newScript)
+        
+        // Clean up
+        setTimeout(() => {
+          if (newScript.parentNode) {
+            newScript.parentNode.removeChild(newScript)
+          }
+        }, 5000)
+      })
+      
+      setDebugInfo(prev => prev + ` | Scripts: ${scripts.length}`)
+    }
+  }, [htmlContent])
   
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
@@ -65,6 +104,7 @@ export default function AdSlotSimple({ position, className = '' }: AdSlotProps) 
       {/* Ad content */}
       {htmlContent && (
         <div 
+          ref={containerRef}
           dangerouslySetInnerHTML={{ __html: htmlContent }}
           suppressHydrationWarning={true}
         />
