@@ -54,72 +54,133 @@ export default function AdSlotSimple({ position, className = '' }: AdSlotProps) 
     loadAds()
   }, [position])
   
-  // Execute scripts after content is set
+  // Execute scripts after content is set - using iframe method for better compatibility
   useEffect(() => {
     if (htmlContent && containerRef.current) {
       // Wait for DOM to be ready
       setTimeout(() => {
-        const scripts = containerRef.current?.querySelectorAll('script') || []
+        setDebugInfo(prev => prev + ' | Loading...')
         
-        scripts.forEach((script, index) => {
+        // Try iframe method for better script isolation
+        const iframe = document.createElement('iframe')
+        iframe.style.display = 'none'
+        document.body.appendChild(iframe)
+        
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document
+        if (iframeDoc) {
+          // Set up the iframe document
+          iframeDoc.open()
+          iframeDoc.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <meta charset="utf-8">
+              <style>
+                body { margin: 0; padding: 0; }
+                .ad-container { width: 100%; height: auto; }
+              </style>
+            </head>
+            <body>
+              <div class="ad-container">${htmlContent}</div>
+              <script>
+                // Forward ad content to parent
+                setTimeout(function() {
+                  var containers = document.querySelectorAll('[id^="container-"]');
+                  var hasContent = false;
+                  containers.forEach(function(container) {
+                    if (container.children.length > 0 || container.innerHTML.trim()) {
+                      hasContent = true;
+                      // Copy content to parent
+                      parent.postMessage({
+                        type: 'adContent',
+                        position: '${position}',
+                        content: container.outerHTML
+                      }, '*');
+                    }
+                  });
+                  
+                  parent.postMessage({
+                    type: 'adStatus', 
+                    position: '${position}',
+                    containers: containers.length,
+                    hasContent: hasContent
+                  }, '*');
+                }, 3000);
+              </script>
+            </body>
+            </html>
+          `)
+          iframeDoc.close()
+          
+          setDebugInfo(prev => prev + ' | Iframe: ✅')
+          
+          // Clean up iframe after timeout
           setTimeout(() => {
-            const newScript = document.createElement('script')
-            
-            if (script.src) {
-              newScript.src = script.src
-              newScript.async = script.async
-              newScript.defer = script.defer
-              
-              // Copy all attributes
-              for (let i = 0; i < script.attributes.length; i++) {
-                const attr = script.attributes[i]
-                newScript.setAttribute(attr.name, attr.value)
-              }
-              
-              // Add load listener for debugging
-              newScript.onload = () => {
-                console.log(`Ad script loaded for ${position}:`, script.src)
-                setDebugInfo(prev => prev + ` | Script${index + 1}: ✅`)
-              }
-              
-              newScript.onerror = () => {
-                console.error(`Ad script failed for ${position}:`, script.src)
-                setDebugInfo(prev => prev + ` | Script${index + 1}: ❌`)
-              }
-            } else {
-              newScript.textContent = script.textContent
-              console.log(`Inline script executed for ${position}`)
+            if (iframe.parentNode) {
+              iframe.parentNode.removeChild(iframe)
             }
-            
-            // Add to document body instead of head for better compatibility
-            document.body.appendChild(newScript)
-            
-            // Don't remove scripts immediately - let them run
-          }, index * 100) // Stagger script execution
-        })
-        
-        setDebugInfo(prev => prev + ` | Scripts: ${scripts.length} queued`)
-        
-        // Check for ad containers after a delay
-        setTimeout(() => {
-          const containers = containerRef.current?.querySelectorAll('[id^="container-"]')
-          if (containers && containers.length > 0) {
-            setDebugInfo(prev => prev + ` | Containers: ${containers.length}`)
-            
-            // Check if any containers have content
-            let hasContent = false
-            containers.forEach(container => {
-              if (container.children.length > 0 || container.innerHTML.trim()) {
-                hasContent = true
+          }, 10000)
+        } else {
+          setDebugInfo(prev => prev + ' | Iframe: ❌')
+          
+          // Fallback to direct script execution
+          const scripts = containerRef.current?.querySelectorAll('script') || []
+          scripts.forEach((script, index) => {
+            try {
+              if (script.src) {
+                // Try to load external script with fetch first to check if accessible
+                fetch(script.src, { mode: 'no-cors' })
+                  .then(() => {
+                    const newScript = document.createElement('script')
+                    newScript.src = script.src
+                    newScript.async = true
+                    newScript.onload = () => setDebugInfo(prev => prev + ` | Script${index + 1}: ✅`)
+                    newScript.onerror = () => setDebugInfo(prev => prev + ` | Script${index + 1}: ❌CORS`)
+                    document.head.appendChild(newScript)
+                  })
+                  .catch(() => {
+                    setDebugInfo(prev => prev + ` | Script${index + 1}: ❌FETCH`)
+                  })
+              } else if (script.textContent) {
+                // Try to execute inline script
+                try {
+                  new Function(script.textContent)()
+                  setDebugInfo(prev => prev + ` | Script${index + 1}: ✅INLINE`)
+                } catch (e) {
+                  setDebugInfo(prev => prev + ` | Script${index + 1}: ❌EXEC`)
+                  console.error('Script execution error:', e)
+                }
               }
-            })
-            setDebugInfo(prev => prev + (hasContent ? ' | Content: ✅' : ' | Content: ⏳'))
-          }
-        }, 2000)
-        
+            } catch (e) {
+              setDebugInfo(prev => prev + ` | Script${index + 1}: ❌ERR`)
+              console.error('Script processing error:', e)
+            }
+          })
+        }
       }, 100)
     }
   }, [htmlContent, position])
+  
+  // Listen for iframe messages
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'adStatus' && event.data.position === position) {
+        setDebugInfo(prev => prev + ` | Containers: ${event.data.containers} | Content: ${event.data.hasContent ? '✅' : '⏳'}`)
+      } else if (event.data.type === 'adContent' && event.data.position === position) {
+        // Inject the ad content directly into our container
+        if (containerRef.current) {
+          const adDiv = document.createElement('div')
+          adDiv.innerHTML = event.data.content
+          adDiv.style.cssText = 'width: 100%; height: auto; display: block;'
+          containerRef.current.appendChild(adDiv)
+          setDebugInfo(prev => prev + ' | Injected: ✅')
+        }
+      }
+    }
+    
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [position])
   
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
