@@ -11,7 +11,6 @@ interface AdSlotProps {
 export default function AdSlotComponent({ position, className = '' }: AdSlotProps) {
   const [ads, setAds] = useState<AdSlot[]>([])
   const [loading, setLoading] = useState(true)
-  const [showFallback, setShowFallback] = useState(false)
   
   
 
@@ -31,16 +30,6 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
           const data = await response.json()
           const filteredAds = data.filter((ad: any) => ad.position === position)
           setAds(filteredAds)
-          
-          // For script-based ads, wait a bit for external scripts to load before showing fallback
-          const hasScriptAd = filteredAds.some((ad: any) => ad.htmlContent?.includes('<script'))
-          if (hasScriptAd) {
-            setTimeout(() => {
-              if (!isCancelled) {
-                setShowFallback(true)
-              }
-            }, 3000) // Wait 3 seconds for external scripts
-          }
         }
       } catch (error) {
         if (!isCancelled) {
@@ -113,40 +102,14 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
       )}
       
       {ads.length > 0 ? (
-        ads.map((ad) => {
-          // Check if this is a script-based ad and add fallback
-          const hasScript = ad.htmlContent?.includes('<script')
-          
-          return (
-            <div key={ad.id} className="ad-content">
-              <div 
-                dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
-                suppressHydrationWarning={true}
-              />
-              
-              {/* Fallback for script-based ads - only show after delay */}
-              {hasScript && showFallback && (
-                <div style={{
-                  marginTop: '10px',
-                  padding: '15px',
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
-                  textAlign: 'center',
-                  borderRadius: '8px',
-                  fontSize: '14px'
-                }}>
-                  <div>🎮 <strong>World Guessr</strong> 🌍</div>
-                  <div style={{fontSize: '12px', marginTop: '5px', opacity: '0.9'}}>
-                    Explore the world through games • Free to play
-                  </div>
-                  <div style={{fontSize: '10px', marginTop: '5px', opacity: '0.7'}}>
-                    {position} advertisement space
-                  </div>
-                </div>
-              )}
-            </div>
-          )
-        })
+        ads.map((ad) => (
+          <div 
+            key={ad.id} 
+            className="ad-content"
+            dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
+            suppressHydrationWarning={true}
+          />
+        ))
       ) : (
         process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
           <div style={{
