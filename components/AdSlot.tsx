@@ -18,7 +18,11 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
     const loadAds = async () => {
       try {
         setLoading(true)
-        const response = await fetch('/api/ads')
+        // Temporarily use test API to debug rendering issues
+        const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
+        const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
+        
+        const response = await fetch(apiEndpoint)
         if (response.ok && !isCancelled) {
           const data = await response.json()
           const filteredAds = data.filter((ad: any) => ad.position === position)
@@ -83,7 +87,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
           marginBottom: '8px',
           borderRadius: '4px'
         }}>
-          Debug: {ads.length} ads loaded for position '{position}'
+          Debug: {ads.length} ads loaded for position '{position}' (Using test API for debugging)
         </div>
       )}
       
