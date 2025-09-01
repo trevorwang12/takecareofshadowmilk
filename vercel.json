@@ -10,7 +10,8 @@
   },
   "env": {
     "NODE_ENV": "production",
-    "ENABLE_ADMIN": "false"
+    "ENABLE_ADMIN": "false",
+    "NEXT_PUBLIC_DEBUG_ADS": "true"
   },
   "headers": [
     {
