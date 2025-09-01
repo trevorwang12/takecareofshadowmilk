@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Search, Play, Star } from "lucide-react"
+import { Search, Play, Star, ArrowLeft, Gamepad2 } from "lucide-react"
 import { dataManager } from "@/lib/data-manager"
 import AdSlot from "@/components/AdSlot-Simple"
 import YouMightAlsoLike from "@/components/YouMightAlsoLike"
@@ -27,9 +27,11 @@ export default function SearchPage() {
     }
   }, [query])
 
-  const performSearch = (term: string) => {
+  const performSearch = async (term: string) => {
     setIsLoading(true)
     try {
+      // Ensure data manager is initialized by getting all games first
+      await dataManager.getAllGames()
       const results = dataManager.searchGames(term)
       setSearchResults(results)
     } catch (error) {
@@ -49,8 +51,22 @@ export default function SearchPage() {
     }
   }
 
-  const hotGames = dataManager.getHotGames(8)
-  const newGames = dataManager.getNewGames(8)
+  const [hotGames, setHotGames] = useState<any[]>([])
+  const [newGames, setNewGames] = useState<any[]>([])
+
+  // Load initial data
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        await dataManager.getAllGames()
+        setHotGames(dataManager.getHotGames(8))
+        setNewGames(dataManager.getNewGames(8))
+      } catch (error) {
+        console.error('Error loading initial data:', error)
+      }
+    }
+    loadInitialData()
+  }, [])
 
   return (
     <div className="min-h-screen bg-white">
