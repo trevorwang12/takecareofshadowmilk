@@ -16,10 +16,14 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
   
   
 
+  console.log(`🟡 AdSlot-${position}: Setting up useEffect`)
+  
   useEffect(() => {
+    console.log(`🟢 AdSlot-${position}: useEffect STARTED`)
     let isCancelled = false
     
     const loadAds = async () => {
+      console.log(`🔵 AdSlot-${position}: loadAds starting`)
       try {
         setLoading(true)
         // Use real ads in production, test ads only when debug is explicitly enabled
@@ -27,10 +31,12 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
         const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
         
         const response = await fetch(apiEndpoint)
+        console.log(`🟠 AdSlot-${position}: API response ${response.status}`)
         
         if (response.ok && !isCancelled) {
           const data = await response.json()
           const filteredAds = data.filter((ad: any) => ad.position === position)
+          console.log(`🟣 AdSlot-${position}: Found ${filteredAds.length} ads`)
           setAds(filteredAds)
         }
       } catch (error) {
@@ -39,14 +45,17 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
         }
       } finally {
         if (!isCancelled) {
+          console.log(`⚪ AdSlot-${position}: Setting loading to false`)
           setLoading(false)
         }
       }
     }
 
+    console.log(`🔴 AdSlot-${position}: Calling loadAds()`)
     loadAds()
 
     return () => {
+      console.log(`❌ AdSlot-${position}: Cleanup function called`)
       isCancelled = true
     }
   }, [position])
