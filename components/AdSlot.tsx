@@ -12,7 +12,6 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
   const [ads, setAds] = useState<AdSlot[]>([])
   const [loading, setLoading] = useState(true)
   
-  console.log(`[AdSlot] Component rendered for position: ${position}`)
 
   useEffect(() => {
     let isCancelled = false
@@ -24,22 +23,15 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
         const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
         const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
         
-        console.log(`[AdSlot-${position}] Loading from:`, apiEndpoint, 'isTestMode:', isTestMode)
-        console.log(`[AdSlot-${position}] DEBUG_ADS env:`, process.env.NEXT_PUBLIC_DEBUG_ADS)
-        
         const response = await fetch(apiEndpoint)
-        console.log(`[AdSlot-${position}] Response status:`, response.status)
         
         if (response.ok && !isCancelled) {
           const data = await response.json()
-          console.log(`[AdSlot-${position}] Raw data length:`, data.length)
           const filteredAds = data.filter((ad: any) => ad.position === position)
-          console.log(`[AdSlot-${position}] Filtered ads for '${position}':`, filteredAds.length, filteredAds.map(ad => ad.id))
           setAds(filteredAds)
         }
       } catch (error) {
         if (!isCancelled) {
-          console.error(`[AdSlot-${position}] Error loading ads:`, error)
           setAds([])
         }
       } finally {
@@ -86,17 +78,6 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
 
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
-      {/* Always visible debug - temporary */}
-      <div style={{
-        background: loading ? '#ffebee' : '#e8f5e8',
-        border: '2px solid ' + (loading ? '#f44336' : '#4caf50'),
-        padding: '8px',
-        fontSize: '10px',
-        marginBottom: '8px',
-        borderRadius: '4px'
-      }}>
-        <strong>AdSlot-{position}</strong> | Loading: {loading.toString()} | Ads: {ads.length} | Env: {process.env.NEXT_PUBLIC_DEBUG_ADS || 'undefined'}
-      </div>
       
       {/* Debug info for troubleshooting */}
       {process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
@@ -121,20 +102,12 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
       
       {ads.length > 0 ? (
         ads.map((ad) => {
-          console.log('Rendering ad:', ad.id, 'HTML length:', ad.htmlContent?.length, 'HTML preview:', ad.htmlContent?.substring(0, 100))
-          
           // Check if this is a script-based ad and add fallback
           const hasScript = ad.htmlContent?.includes('<script')
           
           return (
             <div key={ad.id} className="ad-content">
               <div 
-                style={{ 
-                  border: '1px dashed #999', 
-                  margin: '5px 0', 
-                  minHeight: '20px',
-                  background: '#f9f9f9'
-                }}
                 dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
                 suppressHydrationWarning={true}
               />
