@@ -49,36 +49,22 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
     }
   }, [position])
 
-  if (loading) {
-    return null // Don't show anything while loading
-  }
+  // Always render container, even during loading
 
-  if (ads.length === 0) {
-    // Show placeholder in development, debug info in production temporarily
-    const isDevelopment = process.env.NODE_ENV === 'development'
-    if (isDevelopment || process.env.NEXT_PUBLIC_DEBUG_ADS === 'true') {
-      return (
-        <div className={`ad-slot ad-slot-${position} ${className}`} style={{ 
-          background: isDevelopment ? '#f8f9fa' : '#fff3cd', 
-          border: isDevelopment ? '1px dashed #dee2e6' : '1px solid #ffd60a', 
-          padding: '12px', 
-          textAlign: 'center',
-          borderRadius: '8px',
-          color: isDevelopment ? '#6c757d' : '#664d03',
-          fontSize: '12px',
-          minHeight: position === 'sidebar' ? '150px' : '80px'
-        }}>
-          <p>📢 {position.charAt(0).toUpperCase() + position.slice(1).replace('-', ' ')} Ad Slot</p>
-          <p>{isDevelopment ? '(No ads configured)' : `(No ads for position: ${position})`}</p>
-          {!isDevelopment && <p style={{fontSize: '10px'}}>Debug: Check /api/ads for data</p>}
-        </div>
-      )
-    }
-    return null
-  }
+  // Always render the container
 
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
+      {/* Temporary visibility test */}
+      <div style={{
+        background: '#ff0000',
+        color: 'white',
+        padding: '5px',
+        fontSize: '10px',
+        margin: '2px 0'
+      }}>
+        AdSlot-{position} RENDERED - Loading: {loading.toString()} - Ads: {ads.length}
+      </div>
       
       {/* Debug info for troubleshooting */}
       {process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
