@@ -88,20 +88,47 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
           borderRadius: '4px'
         }}>
           Debug: {ads.length} ads loaded for position '{position}' (Using test API for debugging)
+          {ads.length > 0 && (
+            <div>
+              <strong>Ad IDs:</strong> {ads.map(ad => ad.id).join(', ')}
+              <br />
+              <strong>HTML lengths:</strong> {ads.map(ad => ad.htmlContent?.length || 0).join(', ')}
+            </div>
+          )}
         </div>
       )}
       
-      {ads.map((ad) => {
-        console.log('Rendering ad:', ad.id, 'HTML length:', ad.htmlContent?.length)
-        return (
-          <div 
-            key={ad.id} 
-            className="ad-content"
-            dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
-            suppressHydrationWarning={true}
-          />
+      {ads.length > 0 ? (
+        ads.map((ad) => {
+          console.log('Rendering ad:', ad.id, 'HTML length:', ad.htmlContent?.length, 'HTML preview:', ad.htmlContent?.substring(0, 100))
+          return (
+            <div 
+              key={ad.id} 
+              className="ad-content"
+              style={{ 
+                border: '1px dashed #999', 
+                margin: '5px 0', 
+                minHeight: '20px',
+                background: '#f9f9f9'
+              }}
+              dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
+              suppressHydrationWarning={true}
+            />
+          )
+        })
+      ) : (
+        process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
+          <div style={{
+            background: '#fff3cd',
+            border: '1px solid #ffd60a',
+            padding: '10px',
+            color: '#664d03',
+            fontSize: '12px'
+          }}>
+            No ads found for position: {position}
+          </div>
         )
-      })}
+      )}
     </div>
   )
 }
