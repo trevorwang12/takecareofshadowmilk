@@ -68,7 +68,7 @@ class DataManager {
     
     try {
       // Load latest games from API
-      const gamesResponse = await fetch('/api/admin/games', {
+      const gamesResponse = await fetch('/api/games', {
         headers: {
           'Cache-Control': 'no-cache'
         }
@@ -81,7 +81,7 @@ class DataManager {
       }
 
       // Load latest categories from API
-      const categoriesResponse = await fetch('/api/admin/categories', {
+      const categoriesResponse = await fetch('/api/categories', {
         headers: {
           'Cache-Control': 'no-cache'
         }

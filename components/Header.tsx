@@ -21,7 +21,7 @@ export default function Header() {
   useEffect(() => {
     const loadSEOSettings = async () => {
       try {
-        const response = await fetch('/api/admin/seo')
+        const response = await fetch('/api/seo')
         if (response.ok) {
           const data = await response.json()
           if (data.seoSettings) {

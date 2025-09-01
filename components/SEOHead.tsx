@@ -19,7 +19,7 @@ export default function SEOHead({ pageType = 'home', gameData, categoryData }: S
     const loadSEOSettings = async () => {
       try {
         // 从API获取SEO设置
-        const response = await fetch('/api/admin/seo')
+        const response = await fetch('/api/seo')
         if (response.ok) {
           const data = await response.json()
           setSeoSettings(data.seoSettings || null)

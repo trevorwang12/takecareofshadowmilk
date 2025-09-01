@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, MessageCircle, Phone, MapPin, Send, CheckCircle } from "lucide-react"
-import AdSlot from "@/components/AdSlot"
+import AdSlot from "@/components/AdSlot-Simple"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 

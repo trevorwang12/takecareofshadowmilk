@@ -19,7 +19,7 @@ class RecommendedGamesManager {
 
   private async loadFromAPI(): Promise<RecommendedGame[]> {
     try {
-      const response = await fetch('/api/admin/recommendations')
+      const response = await fetch('/api/recommendations')
       if (response.ok) {
         return await response.json()
       }
