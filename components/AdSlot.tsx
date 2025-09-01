@@ -122,19 +122,44 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
       {ads.length > 0 ? (
         ads.map((ad) => {
           console.log('Rendering ad:', ad.id, 'HTML length:', ad.htmlContent?.length, 'HTML preview:', ad.htmlContent?.substring(0, 100))
+          
+          // Check if this is a script-based ad and add fallback
+          const hasScript = ad.htmlContent?.includes('<script')
+          
           return (
-            <div 
-              key={ad.id} 
-              className="ad-content"
-              style={{ 
-                border: '1px dashed #999', 
-                margin: '5px 0', 
-                minHeight: '20px',
-                background: '#f9f9f9'
-              }}
-              dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
-              suppressHydrationWarning={true}
-            />
+            <div key={ad.id} className="ad-content">
+              <div 
+                style={{ 
+                  border: '1px dashed #999', 
+                  margin: '5px 0', 
+                  minHeight: '20px',
+                  background: '#f9f9f9'
+                }}
+                dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
+                suppressHydrationWarning={true}
+              />
+              
+              {/* Fallback for script-based ads */}
+              {hasScript && (
+                <div style={{
+                  marginTop: '10px',
+                  padding: '15px',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  color: 'white',
+                  textAlign: 'center',
+                  borderRadius: '8px',
+                  fontSize: '14px'
+                }}>
+                  <div>🎮 <strong>World Guessr</strong> 🌍</div>
+                  <div style={{fontSize: '12px', marginTop: '5px', opacity: '0.9'}}>
+                    Explore the world through games • Free to play
+                  </div>
+                  <div style={{fontSize: '10px', marginTop: '5px', opacity: '0.7'}}>
+                    {position} advertisement space
+                  </div>
+                </div>
+              )}
+            </div>
           )
         })
       ) : (

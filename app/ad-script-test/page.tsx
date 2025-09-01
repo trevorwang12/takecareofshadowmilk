@@ -37,13 +37,40 @@ export default function AdScriptTestPage() {
         </div>
       </div>
       
+      <div style={{ marginBottom: '20px', padding: '15px', background: '#fff3cd', borderRadius: '8px' }}>
+        <h3>🔍 诊断信息</h3>
+        <p><strong>User Agent:</strong> <span style={{fontSize: '10px'}}>{typeof window !== 'undefined' ? window.navigator.userAgent : 'Loading...'}</span></p>
+        <p><strong>CSP检测:</strong> <span id="csp-test">检测中...</span></p>
+        <p><strong>网络连接测试:</strong> <span id="network-test">检测中...</span></p>
+        
+        <script dangerouslySetInnerHTML={{__html: `
+          // CSP测试
+          try {
+            eval('1+1');
+            document.getElementById('csp-test').innerHTML = '✅ 允许eval - CSP较宽松';
+          } catch(e) {
+            document.getElementById('csp-test').innerHTML = '❌ 阻止eval - CSP可能过严格';
+          }
+          
+          // 网络连接测试
+          fetch('//pl27550504.revenuecpmgate.com/7f4e324f2b07a5d92952cf5ac8a8dd2f/invoke.js', {mode: 'no-cors'})
+            .then(() => {
+              document.getElementById('network-test').innerHTML = '✅ 可以连接广告服务器';
+            })
+            .catch(() => {
+              document.getElementById('network-test').innerHTML = '❌ 无法连接广告服务器';
+            });
+        `}} />
+      </div>
+      
       <div style={{ marginBottom: '20px', padding: '15px', background: '#d1ecf1', borderRadius: '8px' }}>
         <h3>📋 测试说明</h3>
         <ul>
           <li>如果看到广告内容，说明外部脚本工作正常</li>
-          <li>如果只看到空框，可能是广告屏蔽器或网络问题</li>
+          <li>如果只看到空框，检查上面的诊断信息</li>
           <li>脚本可能需要几秒钟加载时间</li>
           <li>某些广告可能有地理位置限制</li>
+          <li>广告屏蔽器会阻止这些脚本</li>
         </ul>
       </div>
     </div>
