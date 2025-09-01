@@ -57,34 +57,69 @@ export default function AdSlotSimple({ position, className = '' }: AdSlotProps) 
   // Execute scripts after content is set
   useEffect(() => {
     if (htmlContent && containerRef.current) {
-      const scripts = containerRef.current.querySelectorAll('script')
-      scripts.forEach((script) => {
-        const newScript = document.createElement('script')
-        if (script.src) {
-          newScript.src = script.src
-          newScript.async = script.async
-          newScript.defer = script.defer
-          if (script.getAttribute('data-cfasync')) {
-            newScript.setAttribute('data-cfasync', script.getAttribute('data-cfasync')!)
-          }
-        } else {
-          newScript.textContent = script.textContent
-        }
+      // Wait for DOM to be ready
+      setTimeout(() => {
+        const scripts = containerRef.current?.querySelectorAll('script') || []
         
-        // Add to document head to ensure execution
-        document.head.appendChild(newScript)
+        scripts.forEach((script, index) => {
+          setTimeout(() => {
+            const newScript = document.createElement('script')
+            
+            if (script.src) {
+              newScript.src = script.src
+              newScript.async = script.async
+              newScript.defer = script.defer
+              
+              // Copy all attributes
+              for (let i = 0; i < script.attributes.length; i++) {
+                const attr = script.attributes[i]
+                newScript.setAttribute(attr.name, attr.value)
+              }
+              
+              // Add load listener for debugging
+              newScript.onload = () => {
+                console.log(`Ad script loaded for ${position}:`, script.src)
+                setDebugInfo(prev => prev + ` | Script${index + 1}: ✅`)
+              }
+              
+              newScript.onerror = () => {
+                console.error(`Ad script failed for ${position}:`, script.src)
+                setDebugInfo(prev => prev + ` | Script${index + 1}: ❌`)
+              }
+            } else {
+              newScript.textContent = script.textContent
+              console.log(`Inline script executed for ${position}`)
+            }
+            
+            // Add to document body instead of head for better compatibility
+            document.body.appendChild(newScript)
+            
+            // Don't remove scripts immediately - let them run
+          }, index * 100) // Stagger script execution
+        })
         
-        // Clean up
+        setDebugInfo(prev => prev + ` | Scripts: ${scripts.length} queued`)
+        
+        // Check for ad containers after a delay
         setTimeout(() => {
-          if (newScript.parentNode) {
-            newScript.parentNode.removeChild(newScript)
+          const containers = containerRef.current?.querySelectorAll('[id^="container-"]')
+          if (containers && containers.length > 0) {
+            setDebugInfo(prev => prev + ` | Containers: ${containers.length}`)
+            
+            // Check if any containers have content
+            let hasContent = false
+            containers.forEach(container => {
+              if (container.children.length > 0 || container.innerHTML.trim()) {
+                hasContent = true
+              }
+            })
+            setDebugInfo(prev => prev + (hasContent ? ' | Content: ✅' : ' | Content: ⏳'))
           }
-        }, 5000)
-      })
-      
-      setDebugInfo(prev => prev + ` | Scripts: ${scripts.length}`)
+        }, 2000)
+        
+      }, 100)
     }
-  }, [htmlContent])
+  }, [htmlContent, position])
   
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
@@ -100,6 +135,20 @@ export default function AdSlotSimple({ position, className = '' }: AdSlotProps) 
         🔍 AdSlot-{position}: {debugInfo}
         {htmlContent && <div>✅ Content loaded ({htmlContent.length} chars)</div>}
       </div>
+      
+      {/* Test ad to verify mechanism works */}
+      {position === 'header' && (
+        <div style={{
+          background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4)',
+          color: 'white',
+          padding: '20px',
+          textAlign: 'center',
+          borderRadius: '8px',
+          margin: '10px 0'
+        }}>
+          🧪 TEST AD - If you see this, the ad mechanism works!
+        </div>
+      )}
       
       {/* Ad content */}
       {htmlContent && (
