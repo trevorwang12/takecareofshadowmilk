@@ -23,10 +23,10 @@
 - ✅ 内联脚本安全验证 - Inline script security validation
 
 ### 4. Vercel 配置 / Vercel Configuration
-- ✅ 地区设置：香港和新加坡 - Regions: Hong Kong & Singapore
-- ✅ 函数超时设置：30秒 - Function timeout: 30s
+- ✅ 函数超时设置：10秒（免费计划） - Function timeout: 10s (Free plan)
 - ✅ 缓存策略配置 - Caching strategy configured
 - ✅ 重定向和重写规则 - Redirects and rewrites configured
+- ⚠️ 多区域部署需要Pro计划 - Multi-region deployment requires Pro plan
 
 ## 🔧 部署前需要配置 / Pre-deployment Configuration
 
@@ -87,8 +87,22 @@ ALLOWED_IMAGE_TYPES=image/jpeg,image/png,image/gif,image/webp
 
 ## ⚠️ 重要提醒 / Important Notes
 
+### Vercel 免费计划限制 / Vercel Free Plan Limitations
+- 🌍 **地区**: 自动选择最近区域（不支持多区域）
+- ⏱️ **函数超时**: 最大10秒
+- 💾 **带宽**: 每月100GB
+- 🔄 **构建时间**: 每月6000分钟
+- 📊 **函数调用**: 每月125,000次
+
+### 生产环境注意事项 / Production Notes
 1. **Admin功能**：默认在生产环境禁用，需要时在Vercel环境变量中设置`ENABLE_ADMIN=true`
 2. **数据持久化**：JSON文件存储在服务器文件系统中，Vercel函数重启时会丢失。考虑迁移到数据库。
 3. **广告安全**：只允许来自可信域名的广告脚本
 4. **性能优化**：图片已启用优化，静态资源已压缩
 5. **监控**：建议设置Vercel Analytics监控网站性能
+
+### 升级到Pro计划的好处 / Benefits of Pro Plan
+- 🌏 多区域部署（香港、新加坡等）
+- ⏱️ 函数超时60秒
+- 💾 无限带宽
+- 🚀 更快的构建速度
