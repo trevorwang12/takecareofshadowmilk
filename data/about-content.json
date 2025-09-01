@@ -1,0 +1,93 @@
+{
+  "hero": {
+    "isVisible": false,
+    "title": "GAMES",
+    "subtitle": "Providing the highest quality online gaming experience for players worldwide",
+    "icon": "Gamepad2"
+  },
+  "mission": {
+    "isVisible": false,
+    "title": "Our Mission & Values",
+    "cards": {
+      "mission": {
+        "isVisible": true,
+        "title": "Our Mission",
+        "description": "To create a safe, fun, and user-friendly online gaming platform where everyone can enjoy gaming.",
+        "icon": "Target"
+      },
+      "team": {
+        "isVisible": true,
+        "title": "Our Team",
+        "description": "A professional team of experienced game developers and designers committed to providing the best user experience.",
+        "icon": "Users"
+      },
+      "values": {
+        "isVisible": true,
+        "title": "Our Values",
+        "description": "User-centered focus on innovation, quality and community building to connect the world through gaming.",
+        "icon": "Heart"
+      }
+    }
+  },
+  "about": {
+    "isVisible": false,
+    "title": "About Us",
+    "content": {
+      "description": "GAMES was founded in 2024 as an innovative company focused on online gaming experiences. Our platform brings together quality games from around the world, from classic arcade games to the latest creative works, providing diverse choices for players of all ages and interests.",
+      "features": {
+        "title": "Our Features",
+        "items": [
+          {
+            "title": "Curated Game Library",
+            "description": "Every game is carefully selected to ensure quality and entertainment value",
+            "color": "blue"
+          },
+          {
+            "title": "No Download Required",
+            "description": "All games run directly in your browser",
+            "color": "green"
+          },
+          {
+            "title": "Safe & Secure",
+            "description": "Strict security measures protect user privacy and data",
+            "color": "purple"
+          },
+          {
+            "title": "Regular Updates",
+            "description": "New games added regularly to keep content fresh",
+            "color": "orange"
+          }
+        ]
+      },
+      "vision": {
+        "title": "Our Vision",
+        "content": "We hope to create a gathering place for global gaming enthusiasts where everyone can find their own gaming joy. Through continuous technological innovation and content optimization, we strive to become the most popular online gaming platform."
+      },
+      "contact": {
+        "title": "Contact Us",
+        "content": "If you have any questions, suggestions or partnership interests, please feel free to contact us through our contact page. We value feedback from every user, as it drives our continuous improvement."
+      }
+    }
+  },
+  "cta": {
+    "isVisible": true,
+    "title": "Ready to Start Gaming?",
+    "description": "Explore our exciting world of games and discover your next favorite game!",
+    "buttonText": "Start Gaming",
+    "buttonLink": "/"
+  },
+  "customHtmlSections": [
+    {
+      "id": "custom-html-1756603698911",
+      "title": "About WorldGuessr",
+      "content": "<style>\n.about-container {\n    max-width: 1200px;\n    margin: 0 auto;\n    padding: 20px;\n    font-family: system-ui, -apple-system, sans-serif;\n    background: #f8f9fa;\n}\n\n.hero-section {\n    background: linear-gradient(135deg, #3498db, #2980b9);\n    padding: 80px 40px;\n    border-radius: 20px;\n    text-align: center;\n    color: white;\n    margin-bottom: 40px;\n    position: relative;\n    overflow: hidden;\n}\n\n.hero-section::before {\n    content: '🌎';\n    position: absolute;\n    right: 40px;\n    top: 50%;\n    transform: translateY(-50%);\n    font-size: 60px;\n    opacity: 0.2;\n}\n\n.section-card {\n    background: white;\n    border-radius: 15px;\n    margin-bottom: 30px;\n    overflow: hidden;\n    box-shadow: 0 4px 6px rgba(0,0,0,0.1);\n}\n\n.section-header {\n    background: #3498db;\n    color: white;\n    padding: 20px 30px;\n    font-size: 1.5em;\n}\n\n.section-content {\n    padding: 30px;\n    line-height: 1.6;\n}\n\n.values-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n    gap: 20px;\n    margin-top: 20px;\n}\n\n.value-card {\n    background: #f8f9fa;\n    padding: 20px;\n    border-radius: 10px;\n    text-align: center;\n}\n\n.value-icon {\n    font-size: 40px;\n    margin-bottom: 15px;\n}\n\n.team-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n    gap: 20px;\n    margin-top: 20px;\n}\n\n.member-card {\n    background: #f8f9fa;\n    padding: 20px;\n    border-radius: 10px;\n    text-align: center;\n}\n\n.member-img {\n    width: 100px;\n    height: 100px;\n    border-radius: 50%;\n    margin: 0 auto 15px;\n    background: #e9ecef;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 40px;\n}\n\n.stats-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n    gap: 20px;\n    margin-top: 20px;\n}\n\n.stat-card {\n    background: #f8f9fa;\n    padding: 20px;\n    border-radius: 10px;\n    text-align: center;\n}\n\n.stat-number {\n    font-size: 2em;\n    color: #3498db;\n    font-weight: bold;\n    margin-bottom: 10px;\n}\n\n@media (max-width: 768px) {\n    .hero-section {\n        padding: 40px 20px;\n    }\n    \n    .section-content {\n        padding: 20px;\n    }\n}\n</style>\n\n<div class=\"about-container\">\n    <div class=\"hero-section\">\n        <h1>About WorldGuessr</h1>\n        <p>Explore the World Through Interactive Geography</p>\n    </div>\n\n    <div class=\"section-card\">\n        <div class=\"section-header\">Our Story</div>\n        <div class=\"section-content\">\n            <p>WorldGuessr was born from our passion for geography and technological innovation. Founded in 2023, we set out to create an engaging platform that makes learning about world geography fun and interactive. Our journey began with a simple idea: combine educational content with gaming mechanics to create an immersive learning experience.</p>\n            \n            <p>Today, WorldGuessr has grown into a global community of geography enthusiasts, students, and casual players who share our vision of making geographical education accessible and enjoyable for everyone.</p>\n        </div>\n    </div>\n\n    <div class=\"section-card\">\n        <div class=\"section-header\">Our Mission</div>\n        <div class=\"section-content\">\n            <p>We strive to make geography education engaging and accessible to everyone through interactive gameplay and immersive experiences. Our goal is to foster global awareness and cultural understanding while providing an entertaining platform for learning.</p>\n            \n            <div class=\"values-grid\">\n                <div class=\"value-card\">\n                    <div class=\"value-icon\">🎯</div>\n                    <h3>Innovation</h3>\n                    <p>Pushing boundaries in educational gaming</p>\n                </div>\n                <div class=\"value-card\">\n                    <div class=\"value-icon\">🌍</div>\n                    <h3>Education</h3>\n                    <p>Making learning fun and engaging</p>\n                </div>\n                <div class=\"value-card\">\n                    <div class=\"value-icon\">🤝</div>\n                    <h3>Community</h3>\n                    <p>Building connections across borders</p>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"section-card\">\n        <div class=\"section-header\">Our Impact</div>\n        <div class=\"section-content\">\n            <div class=\"stats-grid\">\n                <div class=\"stat-card\">\n                    <div class=\"stat-number\">1M+</div>\n                    <p>Active Players</p>\n                </div>\n                <div class=\"stat-card\">\n                    <div class=\"stat-number\">200+</div>\n                    <p>Countries Covered</p>\n                </div>\n                <div class=\"stat-card\">\n                    <div class=\"stat-number\">5M+</div>\n                    <p>Games Played</p>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"section-card\">\n        <div class=\"section-header\">Our Team</div>\n        <div class=\"section-content\">\n            <p>WorldGuessr is powered by a passionate team of geography enthusiasts, developers, and educators who work together to create the best possible experience for our users.</p>\n            \n            <div class=\"team-grid\">\n                <div class=\"member-card\">\n                    <div class=\"member-img\">👨‍💻</div>\n                    <h3>John Smith</h3>\n                    <p>Founder & CEO</p>\n                </div>\n                <div class=\"member-card\">\n                    <div class=\"member-img\">👩‍💻</div>\n                    <h3>Sarah Johnson</h3>\n                    <p>Lead Developer</p>\n                </div>\n                <div class=\"member-card\">\n                    <div class=\"member-img\">👨‍🏫</div>\n                    <h3>Michael Chen</h3>\n                    <p>Education Director</p>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"section-card\">\n        <div class=\"section-header\">Looking Forward</div>\n        <div class=\"section-content\">\n            <p>As we continue to grow, our commitment to providing an exceptional educational gaming experience remains unwavering. We're constantly working on new features, expanding our coverage, and improving our platform based on community feedback.</p>\n            \n            <p>Join us in our mission to make geography education more engaging and accessible to everyone around the world.</p>\n        </div>\n    </div>\n</div>",
+      "isVisible": true
+    }
+  ],
+  "sectionOrder": {
+    "hero": 0,
+    "mission": 1,
+    "about": 2,
+    "cta": 3
+  }
+}

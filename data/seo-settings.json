@@ -1,0 +1,60 @@
+{
+  "seoSettings": {
+    "id": "main-seo-settings",
+    "siteName": "Worldguessr",
+    "siteDescription": "Play Worldguessr Game Unblocked Here - Play hundreds of free browser games",
+    "siteUrl": "https://worldguessr.pro/",
+    "siteLogo": "/placeholder-logo.png",
+    "favicon": "/favicon.ico",
+    "keywords": [
+      "Worldguessr Game",
+      "browser games",
+      "free games",
+      "HTML5 games",
+      "web games",
+      "casual games",
+      "arcade games"
+    ],
+    "author": "Gaming Platform",
+    "twitterHandle": "@yourgames",
+    "ogImage": "/og-image.png",
+    "ogTitle": "GAMES - Best Free Online Games",
+    "ogDescription": "Play the best free online games. No download required!",
+    "robotsTxt": "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\n\nSitemap:https://worldguessr.pro//sitemap.xml",
+    "structuredData": {
+      "enabled": true,
+      "organizationType": "WebSite",
+      "organizationName": "GAMES",
+      "organizationUrl": "https://worldguessr.pro/",
+      "organizationLogo": "/placeholder-logo.png",
+      "sameAs": [
+        "https://twitter.com/yourgames",
+        "https://facebook.com/yourgames"
+      ]
+    },
+    "metaTags": {
+      "viewport": "width=device-width, initial-scale=1.0",
+      "themeColor": "#475569",
+      "appleMobileWebAppTitle": "GAMES",
+      "appleMobileWebAppCapable": "yes"
+    },
+    "createdAt": "2025-08-29T11:10:41.564Z",
+    "updatedAt": "2025-09-01T02:37:03.416Z",
+    "canonicalUrl": "https://worldguessr.pro/"
+  },
+  "gamePageSEO": {
+    "titleTemplate": "{gameName} - Play Free Online | {siteName}",
+    "descriptionTemplate": "Play {gameName} for free online! {gameDescription} No download required - start playing now!",
+    "keywordsTemplate": "{gameName}, {category}, free game, online game, browser game",
+    "enableBreadcrumbs": true,
+    "enableRichSnippets": true,
+    "enableOpenGraph": true,
+    "enableTwitterCards": true
+  },
+  "categoryPageSEO": {
+    "titleTemplate": "{categoryName} Games - Free Online | {siteName}",
+    "descriptionTemplate": "Play the best {categoryName} games for free! Discover hundreds of exciting {categoryName} games.",
+    "keywordsTemplate": "{categoryName} games, free {categoryName}, online {categoryName}",
+    "enablePagination": true
+  }
+}

@@ -1,0 +1,569 @@
+[
+  {
+    "id": "cut-the-rope",
+    "name": "Take Care of Shadow Milk",
+    "description": "**Take Care of Shadow Milk** is an entertaining and unique game that has gained popularity on TikTok. In this game, you'll meet Shadow Milk Cookie, a villain from *Cookie Run: Kingdom*, and enjoy a quirky, interactive experience with him.\n\n-\n\n### Controls Guide\nIn **Take Care of Shadow Milk**, Shadow Milk Cookie appears as a puppet on a paper stage, tricking other characters. Your role is to take care of him and, for extra fun, tease him using various tools.\n\n-\n\n### How to Play Take Care of Shadow Milk\nAs the developer puts it: \"Do whatever you want to him.\" The game currently has no penalties or consequences, offering a stress-free experience.\n\nYou can take care of Shadow Milk in different rooms, such as the main room, bedroom, bathroom, and kitchen. Interact with him by selecting items or dispose of them by putting them in the trash.\n\n-\n\n### Keep an Eye on Shadow Milk’s Status Indicators\n- **Energy**: Represented by a blue lightning bolt icon.\n- **Health**: Indicated by a blue heart icon.\n- **Hunger**: Shown by a red knife and fork icon. You can feed him foods like meat and tomatoes.\n- **Bathroom Needs**: If he becomes dirty, the character will start to smell and will need a bath.\n\nCare for or tease Shadow Milk as you wish in this amusing game!",
+    "thumbnailUrl": "/uploads/1756619405301-aiazr8.png",
+    "category": "meme-games",
+    "tags": [
+      "Meme Games"
+    ],
+    "rating": 5,
+    "playCount": 1200000,
+    "viewCount": 850000,
+    "developer": "",
+    "releaseDate": "2025",
+    "addedDate": "2024-01-15",
+    "isActive": true,
+    "isFeatured": true,
+    "gameType": "iframe",
+    "gameUrl": "https://scratch.mit.edu/projects/1206876997/embed",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "gradientDescription": "**Take Care of Shadow Milk** is an entertaining and unique game that has gained popularity on TikTok."
+  },
+  {
+    "id": "subway-surfers",
+    "name": "Subway Surfers",
+    "description": "Subway Surfers is an endless runner game. Run on subway tracks, dodge trains and obstacles, collect coins and power-ups. The game has intense rhythm and simple controls.",
+    "thumbnailUrl": "/subway-surfers-game.png",
+    "category": "action",
+    "tags": [
+      "runner",
+      "endless",
+      "urban",
+      "collecting"
+    ],
+    "rating": 4.8,
+    "playCount": 2800000,
+    "viewCount": 1500000,
+    "developer": "SYBO Games",
+    "releaseDate": "2012",
+    "addedDate": "2024-02-10",
+    "isActive": false,
+    "isFeatured": true,
+    "gameType": "iframe",
+    "gameUrl": "https://www.crazygames.com/embed/subway-surfers-bali",
+    "externalUrl": null,
+    "embedCode": null,
+    "controls": [
+      "keyboard",
+      "mouse",
+      "touch"
+    ],
+    "platforms": [
+      "web",
+      "mobile"
+    ],
+    "languages": [
+      "en",
+      "es",
+      "fr",
+      "de",
+      "pt"
+    ],
+    "features": [
+      "endless-runner",
+      "character-collection",
+      "power-ups",
+      "global-leaderboard"
+    ]
+  },
+  {
+    "id": "candy-crush",
+    "name": "Candy Crush",
+    "description": "Candy Crush is a classic match-3 game. Swap adjacent candies to create combinations of three or more same-colored candies. The game features clever level design and challenging gameplay.",
+    "thumbnailUrl": "/candy-crush-game.png",
+    "category": "puzzle",
+    "tags": [
+      "match-3",
+      "sweet",
+      "casual",
+      "addictive"
+    ],
+    "rating": 4.3,
+    "playCount": 5200000,
+    "viewCount": 2100000,
+    "developer": "King",
+    "releaseDate": "2012",
+    "addedDate": "2024-01-20",
+    "isActive": false,
+    "isFeatured": true,
+    "gameType": "iframe",
+    "gameUrl": "https://www.crazygames.com/embed/candy-crush-saga",
+    "externalUrl": null,
+    "embedCode": null,
+    "controls": [
+      "mouse",
+      "touch"
+    ],
+    "platforms": [
+      "web",
+      "mobile"
+    ],
+    "languages": [
+      "en",
+      "es",
+      "fr",
+      "de",
+      "it"
+    ],
+    "features": [
+      "match-3-gameplay",
+      "special-items",
+      "social-features",
+      "daily-challenges"
+    ]
+  },
+  {
+    "id": "temple-run",
+    "name": "Temple Run",
+    "description": "Temple Run is a 3D endless runner game. You need to run in an ancient temple, dodge various traps and obstacles, collect gems and coins. The game features beautiful graphics and smooth controls.",
+    "thumbnailUrl": "/temple-run-game.png",
+    "category": "action",
+    "tags": [
+      "3d",
+      "adventure",
+      "temple",
+      "treasure"
+    ],
+    "rating": 4.6,
+    "playCount": 3100000,
+    "viewCount": 1800000,
+    "developer": "Imangi Studios",
+    "releaseDate": "2011",
+    "addedDate": "2024-03-05",
+    "isActive": false,
+    "isFeatured": true,
+    "gameType": "iframe",
+    "gameUrl": "https://www.crazygames.com/embed/temple-run-2",
+    "externalUrl": null,
+    "embedCode": null,
+    "controls": [
+      "keyboard",
+      "touch"
+    ],
+    "platforms": [
+      "web",
+      "mobile"
+    ],
+    "languages": [
+      "en",
+      "es",
+      "fr"
+    ],
+    "features": [
+      "3d-graphics",
+      "gesture-control",
+      "character-upgrades",
+      "achievement-system"
+    ]
+  },
+  {
+    "id": "burning-dog-game",
+    "name": "Take Care of Your Own Burning Dog",
+    "description": "A unique pet care game where you need to take care of a special dog and help it complete various challenges and adventures. The game features beautiful graphics and innovative gameplay.",
+    "thumbnailUrl": "/burning-dog-game.png",
+    "category": "simulation",
+    "tags": [
+      "pet-care",
+      "unique",
+      "creative",
+      "emotional"
+    ],
+    "rating": 4.1,
+    "playCount": 120000,
+    "viewCount": 85000,
+    "developer": "Indie Studio",
+    "releaseDate": "2025",
+    "addedDate": "2025-08-20",
+    "isActive": false,
+    "isFeatured": false,
+    "gameType": "iframe",
+    "gameUrl": "https://example.com/burning-dog-game",
+    "externalUrl": null,
+    "embedCode": null,
+    "controls": [
+      "mouse",
+      "keyboard"
+    ],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [
+      "pet-nurturing",
+      "unique-art-style",
+      "innovative-gameplay",
+      "emotional-experience"
+    ]
+  },
+  {
+    "id": "frogger",
+    "name": "Frogger",
+    "description": "Classic frog crossing game remastered. Help the frog safely cross roads and rivers while avoiding cars and dangers. Simple but challenging gameplay.",
+    "thumbnailUrl": "/frogger-game.png",
+    "category": "arcade",
+    "tags": [
+      "classic",
+      "retro",
+      "crossing",
+      "timing"
+    ],
+    "rating": 4,
+    "playCount": 250000,
+    "viewCount": 110000,
+    "developer": "Retro Games",
+    "releaseDate": "2025",
+    "addedDate": "2025-08-10",
+    "isActive": false,
+    "isFeatured": false,
+    "gameType": "iframe",
+    "gameUrl": "https://www.crazygames.com/embed/frogger",
+    "externalUrl": null,
+    "embedCode": null,
+    "controls": [
+      "keyboard",
+      "touch"
+    ],
+    "platforms": [
+      "web",
+      "mobile"
+    ],
+    "languages": [
+      "en",
+      "es",
+      "fr"
+    ],
+    "features": [
+      "classic-gameplay",
+      "modern-graphics",
+      "multiple-modes",
+      "leaderboard"
+    ]
+  },
+  {
+    "name": "d懂得都懂",
+    "description": "sssssssssssssssssssssss",
+    "thumbnailUrl": "http://localhost:5000/",
+    "category": "strategy",
+    "tags": [
+      "action"
+    ],
+    "rating": 4,
+    "developer": "dddd",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "http://localhost:5000/",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": false,
+    "isFeatured": false,
+    "id": "d",
+    "addedDate": "2025-08-29",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "Okak Clicker: Gotta Tap 'Em All",
+    "description": "**Okak Clicker: Gotta Tap 'Em All** is a delightful clicking game where you face off against cheeky meme cats. The goal is simple: click as quickly as you can to stop them and collect a fun assortment of \"okay\" cats. It's an entertaining experience that also presents plenty of challenges.\n\n**How to Play Okak Clicker: Gotta Tap 'Em All**\n\nThe gameplay is straightforward. Every click on the screen lands a hit on the cat, and the faster you click, the more coins you earn. As you progress through levels, new meme cats appear, and you'll encounter exciting boss battles that keep the action fresh and engaging.\n\n**Upgrades and Challenges**\n\nThe coins you collect can be spent on upgrading your gear or unlocking auto-clickers. These upgrades boost your strength, speed up your clicks, and make it easier to conquer tougher levels. Your ultimate goal is to become a clicking master and complete your collection of meme cats.\n\n**Why You'll Love It**\n\n- Easy-to-learn mechanics that can easily turn into an addictive experience.\n- Hilarious meme cats that become even more entertaining the longer you play.\n- Thrilling boss battles that really test your clicking speed.\n- A wide range of upgrades to help you advance even further.",
+    "gradientDescription": "A delightful clicking game where you battle cheeky meme cats! Click fast to earn coins and unlock upgrades.",
+    "thumbnailUrl": "/uploads/1756607228517-5xgkjp.webp",
+    "category": "strategy",
+    "tags": [
+      "Clicker Games",
+      "Meme Games"
+    ],
+    "rating": 4,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://st.8games.net/7/8g/igra-okak-kliker-soberi-ikh-vsekh/",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": false,
+    "id": "okak-clicker-gotta-tap-em-all",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "The Battle Cats",
+    "description": "**The Battle Cats** is an exciting fighting game with incredibly simple controls. What sets it apart is its unique combination of space and time, where you'll command an eccentric army of cats in thrilling battles across various settings.\n\n-\n\n### Fun Gameplay\nIn **The Battle Cats**, you'll dive into three Story Modes and challenging Legends missions, featuring hundreds of levels. As you progress, you'll gather treasures, face obstacles on different planets, and continuously upgrade your cat army's strength to defeat your foes.\n\n-\n\n### Key Features\n- Simple controls that are easy for anyone to pick up and enjoy.\n- Over 100 quirky and entertaining cats to add to your collection.\n- A vast and challenging level system that gets tougher as you advance.\n- Perfect for players of all ages, offering hours of fun and excitement.\n\nJoin the battle and lead your cat army to victory today in **The Battle Cats**!",
+    "gradientDescription": "**The Battle Cats** is an exciting fighting game with incredibly simple controls.",
+    "thumbnailUrl": "/uploads/1756611197924-85d5f9.webp",
+    "category": "casual",
+    "tags": [
+      "Clicker Games",
+      "Dog Games",
+      "Meme Games"
+    ],
+    "rating": 4,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://scratch.mit.edu/projects/225197640/embed",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": false,
+    "id": "the-battle-cats",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "Mental Incremental Clicker",
+    "description": "**Mental Incremental Clicker** lets you create a mighty empire with just a few taps. Embark on an exciting adventure of conquest where every click unlocks new possibilities. This game blends resource management, combat, and army building, offering something for fans of the clicker genre.\n\n-\n\n### Engaging Gameplay\nIn **Mental Incremental Clicker**, you begin with basic strength and unlock new combat abilities as you progress. Each click not only generates resources but also boosts your power. Along the way, you can recruit a variety of allies, from goblins and Viking warriors to humans and even an undead army. These allies help you face tougher enemies as you expand your empire.\n\n-\n\n### Key Features of Mental Incremental Clicker\n- Smart resource management to help grow your empire.\n- A wide range of combat skills to upgrade as you progress.\n- Recruit powerful allies to join you on your journey.\n- Challenge dark forces and carve your name into history.\n\nReady to build your empire and conquer the world? Play **Mental Incremental Clicker** today!",
+    "gradientDescription": "**Mental Incremental Clicker** lets you create a mighty empire with just a few taps.",
+    "thumbnailUrl": "/uploads/1756613397510-yfuh47.webp",
+    "category": "strategy",
+    "tags": [
+      "Clicker Games"
+    ],
+    "rating": 4,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://st.8games.net/dasha1/igry-klikery/fight-monsters/",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": false,
+    "id": "mental-incremental-clicker",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "Take Care of Your Own Hollyberry",
+    "description": "**Take Care of Your Own Hollyberry** is a charming and relaxing simulation game where you care for Hollyberry, a cute pink-haired girl inspired by Hollyberry Cookie from *Cookie Run: Kingdom*. Released on August 17, 2025, on Scratch, this game quickly gained popularity on TikTok due to its soothing and adorable gameplay.\n\n-\n\n### How to Play Take Care of Your Own Hollyberry\nIn **Take Care of Your Own Hollyberry**, your goal is to keep Hollyberry happy and healthy by feeding, bathing, resting, and playing with her. The game features four unique rooms: the main room, bedroom, kitchen, and bathroom. Each room offers different fun activities. Simply drag and click to interact with various elements, and enjoy a stress-free experience with no \"Game Over.\" \n\nRelax and enjoy the adorable journey of caring for Hollyberry today!",
+    "gradientDescription": "**Take Care of Your Own Hollyberry** is a charming and relaxing simulation game.",
+    "thumbnailUrl": "/uploads/1756613786803-5x057o.webp",
+    "category": "casual",
+    "tags": [
+      "Meme Games"
+    ],
+    "rating": 4,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://scratch.mit.edu/projects/1207007542/embed",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": false,
+    "id": "take-care-of-your-own-hollyberry",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "Elastic Man",
+    "description": "**Elastic Man** lets you stretch and twist a character's face like bubble gum, delivering endless fun and relaxation.\n\n-\n\n### A One-of-a-Kind Experience\nIn **Elastic Man**, a cute 3D character is ready to \"take the beating\" as you stretch, twist, and deform their face. Every touch brings out a surprising expression, making it both entertaining and creative.\n\n-\n\n### Easy Gameplay\nSimply use your mouse or touch the screen to stretch the character's face. Drag quickly for an instant reaction or slowly to enjoy every subtle transformation.\n\n-\n\n### Extra Fun Tips\n- Drag slowly to create the funniest expressions.\n- Experiment with different pulling directions.\n- Mix stretching and twisting to create unique and hilarious styles.\n\nStretch, twist, and have fun with **Elastic Man** today!",
+    "gradientDescription": "**Elastic Man** lets you stretch and twist a character's face like bubble gum, delivering endless fun and relaxation.",
+    "thumbnailUrl": "/uploads/1756614742469-79yml6.webp",
+    "category": "casual",
+    "tags": [
+      "Clicker Games",
+      "Meme Games"
+    ],
+    "rating": 4,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://d21u3ic0kp9e91.cloudfront.net/elasticman/0/index.html",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": false,
+    "id": "elastic-man",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "Take Care of Your Own Burning Spice",
+    "description": "**Take Care of Your Own Burning Spice** introduces you to Burning Spice Cookie, a former warrior from *Cookie Run*, now turned into a virtual pet in need of your care. This game offers a unique pet-raising experience where you take care of a fiery, strong, and lively cookie character.\n\n-\n\n### How to Play\nIn **Take Care of Your Own Burning Spice**, you’ll care for Burning Spice in four different rooms: the living room, bedroom, kitchen, and bathroom.\n\n- **Feed** him to satisfy his hunger.\n- **Bathe** him to maintain his shiny appearance.\n- **Let him rest** to regain energy.\n- **Play** with him to keep his spirits up.\n\nKeep an eye on his hunger, health, and energy levels, and you'll be able to easily take care of this unique character.\n\n-\n\n### Why You Should Play Take Care of Your Own Burning Spice\n- Experience Burning Spice Cookie like never before—cooler and more dynamic than ever.\n- Familiar virtual pet care gameplay with delightful surprises.\n- Enjoy a variety of humorous and unpredictable reactions.\n- Free to play, accessible online.\n\nJoin Burning Spice in his fiery adventures and give him the care he deserves!",
+    "gradientDescription": "**Take Care of Your Own Burning Spice** introduces you to Burning Spice Cookie.",
+    "thumbnailUrl": "/uploads/1756620001602-r8qej1.png",
+    "category": "casual",
+    "tags": [
+      "Meme Games"
+    ],
+    "rating": 4.5,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://scratch.mit.edu/projects/1207373782/embed",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": true,
+    "id": "take-care-of-your-own-burning-spice",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "Clashdle",
+    "description": "**Clashdle** is the ultimate blend of *Clash Royale* and *Wordle*-style puzzles. This free browser game presents a daily challenge packed with surprises, perfect for fans of both genres.\n\n-\n\n### Basic Gameplay\nIn **Clashdle**, your goal is to guess the secret card within a limited number of attempts, typically 6. After each guess, the game provides clues about the card’s type, stats, or characteristics. Use these hints to narrow down your options and move closer to identifying the correct card.\n\n-\n\n### Why You’ll Love Clashdle\n- **Fresh challenges every day** to keep the game exciting.\n- **No downloads required**—play instantly on any browser.\n- A great way to **refresh your knowledge** of *Clash Royale* cards.\n- **Simple yet addictive gameplay**, fun for players of all ages.\n\n-\n\n### Why Try Clashdle?\n**Clashdle** is a fast-paced, brain-teasing game that allows you to share your results and challenge your friends or the global *Clash Royale* community. Ready to test your knowledge? Jump in now!",
+    "gradientDescription": "**Clashdle** is the ultimate blend of *Clash Royale* and *Wordle*-style puzzles.",
+    "thumbnailUrl": "/uploads/1756620264638-sivpae.png",
+    "category": "puzzle",
+    "tags": [
+      "puzzlegame"
+    ],
+    "rating": 4.3,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://clashdle.com/",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": true,
+    "id": "clashdle",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "A Shedletsky POV",
+    "description": "**A Shedletsky POV** invites you to dive into an enigmatic journey within the Roblox universe. Step into the shoes of Shedletsky and unravel the hidden secrets of the fourth dimension. This game offers a unique and captivating role-playing experience that stands out in the Roblox world.\n\n-\n\n### What is A Shedletsky POV?\nIn **A Shedletsky POV**, you take on the role of Shedletsky, a well-known character from Roblox lore. Shedletsky appears as a turquoise block with a black skeleton, and your mission is to explore the vast Roblox world, unlock the mysteries of the infamous 1x1x1x1, and uncover hidden truths.\n\n-\n\n### How to Play A Shedletsky POV\nThe gameplay revolves around exploration and making decisions.\n- **Use your mouse** to navigate and observe your surroundings.\n- **Click on the green arrows** to interact with objects in the game.\n- **Select dialogue options** to influence the story and create your own path.\n\nEvery choice you make opens up new possibilities, ensuring that each playthrough is a fresh and unique experience.\n\n-\n\n### What Makes A Shedletsky POV Special\n- A **legendary story** deeply rooted in Roblox history.\n- Discover the **mystery of the fourth dimension**.\n- **Varied dialogue options** lead to multiple endings.\n- **Simple controls**, perfect for newcomers and experienced players alike.\n\nEmbark on this unforgettable adventure and uncover the secrets that await in **A Shedletsky POV**!",
+    "gradientDescription": "**A Shedletsky POV** invites you to dive into an enigmatic journey within the Roblox universe.",
+    "thumbnailUrl": "/uploads/1756620882612-us05b1.png",
+    "category": "casual",
+    "tags": [
+      "Clicker Games",
+      "Meme Games"
+    ],
+    "rating": 4,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://scratch.mit.edu/projects/1192006075/embed",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": false,
+    "id": "a-shedletsky-pov",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  },
+  {
+    "name": "Deer Adventure",
+    "description": "**Deer Adventure** is an exciting open-world sandbox game that allows you to take on the role of a nimble, long-necked deer with impressive antlers. In this game, you can run, jump, climb to great heights, throw objects, and cause chaos all around you. You’ll also have the chance to drive cars, ride horses, or transform, offering a truly unique experience.\n\n-\n\n### A Town Full of Surprises\nThe game’s town is lively and filled with vibrant details, featuring NPCs, vehicles, animals, and numerous interactive elements. Explore every nook and cranny, uncover hidden secrets, or turn the entire area into a chaotic playground of your own.\n\n-\n\n### Two Playstyles\n- **Chill & Explore:** Wander around, interact with animals, and enjoy a peaceful, laid-back pace of life.\n- **Chaos & Vandalism:** Wreck cars, disrupt NPCs, and dodge the “animal police.” Each action leads to unexpected, often hilarious, situations.\n\nEmbark on an unforgettable adventure in **Deer Adventure**, where the fun never stops!",
+    "gradientDescription": "**Deer Adventure** is an exciting open-world sandbox game.",
+    "thumbnailUrl": "/uploads/1756621186350-7jbnyi.png",
+    "category": "casual",
+    "tags": [
+      "Meme Games"
+    ],
+    "rating": 4.4,
+    "developer": "",
+    "releaseDate": "2025",
+    "gameType": "iframe",
+    "gameUrl": "https://game.azgame.io/deer-adventure/",
+    "externalUrl": "",
+    "embedCode": "",
+    "controls": [],
+    "platforms": [
+      "web"
+    ],
+    "languages": [
+      "en"
+    ],
+    "features": [],
+    "isActive": true,
+    "isFeatured": false,
+    "id": "deer-adventure",
+    "addedDate": "2025-08-31",
+    "viewCount": 0,
+    "playCount": 0
+  }
+]
