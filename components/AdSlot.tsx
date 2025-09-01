@@ -9,6 +9,8 @@ interface AdSlotProps {
 }
 
 export default function AdSlotComponent({ position, className = '' }: AdSlotProps) {
+  console.log(`🔴 AdSlot-${position}: Component STARTING`)
+  
   const [ads, setAds] = useState<AdSlot[]>([])
   const [loading, setLoading] = useState(true)
   
