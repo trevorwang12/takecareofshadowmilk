@@ -26,6 +26,20 @@ async function loadFromFile(): Promise<FriendlyLink[]> {
     const fileContent = await fs.readFile(filePath, 'utf8')
     const loadedData = JSON.parse(fileContent)
     console.log('Friendly links data loaded from file:', filePath)
+    
+    // Handle the actual data structure which has links array
+    if (loadedData.links && Array.isArray(loadedData.links)) {
+      return loadedData.links.map((link: any) => ({
+        id: link.id,
+        name: link.name,
+        url: link.url,
+        description: link.description || '',
+        isVisible: link.isActive, // isActive maps to isVisible
+        order: link.priority || 0, // priority maps to order
+        createdAt: link.createdAt,
+        updatedAt: link.updatedAt
+      }))
+    }
     return loadedData
   } catch (error) {
     console.log('Failed to load friendly links data from file, using default:', error)
