@@ -119,7 +119,12 @@ export default function AdTestPage() {
         <h3>🔍 调试信息 / Debug Info</h3>
         <p><strong>当前模式:</strong> {testMode ? '测试广告模式' : '真实广告模式'}</p>
         <p><strong>环境:</strong> {process.env.NODE_ENV}</p>
-        <p><strong>调试模式:</strong> {process.env.NEXT_PUBLIC_DEBUG_ADS}</p>
+        <p><strong>调试模式:</strong> {process.env.NEXT_PUBLIC_DEBUG_ADS || 'undefined'}</p>
+        <p><strong>所有环境变量:</strong> {JSON.stringify({
+          NODE_ENV: process.env.NODE_ENV,
+          DEBUG_ADS: process.env.NEXT_PUBLIC_DEBUG_ADS,
+          all_keys: Object.keys(process.env).filter(k => k.startsWith('NEXT_PUBLIC')).join(', ')
+        })}</p>
         <p><strong>真实广告数量:</strong> {apiData ? apiData.length : 'Loading...'}</p>
         <p><strong>测试广告数量:</strong> {testApiData ? testApiData.length : 'Loading...'}</p>
       </div>

@@ -19,7 +19,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
       try {
         setLoading(true)
         // Temporarily use test API to debug rendering issues
-        const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
+        const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' || process.env.NODE_ENV === 'production' // Force test mode in production for debugging
         const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
         
         const response = await fetch(apiEndpoint)
@@ -54,7 +54,8 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
   if (ads.length === 0) {
     // Show placeholder in development, debug info in production temporarily
     const isDevelopment = process.env.NODE_ENV === 'development'
-    if (isDevelopment || process.env.NEXT_PUBLIC_DEBUG_ADS === 'true') {
+    const showDebug = isDevelopment || process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' || process.env.NODE_ENV === 'production' // Force debug in production
+    if (showDebug) {
       return (
         <div className={`ad-slot ad-slot-${position} ${className}`} style={{ 
           background: isDevelopment ? '#f8f9fa' : '#fff3cd', 
@@ -78,7 +79,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
       {/* Debug info for troubleshooting */}
-      {process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
+      {(process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' || process.env.NODE_ENV === 'production') && (
         <div style={{
           background: '#e7f3ff',
           border: '1px solid #0066cc',
@@ -117,7 +118,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
           )
         })
       ) : (
-        process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
+        (process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' || process.env.NODE_ENV === 'production') && (
           <div style={{
             background: '#fff3cd',
             border: '1px solid #ffd60a',
