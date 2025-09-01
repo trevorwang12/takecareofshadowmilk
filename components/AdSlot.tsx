@@ -33,7 +33,12 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
     const loadAds = async () => {
       console.log(`🔵 AdSlot-${position}: loadAds starting`)
       try {
-        setLoading(true)
+        // Don't set loading to true if already loading - prevents re-render
+        if (!loading) {
+          console.log(`🔄 AdSlot-${position}: Setting loading to true`)
+          setLoading(true)
+        }
+        
         // Use real ads in production, test ads only when debug is explicitly enabled
         const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
         const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
@@ -47,15 +52,17 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
           const filteredAds = data.filter((ad: any) => ad.position === position)
           console.log(`🟣 AdSlot-${position}: Found ${filteredAds.length} ads`)
           setAds(filteredAds)
+          
+          // Only set loading to false if we have data
+          if (!isCancelled) {
+            console.log(`⚪ AdSlot-${position}: Setting loading to false`)
+            setLoading(false)
+          }
         }
       } catch (error) {
         console.error(`💥 AdSlot-${position}: Error in loadAds:`, error)
         if (!isCancelled) {
           setAds([])
-        }
-      } finally {
-        if (!isCancelled) {
-          console.log(`⚪ AdSlot-${position}: Setting loading to false`)
           setLoading(false)
         }
       }
@@ -68,7 +75,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
       console.log(`❌ AdSlot-${position}: Cleanup function called`)
       isCancelled = true
     }
-  }, [position])
+  }, [position]) // Only depend on position, not loading state
 
   // Always render container, even during loading
 
