@@ -48,21 +48,23 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
   }
 
   if (ads.length === 0) {
-    // Show placeholder only in development mode
-    if (process.env.NODE_ENV === 'development') {
+    // Show placeholder in development, debug info in production temporarily
+    const isDevelopment = process.env.NODE_ENV === 'development'
+    if (isDevelopment || process.env.NEXT_PUBLIC_DEBUG_ADS === 'true') {
       return (
         <div className={`ad-slot ad-slot-${position} ${className}`} style={{ 
-          background: '#f8f9fa', 
-          border: '1px dashed #dee2e6', 
+          background: isDevelopment ? '#f8f9fa' : '#fff3cd', 
+          border: isDevelopment ? '1px dashed #dee2e6' : '1px solid #ffd60a', 
           padding: '12px', 
           textAlign: 'center',
           borderRadius: '8px',
-          color: '#6c757d',
+          color: isDevelopment ? '#6c757d' : '#664d03',
           fontSize: '12px',
           minHeight: position === 'sidebar' ? '150px' : '80px'
         }}>
           <p>📢 {position.charAt(0).toUpperCase() + position.slice(1).replace('-', ' ')} Ad Slot</p>
-          <p>(No ads configured)</p>
+          <p>{isDevelopment ? '(No ads configured)' : `(No ads for position: ${position})`}</p>
+          {!isDevelopment && <p style={{fontSize: '10px'}}>Debug: Check /api/ads for data</p>}
         </div>
       )
     }
@@ -71,6 +73,20 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
 
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
+      {/* Debug info for troubleshooting */}
+      {process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
+        <div style={{
+          background: '#e7f3ff',
+          border: '1px solid #0066cc',
+          padding: '8px',
+          fontSize: '10px',
+          marginBottom: '8px',
+          borderRadius: '4px'
+        }}>
+          Debug: {ads.length} ads loaded for position '{position}'
+        </div>
+      )}
+      
       {ads.map((ad) => (
         <div 
           key={ad.id} 
