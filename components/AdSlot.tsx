@@ -30,6 +30,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
         const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
         const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
         
+        console.log(`📡 AdSlot-${position}: About to fetch ${apiEndpoint}`)
         const response = await fetch(apiEndpoint)
         console.log(`🟠 AdSlot-${position}: API response ${response.status}`)
         
@@ -40,6 +41,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
           setAds(filteredAds)
         }
       } catch (error) {
+        console.error(`💥 AdSlot-${position}: Error in loadAds:`, error)
         if (!isCancelled) {
           setAds([])
         }
