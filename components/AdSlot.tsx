@@ -9,10 +9,18 @@ interface AdSlotProps {
 }
 
 export default function AdSlotComponent({ position, className = '' }: AdSlotProps) {
-  console.log(`🔴 AdSlot-${position}: Component STARTING`)
+  console.log(`🔴 AdSlot-${position}: Component STARTING at`, new Date().toLocaleTimeString())
   
   const [ads, setAds] = useState<AdSlot[]>([])
   const [loading, setLoading] = useState(true)
+  
+  // Track component mounting/unmounting
+  useEffect(() => {
+    console.log(`🟢 AdSlot-${position}: MOUNTED at`, new Date().toLocaleTimeString())
+    return () => {
+      console.log(`🔴 AdSlot-${position}: UNMOUNTING at`, new Date().toLocaleTimeString())
+    }
+  }, [])
   
   
 
@@ -84,7 +92,8 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
         display: 'block'
       }}>
         🚨 AdSlot-{position} VISIBLE TEST 🚨<br/>
-        Loading: {loading.toString()} | Ads: {ads.length}
+        Loading: {loading.toString()} | Ads: {ads.length}<br/>
+        Time: {new Date().toLocaleTimeString()}
       </div>
       
       {/* Debug info for troubleshooting */}
