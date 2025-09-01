@@ -12,30 +12,41 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
   const [ads, setAds] = useState<AdSlot[]>([])
   const [loading, setLoading] = useState(true)
   
+  // Minimal logging to check if component executes
+  console.log(`AdSlot-${position}: Component starting`)
+  
 
   useEffect(() => {
     let isCancelled = false
     
     const loadAds = async () => {
       try {
+        console.log(`AdSlot-${position}: Starting loadAds`)
         setLoading(true)
         // Use real ads in production, test ads only when debug is explicitly enabled
         const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
         const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
         
+        console.log(`AdSlot-${position}: Fetching from ${apiEndpoint}`)
         const response = await fetch(apiEndpoint)
+        console.log(`AdSlot-${position}: Response ${response.status}`)
         
         if (response.ok && !isCancelled) {
           const data = await response.json()
           const filteredAds = data.filter((ad: any) => ad.position === position)
+          console.log(`AdSlot-${position}: Found ${filteredAds.length} ads`)
           setAds(filteredAds)
+        } else {
+          console.log(`AdSlot-${position}: Response not OK or cancelled`)
         }
       } catch (error) {
+        console.error(`AdSlot-${position}: Error:`, error)
         if (!isCancelled) {
           setAds([])
         }
       } finally {
         if (!isCancelled) {
+          console.log(`AdSlot-${position}: Loading complete`)
           setLoading(false)
         }
       }
@@ -76,6 +87,8 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
     return null
   }
 
+  console.log(`AdSlot-${position}: Rendering with ${ads.length} ads, loading: ${loading}`)
+  
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
       
