@@ -50,6 +50,16 @@ export default function AdTestPage() {
           <h2>主内容区 / Main Content</h2>
           
           <div style={{ marginBottom: '20px' }}>
+            <h3>直接HTML测试 (绕过React组件)</h3>
+            <div 
+              style={{ border: '2px solid red', padding: '10px', marginBottom: '10px' }}
+              dangerouslySetInnerHTML={{ 
+                __html: "<div style='background: #ff6b6b; color: white; padding: 20px; text-align: center; border-radius: 8px;'><h3>🔥 DIRECT HTML TEST</h3><p>This bypasses React component</p></div>" 
+              }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '20px' }}>
             <h3>Header 广告位</h3>
             <AdSlot position="header" />
           </div>

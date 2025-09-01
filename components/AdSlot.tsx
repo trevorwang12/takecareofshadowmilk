@@ -91,14 +91,17 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
         </div>
       )}
       
-      {ads.map((ad) => (
-        <div 
-          key={ad.id} 
-          className="ad-content"
-          dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
-          suppressHydrationWarning={true}
-        />
-      ))}
+      {ads.map((ad) => {
+        console.log('Rendering ad:', ad.id, 'HTML length:', ad.htmlContent?.length)
+        return (
+          <div 
+            key={ad.id} 
+            className="ad-content"
+            dangerouslySetInnerHTML={{ __html: ad.htmlContent }}
+            suppressHydrationWarning={true}
+          />
+        )
+      })}
     </div>
   )
 }
