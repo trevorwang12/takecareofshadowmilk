@@ -22,15 +22,22 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
         const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
         const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
         
+        console.log(`[AdSlot-${position}] Loading from:`, apiEndpoint, 'isTestMode:', isTestMode)
+        console.log(`[AdSlot-${position}] DEBUG_ADS env:`, process.env.NEXT_PUBLIC_DEBUG_ADS)
+        
         const response = await fetch(apiEndpoint)
+        console.log(`[AdSlot-${position}] Response status:`, response.status)
+        
         if (response.ok && !isCancelled) {
           const data = await response.json()
+          console.log(`[AdSlot-${position}] Raw data length:`, data.length)
           const filteredAds = data.filter((ad: any) => ad.position === position)
+          console.log(`[AdSlot-${position}] Filtered ads for '${position}':`, filteredAds.length, filteredAds.map(ad => ad.id))
           setAds(filteredAds)
         }
       } catch (error) {
         if (!isCancelled) {
-          console.error('Error loading ads:', error)
+          console.error(`[AdSlot-${position}] Error loading ads:`, error)
           setAds([])
         }
       } finally {
