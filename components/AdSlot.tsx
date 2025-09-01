@@ -68,15 +68,23 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
 
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
-      {/* Temporary visibility test */}
+      {/* Temporary visibility test - VERY OBVIOUS */}
       <div style={{
         background: '#ff0000',
         color: 'white',
-        padding: '5px',
-        fontSize: '10px',
-        margin: '2px 0'
+        padding: '20px',
+        fontSize: '16px',
+        margin: '10px 0',
+        border: '5px solid #00ff00',
+        textAlign: 'center',
+        zIndex: 9999,
+        position: 'relative',
+        width: '100%',
+        minHeight: '60px',
+        display: 'block'
       }}>
-        AdSlot-{position} RENDERED - Loading: {loading.toString()} - Ads: {ads.length}
+        🚨 AdSlot-{position} VISIBLE TEST 🚨<br/>
+        Loading: {loading.toString()} | Ads: {ads.length}
       </div>
       
       {/* Debug info for troubleshooting */}
