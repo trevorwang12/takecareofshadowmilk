@@ -16,7 +16,7 @@ const DEFAULT_SEO = {
 
 async function loadFromFile() {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'seo.json')
+    const filePath = path.join(process.cwd(), 'data', 'seo-settings.json')
     const fileContent = await fs.readFile(filePath, 'utf8')
     return JSON.parse(fileContent)
   } catch (error) {

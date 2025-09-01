@@ -4,10 +4,10 @@ import path from 'path'
 
 async function loadFromFile() {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'recommendations.json')
+    const filePath = path.join(process.cwd(), 'data', 'recommended-games.json')
     const fileContent = await fs.readFile(filePath, 'utf8')
     const data = JSON.parse(fileContent)
-    return data?.games || []
+    return Array.isArray(data) ? data : []
   } catch (error) {
     console.log('Failed to load recommendations from file, using empty:', error)
     return []

@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
-import { dataManager } from '@/lib/data-manager'
+import gamesData from '@/data/games.json'
 
 export async function GET() {
   try {
-    const games = dataManager.getAllGames()
-    return NextResponse.json(games)
+    // Return active games only
+    const activeGames = gamesData.filter((game: any) => game.isActive)
+    return NextResponse.json(activeGames)
   } catch (error) {
     console.error('Error fetching games:', error)
     return NextResponse.json([], { status: 200 })
