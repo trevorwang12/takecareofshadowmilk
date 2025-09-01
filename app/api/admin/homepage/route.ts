@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminResponse, logAdminAccess } from '@/lib/admin-security'
+import { githubStorage } from '@/lib/github-storage'
 import { promises as fs } from 'fs'
 import path from 'path'
 
@@ -90,28 +91,44 @@ interface HomepageContent {
 // 内存中的首页内容，服务重启后会恢复默认值
 let homepageContent: HomepageContent = getDefaultContent()
 
-// 从文件加载最新数据
+// 从GitHub或文件加载最新数据
 async function loadFromFile(): Promise<HomepageContent> {
   try {
+    // Try loading from GitHub first (production)
+    const githubData = await githubStorage.loadData('homepage-content.json')
+    if (githubData) {
+      console.log('Homepage data loaded from GitHub')
+      return githubData
+    }
+
+    // Fallback to local file system (development)
     const filePath = path.join(process.cwd(), 'data', 'homepage-content.json')
     const fileContent = await fs.readFile(filePath, 'utf8')
     const loadedData = JSON.parse(fileContent)
-    console.log('Homepage data loaded from file:', filePath)
+    console.log('Homepage data loaded from local file:', filePath)
     return loadedData
   } catch (error) {
-    console.log('Failed to load homepage data from file, using default:', error)
+    console.log('Failed to load homepage data, using default:', error)
     return getDefaultContent()
   }
 }
 
-// 将数据保存到 JSON 文件
+// 将数据保存到 GitHub 或文件
 async function saveToFile(data: HomepageContent) {
   try {
+    // Try saving to GitHub first (production)
+    const success = await githubStorage.saveData('homepage-content.json', data)
+    if (success) {
+      console.log('Data saved to GitHub successfully')
+      return
+    }
+
+    // Fallback to local file system (development)
     const filePath = path.join(process.cwd(), 'data', 'homepage-content.json')
     await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8')
-    console.log('Data saved to file:', filePath)
+    console.log('Data saved to local file:', filePath)
   } catch (error) {
-    console.error('Failed to save data to file:', error)
+    console.error('Failed to save data:', error)
     // 不抛出错误，让内存更新继续进行
   }
 }
