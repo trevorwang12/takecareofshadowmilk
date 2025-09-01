@@ -110,10 +110,10 @@ gametemplate/
 
 ### Quick Start | 快速开始
 
-1. **Clone or download the project | 克隆或下载项目**
+1. **Clone the project | 克隆项目**
    ```bash
-   git clone <repository-url>
-   cd gametemplate
+   git clone https://github.com/trevorwang12/worldguessr.git
+   cd worldguessr
    ```
 
 2. **Install dependencies | 安装依赖**
@@ -126,9 +126,18 @@ gametemplate/
    npm run dev
    ```
 
-4. **Access the website | 访问网站**
-   - Website | 网站: http://localhost:3000
-   - Admin Panel | 管理面板: http://localhost:3000/admin
+4. **Access URLs | 访问地址**
+   - 🎮 **游戏网站**: [http://localhost:5050](http://localhost:5050)
+   - ⚙️ **Admin 管理**: [http://localhost:5050/admin](http://localhost:5050/admin)
+
+### 🔄 完美工作流程 | Perfect Workflow
+
+1. **本地配置** → 通过 Admin 面板快速设置所有内容
+2. **推送部署** → `git push` 推送到 GitHub
+3. **自动生效** → Vercel 自动部署，内容立即在生产环境生效
+4. **安全生产** → 生产环境 Admin 禁用，所有内容通过公共 API 正常显示
+
+**📖 详细工作流程**: 查看 `WORKFLOW_GUIDE.md` 获取完整的开发到部署指南
 
 ## 📋 Configuration Guide | 配置指南
 
