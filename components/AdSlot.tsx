@@ -11,6 +11,8 @@ interface AdSlotProps {
 export default function AdSlotComponent({ position, className = '' }: AdSlotProps) {
   const [ads, setAds] = useState<AdSlot[]>([])
   const [loading, setLoading] = useState(true)
+  
+  console.log(`[AdSlot] Component rendered for position: ${position}`)
 
   useEffect(() => {
     let isCancelled = false
@@ -84,6 +86,18 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
 
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
+      {/* Always visible debug - temporary */}
+      <div style={{
+        background: loading ? '#ffebee' : '#e8f5e8',
+        border: '2px solid ' + (loading ? '#f44336' : '#4caf50'),
+        padding: '8px',
+        fontSize: '10px',
+        marginBottom: '8px',
+        borderRadius: '4px'
+      }}>
+        <strong>AdSlot-{position}</strong> | Loading: {loading.toString()} | Ads: {ads.length} | Env: {process.env.NEXT_PUBLIC_DEBUG_ADS || 'undefined'}
+      </div>
+      
       {/* Debug info for troubleshooting */}
       {process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
         <div style={{
