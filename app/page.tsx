@@ -190,6 +190,11 @@ export default function HomePage() {
       {/* Header */}
       <Header />
 
+      {/* Test div */}
+      <div style={{background: '#00ff00', padding: '10px', color: 'black'}}>
+        TEST DIV BEFORE ADSLOT - If you see this, page rendering works
+      </div>
+      
       {/* Ad Slot - Header Position */}
       <AdSlot position="header" className="max-w-7xl mx-auto px-4 py-2" />
 
