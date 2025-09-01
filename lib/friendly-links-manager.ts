@@ -30,7 +30,7 @@ export interface FriendlyLinksData {
 
 // 友情链接管理器类
 class FriendlyLinksManager {
-  private apiUrl = '/api/admin/friendly-links'
+  private apiUrl = '/api/friendly-links'
 
   // 获取所有友情链接数据
   async getData(): Promise<FriendlyLinksData> {

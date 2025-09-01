@@ -101,7 +101,7 @@ class HomepageManager {
 
   private async loadFromAPI(): Promise<HomepageContent> {
     try {
-      const response = await fetch('/api/admin/homepage')
+      const response = await fetch('/api/homepage')
       if (response.ok) {
         return await response.json()
       }

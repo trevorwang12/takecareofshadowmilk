@@ -20,7 +20,7 @@ class FeaturedGamesManager {
 
   private async loadFromAPI(): Promise<FeaturedGame[]> {
     try {
-      const response = await fetch('/api/admin/featured-games')
+      const response = await fetch('/api/featured-games')
       if (response.ok) {
         return await response.json()
       }

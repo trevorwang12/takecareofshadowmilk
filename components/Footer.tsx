@@ -48,9 +48,9 @@ export default function Footer() {
 
     const loadFooterContent = async () => {
       try {
-        const response = await fetch('/api/admin/footer')
+        const response = await fetch('/api/footer')
         const content = response.ok ? await response.json() : null
-        console.log('Footer content loaded:', content.copyright)
+        console.log('Footer content loaded:', content?.copyright)
         setFooterContent(content)
       } catch (error) {
         console.log('Footer content load error:', error)
