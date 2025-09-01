@@ -18,8 +18,8 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
     const loadAds = async () => {
       try {
         setLoading(true)
-        // Temporarily use test API to debug rendering issues
-        const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' || process.env.NODE_ENV === 'production' // Force test mode in production for debugging
+        // Use real ads in production, test ads only when debug is explicitly enabled
+        const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
         const apiEndpoint = isTestMode ? '/api/test-simple-ad' : '/api/ads'
         
         const response = await fetch(apiEndpoint)
@@ -54,8 +54,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
   if (ads.length === 0) {
     // Show placeholder in development, debug info in production temporarily
     const isDevelopment = process.env.NODE_ENV === 'development'
-    const showDebug = isDevelopment || process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' || process.env.NODE_ENV === 'production' // Force debug in production
-    if (showDebug) {
+    if (isDevelopment || process.env.NEXT_PUBLIC_DEBUG_ADS === 'true') {
       return (
         <div className={`ad-slot ad-slot-${position} ${className}`} style={{ 
           background: isDevelopment ? '#f8f9fa' : '#fff3cd', 
@@ -79,7 +78,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
   return (
     <div className={`ad-slot ad-slot-${position} ${className}`}>
       {/* Debug info for troubleshooting */}
-      {(process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' || process.env.NODE_ENV === 'production') && (
+      {process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
         <div style={{
           background: '#e7f3ff',
           border: '1px solid #0066cc',
@@ -118,7 +117,7 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
           )
         })
       ) : (
-        (process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' || process.env.NODE_ENV === 'production') && (
+        process.env.NEXT_PUBLIC_DEBUG_ADS === 'true' && (
           <div style={{
             background: '#fff3cd',
             border: '1px solid #ffd60a',
