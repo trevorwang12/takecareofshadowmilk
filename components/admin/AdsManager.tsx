@@ -17,7 +17,7 @@ import { sanitizeInput } from "@/lib/security"
 interface AdFormData {
   name: string
   htmlContent: string
-  position: 'header' | 'footer' | 'sidebar' | 'hero-bottom' | 'content-top' | 'game-details-bottom' | 'content-bottom' | 'recommendations-top'
+  position: 'header' | 'footer' | 'sidebar' | 'hero-bottom' | 'content-top' | 'game-details-bottom' | 'content-bottom' | 'recommendations-top' | 'adsense-auto' | 'adsense-display' | 'adsense-in-article' | 'adsense-in-feed'
   isActive: boolean
 }
 
@@ -141,7 +141,11 @@ export default function AdsManager() {
       'content-top': 'Content Top',
       'game-details-bottom': 'Game Details Bottom',
       'content-bottom': 'Content Bottom',
-      'recommendations-top': 'Recommendations Top'
+      'recommendations-top': 'Recommendations Top',
+      'adsense-auto': 'AdSense Auto Ads',
+      'adsense-display': 'AdSense Display',
+      'adsense-in-article': 'AdSense In-Article',
+      'adsense-in-feed': 'AdSense In-Feed'
     }
     return labels[position] || position
   }
@@ -201,6 +205,10 @@ export default function AdsManager() {
                           <SelectItem value="game-details-bottom">Game Details Bottom</SelectItem>
                           <SelectItem value="content-bottom">Content Bottom</SelectItem>
                           <SelectItem value="recommendations-top">Recommendations Top</SelectItem>
+                          <SelectItem value="adsense-auto">AdSense Auto Ads</SelectItem>
+                          <SelectItem value="adsense-display">AdSense Display</SelectItem>
+                          <SelectItem value="adsense-in-article">AdSense In-Article</SelectItem>
+                          <SelectItem value="adsense-in-feed">AdSense In-Feed</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

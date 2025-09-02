@@ -9,7 +9,7 @@ interface AdSlot {
   name: string
   htmlContent: string
   isActive: boolean
-  position: 'header' | 'footer' | 'sidebar' | 'hero-bottom' | 'content-top' | 'game-details-bottom' | 'content-bottom' | 'recommendations-top'
+  position: 'header' | 'footer' | 'sidebar' | 'hero-bottom' | 'content-top' | 'game-details-bottom' | 'content-bottom' | 'recommendations-top' | 'adsense-auto' | 'adsense-display' | 'adsense-in-article' | 'adsense-in-feed'
   createdAt: string
   updatedAt: string
 }
@@ -78,6 +78,24 @@ function getDefaultAds(): AdSlot[] {
       "id": "ad_1756696279585_vm5xypv07",
       "createdAt": "2025-09-01T03:11:19.585Z",
       "updatedAt": "2025-09-01T03:11:19.585Z"
+    },
+    {
+      "name": "AdSense Auto Ads",
+      "htmlContent": "<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID\" crossorigin=\"anonymous\"></script>",
+      "position": "adsense-auto",
+      "isActive": false,
+      "id": "adsense_auto_ads",
+      "createdAt": "2025-09-02T04:00:00.000Z",
+      "updatedAt": "2025-09-02T04:00:00.000Z"
+    },
+    {
+      "name": "AdSense Display Ad",
+      "htmlContent": "<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID\" crossorigin=\"anonymous\"></script>\n<ins class=\"adsbygoogle\" style=\"display:block\" data-ad-client=\"ca-pub-YOUR_PUBLISHER_ID\" data-ad-slot=\"YOUR_AD_SLOT_ID\" data-ad-format=\"auto\" data-full-width-responsive=\"true\"></ins>\n<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>",
+      "position": "adsense-display",
+      "isActive": false,
+      "id": "adsense_display_ad",
+      "createdAt": "2025-09-02T04:00:00.000Z",
+      "updatedAt": "2025-09-02T04:00:00.000Z"
     }
   ]
 }
