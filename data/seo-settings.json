@@ -20,7 +20,7 @@
     "ogImage": "/og-image.png",
     "ogTitle": "GAMES - Best Free Online Games",
     "ogDescription": "Play the best free online games. No download required!",
-    "robotsTxt": "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\n\nSitemap:https://worldguessr.pro//sitemap.xml",
+    "robotsTxt": "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\n\nSitemap:https://worldguessr.pro/sitemap.xml",
     "structuredData": {
       "enabled": true,
       "organizationType": "WebSite",
@@ -39,7 +39,7 @@
       "appleMobileWebAppCapable": "yes"
     },
     "createdAt": "2025-08-29T11:10:41.564Z",
-    "updatedAt": "2025-09-02T00:48:17.795Z",
+    "updatedAt": "2025-09-02T01:06:36.144Z",
     "canonicalUrl": "https://worldguessr.pro/"
   },
   "gamePageSEO": {
