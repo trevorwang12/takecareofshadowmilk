@@ -24,7 +24,7 @@ export default function ImprovedAdSlot({ position, className = '' }: AdSlotProps
       if (!response.ok) return
       
       const data = await response.json()
-      const ad = data.find((ad: any) => ad.position === position && ad.isActive)
+      const ad = data.find((ad: any) => ad.position === position && ad.isActive !== false)
       if (!ad) return
       
       const uniqueId = `${ad.id}-${position}-${Date.now()}`
