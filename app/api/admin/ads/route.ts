@@ -17,22 +17,67 @@ interface AdSlot {
 function getDefaultAds(): AdSlot[] {
   return [
     {
-      id: 'header-banner',
-      name: 'Header Banner',
-      htmlContent: '<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; padding: 20px; border-radius: 8px;"><h3 style="margin: 0 0 10px 0;">🎮 Welcome to GAMES Platform!</h3><p style="margin: 0;">Discover thousands of free games - Play instantly in your browser</p></div>',
-      isActive: true,
-      position: 'header',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      "id": "header-banner",
+      "name": "native banner",
+      "htmlContent": "<script async=\"async\" data-cfasync=\"false\" src=\"//pl27550504.revenuecpmgate.com/7f4e324f2b07a5d92952cf5ac8a8dd2f/invoke.js\"></script>\n<div id=\"container-7f4e324f2b07a5d92952cf5ac8a8dd2f\"></div>",
+      "isActive": true,
+      "position": "header",
+      "createdAt": "2025-08-29T10:51:32.233Z",
+      "updatedAt": "2025-09-01T01:40:54.700Z"
     },
     {
-      id: 'footer-banner',
-      name: 'Footer Banner',
-      htmlContent: '<div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; text-align: center; padding: 20px; border-radius: 8px;"><h3 style="margin: 0 0 10px 0;">🎮 Thanks for Playing!</h3><p style="margin: 0;">Visit us again for more amazing games</p></div>',
-      isActive: true,
-      position: 'footer',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      "id": "footer-banner",
+      "name": "Footer Banner",
+      "htmlContent": "<div style=\"background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; text-align: center; padding: 20px; border-radius: 8px;\"><h3 style=\"margin: 0 0 10px 0;\">🎮 Thanks for Playing!</h3><p style=\"margin: 0;\">Visit us again for more amazing games</p></div>",
+      "isActive": false,
+      "position": "footer",
+      "createdAt": "2025-08-29T10:51:32.233Z",
+      "updatedAt": "2025-08-31T08:41:00.504Z"
+    },
+    {
+      "name": "hero bottom",
+      "htmlContent": "<script async=\"async\" data-cfasync=\"false\" src=\"//pl27550504.revenuecpmgate.com/7f4e324f2b07a5d92952cf5ac8a8dd2f/invoke.js\"></script>\n<div id=\"container-7f4e324f2b07a5d92952cf5ac8a8dd2f\"></div>",
+      "position": "hero-bottom",
+      "isActive": true,
+      "id": "ad_1756693979664_6lfhsrzgo",
+      "createdAt": "2025-09-01T02:32:59.664Z",
+      "updatedAt": "2025-09-01T02:32:59.664Z"
+    },
+    {
+      "name": "content top",
+      "htmlContent": "<script async=\"async\" data-cfasync=\"false\" src=\"//pl27550504.revenuecpmgate.com/7f4e324f2b07a5d92952cf5ac8a8dd2f/invoke.js\"></script>\n<div id=\"container-7f4e324f2b07a5d92952cf5ac8a8dd2f\"></div>",
+      "position": "content-top",
+      "isActive": true,
+      "id": "ad_1756694007025_jda523u4w",
+      "createdAt": "2025-09-01T02:33:27.025Z",
+      "updatedAt": "2025-09-01T02:33:27.025Z"
+    },
+    {
+      "name": "content bottom",
+      "htmlContent": "<script async=\"async\" data-cfasync=\"false\" src=\"//pl27550504.revenuecpmgate.com/7f4e324f2b07a5d92952cf5ac8a8dd2f/invoke.js\"></script>\n<div id=\"container-7f4e324f2b07a5d92952cf5ac8a8dd2f\"></div>",
+      "position": "content-bottom",
+      "isActive": true,
+      "id": "ad_1756694035196_433pkj3py",
+      "createdAt": "2025-09-01T02:33:55.196Z",
+      "updatedAt": "2025-09-01T02:33:55.196Z"
+    },
+    {
+      "name": "recommendation top",
+      "htmlContent": "<script async=\"async\" data-cfasync=\"false\" src=\"//pl27550504.revenuecpmgate.com/7f4e324f2b07a5d92952cf5ac8a8dd2f/invoke.js\"></script>\n<div id=\"container-7f4e324f2b07a5d92952cf5ac8a8dd2f\"></div>",
+      "position": "recommendations-top",
+      "isActive": true,
+      "id": "ad_1756694070962_257xzwqu3",
+      "createdAt": "2025-09-01T02:34:30.962Z",
+      "updatedAt": "2025-09-01T02:34:30.962Z"
+    },
+    {
+      "name": "sidebar",
+      "htmlContent": "<script type=\"text/javascript\">\n\tatOptions = {\n\t\t'key' : 'd01b6a20602175d470ff4d3f0b9e70b9',\n\t\t'format' : 'iframe',\n\t\t'height' : 300,\n\t\t'width' : 160,\n\t\t'params' : {}\n\t};\n</script>\n<script type=\"text/javascript\" src=\"//www.highperformanceformat.com/d01b6a20602175d470ff4d3f0b9e70b9/invoke.js\"></script>",
+      "position": "sidebar",
+      "isActive": true,
+      "id": "ad_1756696279585_vm5xypv07",
+      "createdAt": "2025-09-01T03:11:19.585Z",
+      "updatedAt": "2025-09-01T03:11:19.585Z"
     }
   ]
 }
