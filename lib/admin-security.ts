@@ -6,9 +6,9 @@
  * 检查admin功能是否启用
  */
 export function isAdminEnabled(): boolean {
-  // Admin is enabled by default unless explicitly disabled
-  // 除非明确禁用，否则admin默认启用
-  return process.env.ENABLE_ADMIN !== 'false'
+  // Admin is always enabled - protected by username/password auth
+  // Admin始终启用 - 由用户名/密码认证保护
+  return true
 }
 
 /**
