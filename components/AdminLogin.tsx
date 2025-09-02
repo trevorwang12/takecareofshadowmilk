@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Lock, Shield, Eye, EyeOff } from 'lucide-react'
 import PasswordResetDialog from './PasswordResetDialog'
 import SecuritySetupDialog from './SecuritySetupDialog'
+import AdminDebugInfo from './AdminDebugInfo'
 
 interface AdminLoginProps {
   onLogin: (username: string, password: string) => { success: boolean; message?: string }
@@ -53,6 +54,8 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
           </p>
         </CardHeader>
         <CardContent>
+          <AdminDebugInfo />
+          
           {error && (
             <Alert className="mb-4 border-red-500">
               <AlertDescription className="text-red-700">
