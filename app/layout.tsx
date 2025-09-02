@@ -88,8 +88,50 @@ export async function generateMetadata(): Promise<Metadata> {
       'theme-color': seoSettings.metaTags.themeColor,
       'apple-mobile-web-app-title': seoSettings.metaTags.appleMobileWebAppTitle,
       'mobile-web-app-capable': seoSettings.metaTags.appleMobileWebAppCapable || 'yes',
+      'google-site-verification': seoSettings.googleSearchConsoleId,
     }
   }
+}
+
+// Analytics组件
+async function AnalyticsScript() {
+  let googleAnalyticsId = null
+  
+  try {
+    const fs = require('fs').promises
+    const path = require('path')
+    const seoFilePath = path.join(process.cwd(), 'data', 'seo-settings.json')
+    
+    try {
+      const fileContent = await fs.readFile(seoFilePath, 'utf8')
+      const data = JSON.parse(fileContent)
+      googleAnalyticsId = data.seoSettings?.googleAnalyticsId
+    } catch (error) {
+      // SEO文件不存在，使用默认值
+    }
+  } catch (error) {
+    console.error('Failed to load Analytics ID:', error)
+  }
+  
+  if (!googleAnalyticsId || googleAnalyticsId === 'GA_MEASUREMENT_ID') {
+    return null
+  }
+  
+  return (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${googleAnalyticsId}');
+          `,
+        }}
+      />
+    </>
+  )
 }
 
 export default function RootLayout({
@@ -102,6 +144,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="format-detection" content="telephone=no" />
+        <AnalyticsScript />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
