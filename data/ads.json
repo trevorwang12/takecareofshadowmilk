@@ -61,5 +61,14 @@
     "id": "ad_1756696279585_vm5xypv07",
     "createdAt": "2025-09-01T03:11:19.585Z",
     "updatedAt": "2025-09-01T03:11:19.585Z"
+  },
+  {
+    "name": "adsense 验证",
+    "htmlContent": "<script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4861826910865457\"\n     crossorigin=\"anonymous\"></script>",
+    "position": "adsense-verification",
+    "isActive": true,
+    "id": "ad_1756797147329_daj7yptr0",
+    "createdAt": "2025-09-02T07:12:27.329Z",
+    "updatedAt": "2025-09-02T07:12:27.329Z"
   }
 ]
