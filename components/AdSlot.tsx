@@ -33,11 +33,8 @@ export default function AdSlotComponent({ position, className = '' }: AdSlotProp
     const loadAds = async () => {
       console.log(`🔵 AdSlot-${position}: loadAds starting`)
       try {
-        // Don't set loading to true if already loading - prevents re-render
-        if (!loading) {
-          console.log(`🔄 AdSlot-${position}: Setting loading to true`)
-          setLoading(true)
-        }
+        console.log(`🔄 AdSlot-${position}: Setting loading to true`)
+        setLoading(true)
         
         // Use real ads in production, test ads only when debug is explicitly enabled
         const isTestMode = process.env.NEXT_PUBLIC_DEBUG_ADS === 'true'
