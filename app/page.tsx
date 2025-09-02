@@ -10,7 +10,7 @@ import { Search, Star, Play, Users, Gamepad2 } from "lucide-react"
 import { dataManager } from '@/lib/data-manager'
 import { featuredGamesManager } from '@/lib/feature-games-manager'
 import { homepageManager } from '@/lib/homepage-manager'
-import AdSlot from '@/components/AdSlot-Simple'
+import AdSlot from '@/components/ImprovedAdSlot'
 import GamePlayer from '@/components/GamePlayer'
 import YouMightAlsoLike from '@/components/YouMightAlsoLike'
 import InstantSearch from '@/components/InstantSearch'

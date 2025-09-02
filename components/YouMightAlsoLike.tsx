@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { recommendedGamesManager } from '@/lib/recommended-games-manager'
 import { GameData } from '@/lib/data-manager'
-import AdSlot from '@/components/AdSlot-Simple'
+import AdSlot from '@/components/ImprovedAdSlot'
 
 export default function YouMightAlsoLike() {
   const [recommendedGames, setRecommendedGames] = useState<GameData[]>([])

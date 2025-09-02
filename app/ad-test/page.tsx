@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import AdSlot from '@/components/AdSlot'
+import AdSlot from '@/components/ImprovedAdSlot'
 
 export default function AdTestPage() {
   const [testMode, setTestMode] = useState(false)

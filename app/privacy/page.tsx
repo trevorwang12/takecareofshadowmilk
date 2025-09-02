@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Shield, Lock, Eye, Database } from "lucide-react"
-import AdSlot from "@/components/AdSlot-Simple"
+import AdSlot from "@/components/ImprovedAdSlot"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
