@@ -246,7 +246,7 @@ Sitemap: https://yourgamesite.com/sitemap.xml`,
       tags.push(`<meta name="apple-mobile-web-app-title" content="${settings.metaTags.appleMobileWebAppTitle}">`)
     }
     if (settings.metaTags.appleMobileWebAppCapable) {
-      tags.push(`<meta name="apple-mobile-web-app-capable" content="${settings.metaTags.appleMobileWebAppCapable}">`)
+      tags.push(`<meta name="mobile-web-app-capable" content="${settings.metaTags.appleMobileWebAppCapable}">`)
     }
     
     return tags.join('\n')

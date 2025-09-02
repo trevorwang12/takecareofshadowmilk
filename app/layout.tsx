@@ -56,6 +56,9 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: seoSettings.author }],
     generator: 'Next.js',
     metadataBase: new URL(seoSettings.siteUrl),
+    alternates: {
+      canonical: seoSettings.canonicalUrl || seoSettings.siteUrl,
+    },
     openGraph: {
       title: seoSettings.ogTitle || seoSettings.siteName,
       description: seoSettings.ogDescription || seoSettings.siteDescription,
@@ -84,7 +87,7 @@ export async function generateMetadata(): Promise<Metadata> {
     other: {
       'theme-color': seoSettings.metaTags.themeColor,
       'apple-mobile-web-app-title': seoSettings.metaTags.appleMobileWebAppTitle,
-      'apple-mobile-web-app-capable': seoSettings.metaTags.appleMobileWebAppCapable || 'yes',
+      'mobile-web-app-capable': seoSettings.metaTags.appleMobileWebAppCapable || 'yes',
     }
   }
 }
