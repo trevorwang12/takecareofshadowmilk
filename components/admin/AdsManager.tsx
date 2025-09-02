@@ -17,7 +17,7 @@ import { sanitizeInput } from "@/lib/security"
 interface AdFormData {
   name: string
   htmlContent: string
-  position: 'header' | 'footer' | 'sidebar' | 'hero-bottom' | 'content-top' | 'game-details-bottom' | 'content-bottom' | 'recommendations-top' | 'adsense-auto' | 'adsense-display' | 'adsense-in-article' | 'adsense-in-feed'
+  position: 'header' | 'footer' | 'sidebar' | 'hero-bottom' | 'content-top' | 'game-details-bottom' | 'content-bottom' | 'recommendations-top' | 'adsense-auto' | 'adsense-display' | 'adsense-in-article' | 'adsense-in-feed' | 'adsense-verification'
   isActive: boolean
 }
 
@@ -145,7 +145,8 @@ export default function AdsManager() {
       'adsense-auto': 'AdSense Auto Ads',
       'adsense-display': 'AdSense Display',
       'adsense-in-article': 'AdSense In-Article',
-      'adsense-in-feed': 'AdSense In-Feed'
+      'adsense-in-feed': 'AdSense In-Feed',
+      'adsense-verification': 'AdSense Verification'
     }
     return labels[position] || position
   }
@@ -209,6 +210,7 @@ export default function AdsManager() {
                           <SelectItem value="adsense-display">AdSense Display</SelectItem>
                           <SelectItem value="adsense-in-article">AdSense In-Article</SelectItem>
                           <SelectItem value="adsense-in-feed">AdSense In-Feed</SelectItem>
+                          <SelectItem value="adsense-verification">AdSense Verification</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

@@ -9,7 +9,7 @@ interface AdSlot {
   name: string
   htmlContent: string
   isActive: boolean
-  position: 'header' | 'footer' | 'sidebar' | 'hero-bottom' | 'content-top' | 'game-details-bottom' | 'content-bottom' | 'recommendations-top' | 'adsense-auto' | 'adsense-display' | 'adsense-in-article' | 'adsense-in-feed'
+  position: 'header' | 'footer' | 'sidebar' | 'hero-bottom' | 'content-top' | 'game-details-bottom' | 'content-bottom' | 'recommendations-top' | 'adsense-auto' | 'adsense-display' | 'adsense-in-article' | 'adsense-in-feed' | 'adsense-verification'
   createdAt: string
   updatedAt: string
 }
@@ -94,6 +94,15 @@ function getDefaultAds(): AdSlot[] {
       "position": "adsense-display",
       "isActive": false,
       "id": "adsense_display_ad",
+      "createdAt": "2025-09-02T04:00:00.000Z",
+      "updatedAt": "2025-09-02T04:00:00.000Z"
+    },
+    {
+      "name": "AdSense Site Verification",
+      "htmlContent": "<meta name=\"google-adsense-account\" content=\"ca-pub-YOUR_PUBLISHER_ID\">",
+      "position": "adsense-verification",
+      "isActive": false,
+      "id": "adsense_verification",
       "createdAt": "2025-09-02T04:00:00.000Z",
       "updatedAt": "2025-09-02T04:00:00.000Z"
     }
