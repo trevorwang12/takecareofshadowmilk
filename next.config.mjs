@@ -8,10 +8,11 @@ const nextConfig = {
   },
   images: {
     unoptimized: false,
-    formats: ['image/webp', 'image/avif'],
+    formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 86400, // 24 hours cache
+    quality: 80, // Reduce from default 75 to 80 for better compression
     domains: [],
     remotePatterns: [
       {
@@ -19,6 +20,8 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
     optimizePackageImports: [
@@ -41,13 +44,31 @@ const nextConfig = {
       '@radix-ui/react-tooltip',
       'lucide-react',
     ],
+    // Use modern JS for better performance
+    browsersListForSwc: true,
+    legacyBrowsers: false,
+    // Enable turbo mode for faster builds
+    turbo: {
+      resolveAlias: {
+        underscore: 'lodash',
+        mocha: { browser: 'mocha/browser-entry.js' },
+      },
+    },
   },
   compiler: {
     // Temporarily disable console removal for debugging
     // removeConsole: process.env.NODE_ENV === 'production',
   },
+  // Performance optimizations
+  swcMinify: true,
   poweredByHeader: false,
   compress: true,
+  // Reduce render-blocking CSS
+  optimizeFonts: true,
+  // Enable build cache
+  generateBuildId: async () => {
+    return `build-${Date.now()}`
+  },
 }
 
 export default nextConfig

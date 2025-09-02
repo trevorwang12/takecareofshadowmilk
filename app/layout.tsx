@@ -101,8 +101,66 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="format-detection" content="telephone=no" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        {/* Resource hints for better performance */}
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+        <link rel="preload" as="font" type="font/woff2" href="/_next/static/media/geist-sans.woff2" crossOrigin="anonymous" />
+        <link rel="modulepreload" href="/_next/static/chunks/main.js" />
+        
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              /* Critical CSS to prevent layout shift */
+              html, body { 
+                margin: 0; 
+                padding: 0; 
+                font-display: swap;
+                -webkit-text-size-adjust: 100%;
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+              }
+              .max-w-7xl { max-width: 80rem; }
+              .mx-auto { margin-left: auto; margin-right: auto; }
+              .px-4 { padding-left: 1rem; padding-right: 1rem; }
+              .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+              .mb-8 { margin-bottom: 2rem; }
+              .mt-12 { margin-top: 3rem; }
+              .aspect-ratio-4-3 { aspect-ratio: 4/3; }
+              footer { height: auto; min-height: 200px; }
+              /* Prevent invisible text during font load */
+              .font-sans { font-display: swap; }
+              /* Improve image loading */
+              img { 
+                max-width: 100%; 
+                height: auto;
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+              }
+              /* Reduce CLS for grid layouts */
+              .grid { display: grid; }
+              .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+              .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+              @media (min-width: 640px) {
+                .sm\\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+              }
+              @media (min-width: 768px) {
+                .md\\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+              }
+              /* Optimize animations */
+              * {
+                will-change: auto;
+              }
+              .group:hover .group-hover\\:scale-105 {
+                transform: scale(1.05);
+              }
+            `,
+          }}
+        />
       </head>
       <body 
         className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}

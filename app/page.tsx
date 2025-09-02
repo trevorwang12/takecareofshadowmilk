@@ -313,9 +313,17 @@ export default function HomePage() {
                       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
                         <div className="aspect-[4/3] overflow-hidden flex-shrink-0">
                           <img 
-                            src={game.thumbnailUrl || "/placeholder.svg"} 
+                            src={game.thumbnailUrl?.replace(/\.png$/i, '.webp') || "/placeholder.svg"} 
                             alt={game.name} 
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                            loading={index < 4 ? "eager" : "lazy"}
+                            fetchpriority={index < 2 ? "high" : "auto"}
+                            onError={(e) => {
+                              const img = e.target as HTMLImageElement;
+                              if (img.src.includes('.webp')) {
+                                img.src = game.thumbnailUrl || "/placeholder.svg";
+                              }
+                            }}
                           />
                         </div>
                         <div className="p-3 flex-grow flex items-start">
@@ -520,9 +528,16 @@ export default function HomePage() {
                     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
                       <div className="aspect-[4/3] overflow-hidden relative flex-shrink-0">
                         <img 
-                          src={game.thumbnailUrl || "/placeholder.svg"} 
+                          src={game.thumbnailUrl?.replace(/\.png$/i, '.webp') || "/placeholder.svg"} 
                           alt={game.name} 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                          loading="lazy"
+                          onError={(e) => {
+                            const img = e.target as HTMLImageElement;
+                            if (img.src.includes('.webp')) {
+                              img.src = game.thumbnailUrl || "/placeholder.svg";
+                            }
+                          }}
                         />
                         <div className="absolute top-1 right-1">
                           <Badge className="bg-orange-500 text-white text-xs px-1 py-0.5">
