@@ -71,6 +71,12 @@ const BackupManager = lazy(() =>
   }))
 )
 
+const SitemapManager = lazy(() => 
+  import("./admin/SitemapManager").catch(() => ({
+    default: () => <div className="p-4">Sitemap Manager failed to load. Please refresh.</div>
+  }))
+)
+
 
 // 改进的Loading组件
 const LoadingTab = ({ title }: { title: string }) => (
@@ -145,18 +151,23 @@ export default function AdminPanel() {
 
         {/* Admin Tabs with Lazy Loading */}
         <Tabs defaultValue="games" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-10">
-            <TabsTrigger value="games">Games</TabsTrigger>
-            <TabsTrigger value="ads">Ads</TabsTrigger>
-            <TabsTrigger value="recommendations">AI Recommendations</TabsTrigger>
-            <TabsTrigger value="homepage">Homepage</TabsTrigger>
-            <TabsTrigger value="about">About Us</TabsTrigger>
-            <TabsTrigger value="contact">Messages</TabsTrigger>
-            <TabsTrigger value="footer">Footer</TabsTrigger>
-            <TabsTrigger value="seo">SEO</TabsTrigger>
-            <TabsTrigger value="friendly-links">Friendly Links</TabsTrigger>
-            <TabsTrigger value="backup">Backup</TabsTrigger>
-          </TabsList>
+          <div className="space-y-2">
+            <TabsList className="grid w-full grid-cols-6">
+              <TabsTrigger value="games">Games</TabsTrigger>
+              <TabsTrigger value="ads">Ads</TabsTrigger>
+              <TabsTrigger value="recommendations">AI Recommendations</TabsTrigger>
+              <TabsTrigger value="homepage">Homepage</TabsTrigger>
+              <TabsTrigger value="about">About Us</TabsTrigger>
+              <TabsTrigger value="contact">Messages</TabsTrigger>
+            </TabsList>
+            <TabsList className="grid w-full grid-cols-5">
+              <TabsTrigger value="footer">Footer</TabsTrigger>
+              <TabsTrigger value="seo">SEO</TabsTrigger>
+              <TabsTrigger value="friendly-links">Friendly Links</TabsTrigger>
+              <TabsTrigger value="sitemap">Sitemap</TabsTrigger>
+              <TabsTrigger value="backup">Backup</TabsTrigger>
+            </TabsList>
+          </div>
           
           <TabsContent value="games">
             <Suspense fallback={<LoadingTab title="Games Manager" />}>
@@ -210,6 +221,12 @@ export default function AdminPanel() {
           <TabsContent value="friendly-links">
             <Suspense fallback={<LoadingTab title="Friendly Links Manager" />}>
               <FriendlyLinksManager />
+            </Suspense>
+          </TabsContent>
+          
+          <TabsContent value="sitemap">
+            <Suspense fallback={<LoadingTab title="Sitemap Manager" />}>
+              <SitemapManager />
             </Suspense>
           </TabsContent>
           

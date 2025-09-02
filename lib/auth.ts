@@ -147,20 +147,10 @@ import { useState, useEffect } from 'react'
 
 export const useAdminAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const checkAuth = () => {
-      setIsAuthenticated(checkAuthStatus())
-      setIsLoading(false)
-    }
-    
-    checkAuth()
-    
-    // 定期检查认证状态
-    const interval = setInterval(checkAuth, 60000) // 每分钟检查一次
-    
-    return () => clearInterval(interval)
+    setIsAuthenticated(checkAuthStatus())
   }, [])
 
   const handleLogin = (username: string, password: string): { success: boolean; message?: string } => {

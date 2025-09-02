@@ -1,0 +1,19 @@
+{
+  "settings": {
+    "baseUrl": "https://worldguessr.pro",
+    "defaultChangeFreq": "weekly",
+    "defaultPriority": 0.5,
+    "includeStaticPages": true,
+    "includeGamePages": true,
+    "includeCategoryPages": true,
+    "customUrls": [],
+    "excludeUrls": [
+      "/admin",
+      "/api",
+      "/test"
+    ],
+    "autoGenerate": true,
+    "lastGenerated": "2025-09-02T02:26:24.074Z"
+  },
+  "updatedAt": "2025-09-02T02:26:24.075Z"
+}
