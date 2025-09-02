@@ -6,21 +6,9 @@
  * 检查admin功能是否启用
  */
 export function isAdminEnabled(): boolean {
-  // Check if admin is explicitly disabled
-  // 检查admin是否被明确禁用
-  if (process.env.ENABLE_ADMIN === 'false') {
-    return false
-  }
-  
-  // In development, admin is enabled by default unless explicitly disabled
-  // 开发环境中，除非明确禁用，否则admin默认启用
-  if (process.env.NODE_ENV === 'development') {
-    return true
-  }
-  
-  // In production, check environment variable (must be explicitly enabled)
-  // 生产环境中，检查环境变量（必须明确启用）
-  return process.env.ENABLE_ADMIN === 'true'
+  // Admin is enabled by default unless explicitly disabled
+  // 除非明确禁用，否则admin默认启用
+  return process.env.ENABLE_ADMIN !== 'false'
 }
 
 /**
