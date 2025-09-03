@@ -19,4 +19,4 @@ Disallow: /ad-script-test
 Disallow: /debug*
 
 # Sitemap
-Sitemap: https://worldguessr.com/sitemap.xml
+Sitemap: https://worldguessr.pro/sitemap.xml
