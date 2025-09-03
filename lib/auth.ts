@@ -107,7 +107,7 @@ const login = async (username: string, password: string): Promise<{ success: boo
         'Content-Type': 'application/json'
       },
       credentials: 'include',
-      body: JSON.stringify({ password })
+      body: JSON.stringify({ username, password })
     })
     
     if (response.ok) {
