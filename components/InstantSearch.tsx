@@ -1,10 +1,9 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Search, X } from "lucide-react"
-import { dataManager } from "@/lib/data-manager"
+import { Search, X, Loader2 } from "lucide-react"
+import { simpleSearch, GameData } from "@/lib/simple-search"
 
 interface InstantSearchProps {
   className?: string
@@ -18,28 +17,53 @@ export default function InstantSearch({
   maxResults = 8
 }: InstantSearchProps) {
   const [searchTerm, setSearchTerm] = useState("")
-  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [searchResults, setSearchResults] = useState<GameData[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [isSearching, setIsSearching] = useState(false)
   const router = useRouter()
   const searchRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const debounceRef = useRef<NodeJS.Timeout>()
 
-  // 实时搜索功能
+  // 实时搜索
   useEffect(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current)
+    }
+
     if (searchTerm.trim().length >= 1) {
-      const results = dataManager.searchGames(searchTerm.trim(), maxResults)
-      setSearchResults(results)
+      setIsSearching(true)
       setIsOpen(true)
-      setSelectedIndex(-1)
+      
+      debounceRef.current = setTimeout(async () => {
+        try {
+          console.log('Searching for:', searchTerm)
+          const results = await simpleSearch.searchGames(searchTerm.trim(), maxResults)
+          setSearchResults(results)
+          setSelectedIndex(-1)
+        } catch (error) {
+          console.error('Search error:', error)
+          setSearchResults([])
+        } finally {
+          setIsSearching(false)
+        }
+      }, 300)
     } else {
       setSearchResults([])
       setIsOpen(false)
       setSelectedIndex(-1)
+      setIsSearching(false)
+    }
+
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current)
+      }
     }
   }, [searchTerm, maxResults])
 
-  // 点击外部关闭搜索结果
+  // 点击外部关闭
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -47,23 +71,25 @@ export default function InstantSearch({
         setSelectedIndex(-1)
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
+    return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
   // 键盘导航
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isOpen) return
+    if (!isOpen) {
+      if (e.key === "Enter" && searchTerm.trim()) {
+        e.preventDefault()
+        router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`)
+        handleClearSearch()
+      }
+      return
+    }
 
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault()
-        setSelectedIndex(prev => 
-          prev < searchResults.length - 1 ? prev + 1 : prev
-        )
+        setSelectedIndex(prev => prev < searchResults.length - 1 ? prev + 1 : prev)
         break
       case "ArrowUp":
         e.preventDefault()
@@ -72,11 +98,9 @@ export default function InstantSearch({
       case "Enter":
         e.preventDefault()
         if (selectedIndex >= 0 && searchResults[selectedIndex]) {
-          // 导航到选中的游戏
           router.push(`/game/${searchResults[selectedIndex].id}`)
           handleClearSearch()
         } else if (searchTerm.trim()) {
-          // 跳转到搜索结果页面
           router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`)
           handleClearSearch()
         }
@@ -101,11 +125,6 @@ export default function InstantSearch({
     handleClearSearch()
   }
 
-  const handleViewAllResults = () => {
-    router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`)
-    handleClearSearch()
-  }
-
   return (
     <div ref={searchRef} className={`relative ${className}`}>
       <div className="relative">
@@ -119,7 +138,9 @@ export default function InstantSearch({
           className="border border-gray-300 rounded-md pl-3 pr-8 py-1 text-sm w-48 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
         />
         <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center">
-          {searchTerm ? (
+          {isSearching ? (
+            <Loader2 className="w-4 h-4 text-blue-500 animate-spin" />
+          ) : searchTerm ? (
             <button
               onClick={handleClearSearch}
               className="p-1 hover:bg-gray-100 rounded-full transition-colors"
@@ -147,7 +168,7 @@ export default function InstantSearch({
                   }`}
                 >
                   <img
-                    src={game.thumbnailUrl || "/placeholder.svg"}
+                    src={game.thumbnailUrl}
                     alt={game.name}
                     className="w-10 h-10 rounded object-cover flex-shrink-0"
                   />
@@ -167,7 +188,10 @@ export default function InstantSearch({
               {/* 查看所有结果 */}
               {searchResults.length >= maxResults && (
                 <div
-                  onClick={handleViewAllResults}
+                  onClick={() => {
+                    router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`)
+                    handleClearSearch()
+                  }}
                   className="flex items-center justify-center gap-2 p-3 hover:bg-gray-50 cursor-pointer transition-colors border-t border-gray-200 text-blue-600 font-medium text-sm"
                 >
                   <Search className="w-4 h-4" />

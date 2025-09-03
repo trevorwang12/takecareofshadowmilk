@@ -204,7 +204,25 @@ class DataManager {
     return result
   }
 
-  searchGames(query: string, limit?: number): GameData[] {
+  async searchGames(query: string, limit?: number): Promise<GameData[]> {
+    // 确保数据已经初始化
+    await this.initializeFromAPI()
+    
+    const searchTerm = query.toLowerCase()
+    const results = this.games.filter(game => 
+      game.isActive && (
+        game.name.toLowerCase().includes(searchTerm) ||
+        game.description.toLowerCase().includes(searchTerm) ||
+        game.category.toLowerCase().includes(searchTerm) ||
+        (game.developer && game.developer.toLowerCase().includes(searchTerm)) ||
+        game.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+      )
+    )
+    return limit ? results.slice(0, limit) : results
+  }
+
+  // 保留同步版本以向后兼容
+  searchGamesSync(query: string, limit?: number): GameData[] {
     const searchTerm = query.toLowerCase()
     const results = this.games.filter(game => 
       game.isActive && (
@@ -436,6 +454,7 @@ export const {
   getHotGames,
   getNewGames,
   searchGames,
+  searchGamesSync,
   updateGameViews: updateGameViewCount,
   updateGamePlayCount,
   formatPlayCount,

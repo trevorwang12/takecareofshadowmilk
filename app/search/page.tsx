@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Search, Play, Star, ArrowLeft, Gamepad2 } from "lucide-react"
-import { dataManager } from "@/lib/data-manager"
+import { simpleSearch, GameData } from "@/lib/simple-search"
 import AdSlot from "@/components/ImprovedAdSlot"
 import PageH1 from "@/components/PageH1"
 import YouMightAlsoLike from "@/components/YouMightAlsoLike"
@@ -18,7 +18,7 @@ export default function SearchPage() {
   const searchParams = useSearchParams()
   const query = searchParams.get('q') || ''
   const [searchTerm, setSearchTerm] = useState(query)
-  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [searchResults, setSearchResults] = useState<GameData[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -31,9 +31,9 @@ export default function SearchPage() {
   const performSearch = async (term: string) => {
     setIsLoading(true)
     try {
-      // Ensure data manager is initialized by getting all games first
-      await dataManager.getAllGames()
-      const results = dataManager.searchGames(term)
+      console.log('Performing search for:', term)
+      const results = await simpleSearch.searchGames(term)
+      console.log('Search results:', results.length, 'games found')
       setSearchResults(results)
     } catch (error) {
       console.error('Search error:', error)
@@ -52,16 +52,17 @@ export default function SearchPage() {
     }
   }
 
-  const [hotGames, setHotGames] = useState<any[]>([])
-  const [newGames, setNewGames] = useState<any[]>([])
+  const [hotGames, setHotGames] = useState<GameData[]>([])
+  const [newGames, setNewGames] = useState<GameData[]>([])
 
   // Load initial data
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        await dataManager.getAllGames()
-        setHotGames(dataManager.getHotGames(8))
-        setNewGames(dataManager.getNewGames(8))
+        const hot = await simpleSearch.getHotGames(8)
+        const newest = await simpleSearch.getNewGames(8)
+        setHotGames(hot)
+        setNewGames(newest)
       } catch (error) {
         console.error('Error loading initial data:', error)
       }
