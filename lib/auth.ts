@@ -101,6 +101,8 @@ const login = async (username: string, password: string): Promise<{ success: boo
   }
   
   try {
+    console.log('Attempting login with:', { username, passwordLength: password?.length })
+    
     const response = await fetch('/api/admin/auth', {
       method: 'POST',
       headers: {
@@ -110,11 +112,23 @@ const login = async (username: string, password: string): Promise<{ success: boo
       body: JSON.stringify({ username, password })
     })
     
+    console.log('Login response status:', response.status)
+    const responseText = await response.text()
+    console.log('Login response body:', responseText)
+    
     if (response.ok) {
-      const data = await response.json()
       clearLoginAttempts()
       return { success: true }
     } else {
+      let errorMessage = '登录失败'
+      
+      try {
+        const errorData = JSON.parse(responseText)
+        errorMessage = errorData.error || errorMessage
+      } catch (e) {
+        console.error('Failed to parse error response:', e)
+      }
+      
       recordFailedAttempt()
       const attempts = parseInt(localStorage.getItem(LOGIN_ATTEMPTS_KEY) || '0')
       const remaining = MAX_LOGIN_ATTEMPTS - attempts
@@ -122,7 +136,7 @@ const login = async (username: string, password: string): Promise<{ success: boo
       if (remaining > 0) {
         return { 
           success: false, 
-          message: `密码错误，还有 ${remaining} 次尝试机会` 
+          message: `${errorMessage}，还有 ${remaining} 次尝试机会` 
         }
       } else {
         return { 
@@ -132,7 +146,7 @@ const login = async (username: string, password: string): Promise<{ success: boo
       }
     }
   } catch (error) {
-    console.error('Login failed:', error)
+    console.error('Login request failed:', error)
     return { success: false, message: '登录请求失败，请重试' }
   }
 }

@@ -5,12 +5,32 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'
 
 export async function POST(request: NextRequest) {
   try {
-    const { username, password } = await request.json()
+    const body = await request.json()
+    console.log('Auth request received:', { 
+      hasUsername: !!body.username, 
+      hasPassword: !!body.password,
+      usernameLength: body.username?.length || 0,
+      passwordLength: body.password?.length || 0
+    })
+    
+    const { username, password } = body
+    
+    // 环境变量调试信息
+    console.log('Environment check:', {
+      expectedUsername: ADMIN_USERNAME,
+      expectedPassword: ADMIN_PASSWORD,
+      receivedUsername: username,
+      passwordMatch: password === ADMIN_PASSWORD,
+      usernameMatch: username === ADMIN_USERNAME
+    })
     
     // 检查用户名和密码是否正确
     if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+      console.log('Authentication failed')
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
+    
+    console.log('Authentication successful')
     
     // 创建响应，设置认证cookie
     const response = NextResponse.json({ success: true, message: 'Authentication successful' })
