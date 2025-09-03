@@ -43,20 +43,37 @@ export default function PageH1({ pageType, template, data = {}, className = '' }
   const generateHeading = () => {
     let text = template
     
-    // 如果没有提供template，从配置获取
-    if (!text && headingStructure) {
-      switch (pageType) {
-        case 'homepage':
-          text = headingStructure.homepage?.h1 || '{siteName} - Best Free Online Games'
-          break
-        case 'gamePage':
-          text = headingStructure.gamePage?.h1 || '{gameName}'
-          break
-        case 'categoryPage':
-          text = headingStructure.categoryPage?.h1 || '{categoryName} Games'
-          break
-        default:
-          text = data.siteName || 'GAMES'
+    // 如果没有提供template，从配置获取或使用默认值
+    if (!text) {
+      if (headingStructure) {
+        switch (pageType) {
+          case 'homepage':
+            text = headingStructure.homepage?.h1 || '{siteName} - Best Free Online Games'
+            break
+          case 'gamePage':
+            text = headingStructure.gamePage?.h1 || '{gameName}'
+            break
+          case 'categoryPage':
+            text = headingStructure.categoryPage?.h1 || '{categoryName} Games'
+            break
+          default:
+            text = data.siteName || 'GAMES'
+        }
+      } else {
+        // 如果没有headingStructure配置，使用默认模板
+        switch (pageType) {
+          case 'homepage':
+            text = '{siteName} - Best Free Online Games'
+            break
+          case 'gamePage':
+            text = '{gameName}'
+            break
+          case 'categoryPage':
+            text = '{categoryName} Games'
+            break
+          default:
+            text = data.siteName || 'GAMES'
+        }
       }
     }
     
@@ -70,12 +87,25 @@ export default function PageH1({ pageType, template, data = {}, className = '' }
     setHeadingText(text || data.siteName || 'GAMES')
   }
   
-  // 如果没有内容，不渲染
-  if (!headingText) return null
+  // 生成fallback标题，确保总是有内容显示
+  const getFallbackTitle = () => {
+    switch (pageType) {
+      case 'homepage':
+        return `${data.siteName || 'GAMES'} - Best Free Online Games`
+      case 'gamePage':
+        return data.gameName || 'Game'
+      case 'categoryPage':
+        return `${data.categoryName || 'Category'} Games`
+      default:
+        return data.siteName || 'GAMES'
+    }
+  }
+  
+  const displayText = headingText || getFallbackTitle()
   
   return (
-    <h1 className={`sr-only ${className}`}>
-      {headingText}
+    <h1 className={`text-3xl font-bold text-gray-900 mb-6 ${className}`}>
+      {displayText}
     </h1>
   )
 }

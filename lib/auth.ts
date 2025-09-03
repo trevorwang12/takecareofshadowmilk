@@ -2,8 +2,8 @@
 
 interface AdminAuth {
   isAuthenticated: boolean
-  login: (username: string, password: string) => boolean
-  logout: () => void
+  login: (username: string, password: string) => Promise<{ success: boolean; message?: string }>
+  logout: () => Promise<void>
 }
 
 const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin'
@@ -21,24 +21,26 @@ const generateAuthToken = (): string => {
   return btoa(Date.now().toString() + Math.random().toString(36))
 }
 
-// 检查认证状态
-const checkAuthStatus = (): boolean => {
+// 检查认证状态 - 使用API验证cookie
+const checkAuthStatus = async (): Promise<boolean> => {
   if (typeof window === 'undefined') return false
   
-  const token = localStorage.getItem(AUTH_KEY)
-  const expiry = localStorage.getItem(AUTH_EXPIRY_KEY)
-  
-  if (!token || !expiry) return false
-  
-  const expiryTime = parseInt(expiry)
-  if (Date.now() > expiryTime) {
-    // 令牌已过期，清除
-    localStorage.removeItem(AUTH_KEY)
-    localStorage.removeItem(AUTH_EXPIRY_KEY)
+  try {
+    const response = await fetch('/api/admin/auth', {
+      method: 'GET',
+      credentials: 'include'
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      return data.authenticated === true
+    }
+    
+    return false
+  } catch (error) {
+    console.error('Auth check failed:', error)
     return false
   }
-  
-  return true
 }
 
 // 检查登录锁定状态
@@ -81,8 +83,8 @@ const clearLoginAttempts = (): void => {
   localStorage.removeItem(LOGIN_LOCKOUT_KEY)
 }
 
-// 登录函数（增强安全性）
-const login = (username: string, password: string): { success: boolean; message?: string } => {
+// 登录函数 - 使用API
+const login = async (username: string, password: string): Promise<{ success: boolean; message?: string }> => {
   // 检查是否被锁定
   if (isLockedOut()) {
     const lockoutUntil = localStorage.getItem(LOGIN_LOCKOUT_KEY)
@@ -94,52 +96,69 @@ const login = (username: string, password: string): { success: boolean; message?
   }
   
   // 输入验证
-  if (!username?.trim() || !password?.trim()) {
-    return { success: false, message: '用户名和密码不能为空' }
+  if (!password?.trim()) {
+    return { success: false, message: '密码不能为空' }
   }
   
-  if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
-    recordFailedAttempt()
-    const attempts = parseInt(localStorage.getItem(LOGIN_ATTEMPTS_KEY) || '0')
-    const remaining = MAX_LOGIN_ATTEMPTS - attempts
+  try {
+    const response = await fetch('/api/admin/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify({ password })
+    })
     
-    if (remaining > 0) {
-      return { 
-        success: false, 
-        message: `用户名或密码错误，还有 ${remaining} 次尝试机会` 
-      }
+    if (response.ok) {
+      const data = await response.json()
+      clearLoginAttempts()
+      return { success: true }
     } else {
-      return { 
-        success: false, 
-        message: `登录失败次数过多，账户已被锁定 ${LOCKOUT_DURATION / 60000} 分钟` 
+      recordFailedAttempt()
+      const attempts = parseInt(localStorage.getItem(LOGIN_ATTEMPTS_KEY) || '0')
+      const remaining = MAX_LOGIN_ATTEMPTS - attempts
+      
+      if (remaining > 0) {
+        return { 
+          success: false, 
+          message: `密码错误，还有 ${remaining} 次尝试机会` 
+        }
+      } else {
+        return { 
+          success: false, 
+          message: `登录失败次数过多，账户已被锁定 ${LOCKOUT_DURATION / 60000} 分钟` 
+        }
       }
     }
+  } catch (error) {
+    console.error('Login failed:', error)
+    return { success: false, message: '登录请求失败，请重试' }
   }
-  
-  // 登录成功
-  clearLoginAttempts()
-  const token = generateAuthToken()
-  const expiry = Date.now() + (24 * 60 * 60 * 1000) // 24小时过期
-  
-  localStorage.setItem(AUTH_KEY, token)
-  localStorage.setItem(AUTH_EXPIRY_KEY, expiry.toString())
-  
-  return { success: true }
 }
 
-// 登出函数
-const logout = (): void => {
+// 登出函数 - 使用API
+const logout = async (): Promise<void> => {
+  try {
+    await fetch('/api/admin/auth', {
+      method: 'DELETE',
+      credentials: 'include'
+    })
+  } catch (error) {
+    console.error('Logout failed:', error)
+  }
+  // 清除localStorage
   localStorage.removeItem(AUTH_KEY)
   localStorage.removeItem(AUTH_EXPIRY_KEY)
 }
 
-// 导出认证功能
+// 导出认证功能 - 现在已弃用，请使用useAdminAuth hook
 export const adminAuth: AdminAuth = {
   get isAuthenticated() {
-    return checkAuthStatus()
+    return false // 已弃用，请使用useAdminAuth hook
   },
-  login,
-  logout
+  login: async () => ({ success: false, message: '请使用useAdminAuth hook' }),
+  logout: async () => { /* 请使用useAdminAuth hook */ }
 }
 
 // React Hook for authentication
@@ -147,23 +166,34 @@ import { useState, useEffect } from 'react'
 
 export const useAdminAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setIsAuthenticated(checkAuthStatus())
+    const checkAuth = async () => {
+      setIsLoading(true)
+      const authenticated = await checkAuthStatus()
+      setIsAuthenticated(authenticated)
+      setIsLoading(false)
+    }
+    
+    checkAuth()
   }, [])
 
-  const handleLogin = (username: string, password: string): { success: boolean; message?: string } => {
-    const result = login(username, password)
+  const handleLogin = async (username: string, password: string): Promise<{ success: boolean; message?: string }> => {
+    setIsLoading(true)
+    const result = await login(username, password)
     if (result.success) {
       setIsAuthenticated(true)
     }
+    setIsLoading(false)
     return result
   }
 
-  const handleLogout = (): void => {
-    logout()
+  const handleLogout = async (): Promise<void> => {
+    setIsLoading(true)
+    await logout()
     setIsAuthenticated(false)
+    setIsLoading(false)
   }
 
   return {

@@ -11,7 +11,7 @@ import PasswordResetDialog from './PasswordResetDialog'
 import SecuritySetupDialog from './SecuritySetupDialog'
 
 interface AdminLoginProps {
-  onLogin: (username: string, password: string) => { success: boolean; message?: string }
+  onLogin: (username: string, password: string) => Promise<{ success: boolean; message?: string }>
 }
 
 export default function AdminLogin({ onLogin }: AdminLoginProps) {
@@ -20,23 +20,29 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!username.trim() || !password.trim()) {
-      setError('请输入用户名和密码')
+    if (!password.trim()) {
+      setError('请输入密码')
       return
     }
 
-    const result = onLogin(username, password)
+    setError('')
     
-    if (result.success) {
-      setError('')
-      setUsername('')
-      setPassword('')
-    } else {
-      setError(result.message || '登录失败')
-      setPassword('')
+    try {
+      const result = await onLogin(username, password)
+      
+      if (result.success) {
+        setError('')
+        setUsername('')
+        setPassword('')
+      } else {
+        setError(result.message || '登录失败')
+        setPassword('')
+      }
+    } catch (error) {
+      setError('登录请求失败，请重试')
     }
   }
 

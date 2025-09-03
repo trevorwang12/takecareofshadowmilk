@@ -28,6 +28,7 @@ export default function HomePage() {
   const [newGames, setNewGames] = useState<any[]>([])
   const [allGames, setAllGames] = useState<any[]>([])
   const [isClient, setIsClient] = useState(false)
+  const [seoData, setSeoData] = useState<any>(null)
   const [homepageContent, setHomepageContent] = useState<any>(null)
   const [loadingTipIndex, setLoadingTipIndex] = useState(0)
   
@@ -115,6 +116,18 @@ export default function HomePage() {
       const activeFeaturedGame = await featuredGamesManager.getActiveFeaturedGame()
       setFeaturedGame(activeFeaturedGame)
     }
+
+    const loadSEOData = async () => {
+      try {
+        const response = await fetch('/api/seo')
+        if (response.ok) {
+          const data = await response.json()
+          setSeoData(data)
+        }
+      } catch (error) {
+        console.error('Failed to load SEO data:', error)
+      }
+    }
     
     const loadGamesData = async () => {
       const hotGamesData = await dataManager.getHotGames(8)
@@ -133,6 +146,7 @@ export default function HomePage() {
     loadFeaturedGame()
     loadGamesData()
     loadHomepageContent()
+    loadSEOData()
     
     // 监听featured games更新事件
     const handleFeaturedGamesUpdate = async () => {
@@ -191,16 +205,17 @@ export default function HomePage() {
       {/* Header */}
       <Header />
       
-      {/* Page H1 - SEO优化的主标题 */}
-      <PageH1 
-        pageType="homepage" 
-        data={{ siteName: 'GAMES' }} 
-      />
-
       {/* Ad Slot - Header Position */}
       <AdSlot position="header" className="max-w-7xl mx-auto px-4 py-2" />
 
       <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Main H1 Title */}
+        <PageH1 
+          pageType="homepage" 
+          data={{ siteName: seoData?.seoSettings?.siteName || 'Worldguessr fan page' }} 
+          className="text-center mb-8"
+        />
+
         <div className="flex gap-6">
           {/* Main Content */}
           <div className="flex-1">
@@ -315,7 +330,7 @@ export default function HomePage() {
             <div className="mb-8">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">{homepageContent.newGames.title}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                  {isClient && newGames.map((game, index) => (
+                  {newGames.map((game, index) => (
                     <Link key={index} href={`/game/${game.id}`} className="group">
                       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
                         <div className="aspect-[4/3] overflow-hidden flex-shrink-0">
@@ -530,7 +545,7 @@ export default function HomePage() {
             <div className="bg-gray-50 rounded-lg p-4">
               <h3 className="text-xl font-bold mb-6 text-gray-800">Hot games 热门游戏</h3>
               <div className="grid grid-cols-2 gap-3">
-                {isClient && hotGames.map((game, index) => (
+                {hotGames.map((game, index) => (
                   <Link key={index} href={`/game/${game.id}`} className="group">
                     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
                       <div className="aspect-[4/3] overflow-hidden relative flex-shrink-0">

@@ -18,7 +18,7 @@
     "author": "Gaming Platform",
     "twitterHandle": "@yourgames",
     "ogImage": "/og-image.png",
-    "ogTitle": "GAMES - Best Free Online Games",
+    "ogTitle": "Worldguessr fan page- Best Free Online Games",
     "ogDescription": "Play the best free online games. No download required!",
     "robotsTxt": "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\n\nSitemap:https://worldguessr.pro/sitemap.xml",
     "structuredData": {
@@ -39,7 +39,7 @@
       "appleMobileWebAppCapable": "yes"
     },
     "createdAt": "2025-08-29T11:10:41.564Z",
-    "updatedAt": "2025-09-02T13:28:07.310Z",
+    "updatedAt": "2025-09-03T06:09:45.615Z",
     "canonicalUrl": "https://worldguessr.pro/",
     "googleAnalyticsId": "468424498"
   },
@@ -57,5 +57,22 @@
     "descriptionTemplate": "Play the best {categoryName} games for free! Discover hundreds of exciting {categoryName} games.",
     "keywordsTemplate": "{categoryName} games, free {categoryName}, online {categoryName}",
     "enablePagination": true
+  },
+  "headingStructure": {
+    "homepage": {
+      "h1": "{siteName} - Best Free Online Games",
+      "h2": "Featured Games",
+      "h3": "Game Categories"
+    },
+    "gamePage": {
+      "h1": "{gameName}",
+      "h2": "About This Game",
+      "h3": "Game Features"
+    },
+    "categoryPage": {
+      "h1": "{categoryName} Games",
+      "h2": "Popular {categoryName} Games",
+      "h3": "Latest {categoryName} Games"
+    }
   }
 }
