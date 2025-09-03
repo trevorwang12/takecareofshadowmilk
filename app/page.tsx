@@ -543,7 +543,7 @@ export default function HomePage() {
           {/* Right Sidebar - Hot Games */}
           <div className="w-80 hidden lg:block">
             <div className="bg-gray-50 rounded-lg p-4">
-              <h3 className="text-xl font-bold mb-6 text-gray-800">Hot games 热门游戏</h3>
+              <h3 className="text-xl font-bold mb-6 text-gray-800">Hot games</h3>
               <div className="grid grid-cols-2 gap-3">
                 {hotGames.map((game, index) => (
                   <Link key={index} href={`/game/${game.id}`} className="group">
