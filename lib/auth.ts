@@ -101,8 +101,6 @@ const login = async (username: string, password: string): Promise<{ success: boo
   }
   
   try {
-    console.log('Attempting login with:', { username, passwordLength: password?.length })
-    
     const response = await fetch('/api/admin/auth', {
       method: 'POST',
       headers: {
@@ -112,10 +110,6 @@ const login = async (username: string, password: string): Promise<{ success: boo
       body: JSON.stringify({ username, password })
     })
     
-    console.log('Login response status:', response.status)
-    const responseText = await response.text()
-    console.log('Login response body:', responseText)
-    
     if (response.ok) {
       clearLoginAttempts()
       return { success: true }
@@ -123,10 +117,10 @@ const login = async (username: string, password: string): Promise<{ success: boo
       let errorMessage = '登录失败'
       
       try {
-        const errorData = JSON.parse(responseText)
+        const errorData = await response.json()
         errorMessage = errorData.error || errorMessage
       } catch (e) {
-        console.error('Failed to parse error response:', e)
+        // 如果解析JSON失败，使用默认错误消息
       }
       
       recordFailedAttempt()
