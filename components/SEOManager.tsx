@@ -391,33 +391,116 @@ export default function SEOManager() {
                 Analytics & Webmaster Tools
               </h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="googleAnalyticsId">Google Analytics ID</Label>
-                  <Input
-                    id="googleAnalyticsId"
-                    value={seoFormData.googleAnalyticsId || ''}
-                    onChange={(e) => setSEOFormData(prev => ({ ...prev, googleAnalyticsId: e.target.value }))}
-                    placeholder="GA_MEASUREMENT_ID"
-                  />
+              <div className="space-y-6">
+                {/* Google Analytics Section */}
+                <div className="bg-blue-50 p-4 rounded-lg space-y-4">
+                  <h4 className="font-semibold text-blue-900">Google Analytics</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="googleAnalyticsId">Analytics Measurement ID</Label>
+                      <Input
+                        id="googleAnalyticsId"
+                        value={seoFormData.googleAnalyticsId || ''}
+                        onChange={(e) => setSEOFormData(prev => ({ ...prev, googleAnalyticsId: e.target.value }))}
+                        placeholder="G-XXXXXXXXXX"
+                      />
+                      <p className="text-xs text-gray-600 mt-1">Google Analytics 4 Measurement ID</p>
+                    </div>
+                    <div>
+                      <Label htmlFor="googleAnalyticsTrackingCode">Full Tracking Code (Optional)</Label>
+                      <Textarea
+                        id="googleAnalyticsTrackingCode"
+                        value={seoFormData.googleAnalyticsTrackingCode || ''}
+                        onChange={(e) => setSEOFormData(prev => ({ ...prev, googleAnalyticsTrackingCode: e.target.value }))}
+                        placeholder="<!-- Google tag (gtag.js) -->"
+                        rows={4}
+                        className="font-mono text-sm"
+                      />
+                      <p className="text-xs text-gray-600 mt-1">Paste complete Google Analytics tracking code here</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <Label htmlFor="googleSearchConsoleId">Search Console ID</Label>
-                  <Input
-                    id="googleSearchConsoleId"
-                    value={seoFormData.googleSearchConsoleId || ''}
-                    onChange={(e) => setSEOFormData(prev => ({ ...prev, googleSearchConsoleId: e.target.value }))}
-                    placeholder="google123456789abcdef"
-                  />
+
+                {/* Search Console Section */}
+                <div className="bg-green-50 p-4 rounded-lg space-y-4">
+                  <h4 className="font-semibold text-green-900">Google Search Console</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="googleSearchConsoleId">Search Console Verification ID</Label>
+                      <Input
+                        id="googleSearchConsoleId"
+                        value={seoFormData.googleSearchConsoleId || ''}
+                        onChange={(e) => setSEOFormData(prev => ({ ...prev, googleSearchConsoleId: e.target.value }))}
+                        placeholder="google123456789abcdef"
+                      />
+                      <p className="text-xs text-gray-600 mt-1">Content value from meta tag verification</p>
+                    </div>
+                    <div>
+                      <Label htmlFor="googleSearchConsoleHtmlTag">HTML Meta Tag (Optional)</Label>
+                      <Textarea
+                        id="googleSearchConsoleHtmlTag"
+                        value={seoFormData.googleSearchConsoleHtmlTag || ''}
+                        onChange={(e) => setSEOFormData(prev => ({ ...prev, googleSearchConsoleHtmlTag: e.target.value }))}
+                        placeholder='<meta name="google-site-verification" content="..." />'
+                        rows={2}
+                        className="font-mono text-sm"
+                      />
+                      <p className="text-xs text-gray-600 mt-1">Paste complete HTML meta tag here</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <Label htmlFor="bingWebmasterToolsId">Bing Webmaster ID</Label>
-                  <Input
-                    id="bingWebmasterToolsId"
-                    value={seoFormData.bingWebmasterToolsId || ''}
-                    onChange={(e) => setSEOFormData(prev => ({ ...prev, bingWebmasterToolsId: e.target.value }))}
-                    placeholder="123456789ABCDEF"
-                  />
+
+                {/* Other Webmaster Tools */}
+                <div className="bg-orange-50 p-4 rounded-lg space-y-4">
+                  <h4 className="font-semibold text-orange-900">Other Webmaster Tools</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <Label htmlFor="bingWebmasterToolsId">Bing Webmaster ID</Label>
+                      <Input
+                        id="bingWebmasterToolsId"
+                        value={seoFormData.bingWebmasterToolsId || ''}
+                        onChange={(e) => setSEOFormData(prev => ({ ...prev, bingWebmasterToolsId: e.target.value }))}
+                        placeholder="123456789ABCDEF"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="yandexWebmasterToolsId">Yandex Webmaster ID</Label>
+                      <Input
+                        id="yandexWebmasterToolsId"
+                        value={seoFormData.yandexWebmasterToolsId || ''}
+                        onChange={(e) => setSEOFormData(prev => ({ ...prev, yandexWebmasterToolsId: e.target.value }))}
+                        placeholder="yandex123456789abcdef"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="baiduWebmasterToolsId">Baidu Webmaster ID</Label>
+                      <Input
+                        id="baiduWebmasterToolsId"
+                        value={seoFormData.baiduWebmasterToolsId || ''}
+                        onChange={(e) => setSEOFormData(prev => ({ ...prev, baiduWebmasterToolsId: e.target.value }))}
+                        placeholder="baidu123456789abcdef"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Custom HTML Head Tags */}
+                <div className="bg-purple-50 p-4 rounded-lg space-y-4">
+                  <h4 className="font-semibold text-purple-900">Custom HTML Head Tags</h4>
+                  <div>
+                    <Label htmlFor="customHeadTags">Additional Head Tags</Label>
+                    <Textarea
+                      id="customHeadTags"
+                      value={seoFormData.customHeadTags || ''}
+                      onChange={(e) => setSEOFormData(prev => ({ ...prev, customHeadTags: e.target.value }))}
+                      placeholder="<!-- Add any additional meta tags, verification codes, or scripts here -->"
+                      rows={6}
+                      className="font-mono text-sm"
+                    />
+                    <p className="text-xs text-gray-600 mt-1">
+                      Paste any additional HTML tags for the &lt;head&gt; section (verification tags, custom analytics, etc.)
+                    </p>
+                  </div>
                 </div>
               </div>
 

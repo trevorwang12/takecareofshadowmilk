@@ -11,12 +11,21 @@ interface BackupData {
   categories: any[]
   seo: any
   homepage: any
+  aboutContent?: any
   ads: any
   recommendations: any
   featuredGames: any
   footer: any
   friendlyLinks: any
+  sitemapSettings?: any
   backupDate: string
+  backupVersion?: string
+  stats?: {
+    totalGames: number
+    totalCategories: number
+    totalFriendlyLinks: number
+    seoFieldsIncluded: string[]
+  }
 }
 
 export default function BackupManager() {
@@ -24,6 +33,11 @@ export default function BackupManager() {
   const [isImporting, setIsImporting] = useState(false)
   const [message, setMessage] = useState<{type: 'success' | 'error', text: string} | null>(null)
   const [importInstructions, setImportInstructions] = useState<string[] | null>(null)
+  const [restoreResult, setRestoreResult] = useState<{
+    autoRestored: boolean
+    restoreErrors: string[]
+    stats?: any
+  } | null>(null)
 
   // 导出备份
   const handleExport = async () => {
@@ -62,7 +76,7 @@ export default function BackupManager() {
     }
   }
 
-  // 导入备份（验证和显示说明）
+  // 导入备份（验证并尝试自动恢复）
   const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
@@ -70,6 +84,7 @@ export default function BackupManager() {
     setIsImporting(true)
     setMessage(null)
     setImportInstructions(null)
+    setRestoreResult(null)
     
     try {
       const text = await file.text()
@@ -80,7 +95,7 @@ export default function BackupManager() {
         throw new Error('Invalid backup file format')
       }
       
-      // 发送到服务器验证
+      // 发送到服务器进行验证和恢复
       const response = await fetch('/api/admin/backup', {
         method: 'POST',
         headers: {
@@ -96,8 +111,16 @@ export default function BackupManager() {
       const result = await response.json()
       
       if (result.success) {
-        setMessage({ type: 'success', text: result.message })
+        setMessage({ 
+          type: 'success', 
+          text: result.message 
+        })
         setImportInstructions(result.instructions || [])
+        setRestoreResult({
+          autoRestored: result.autoRestored || false,
+          restoreErrors: result.restoreErrors || [],
+          stats: result.stats
+        })
       } else {
         throw new Error(result.error || 'Import failed')
       }
@@ -126,9 +149,9 @@ export default function BackupManager() {
           {/* Export Section */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold mb-2">Export Backup</h3>
+              <h3 className="text-lg font-semibold mb-2">Export Complete Backup</h3>
               <p className="text-sm text-gray-600 mb-4">
-                Download a complete backup of all your site data including games, categories, and settings.
+                Download a comprehensive backup including games, categories, SEO settings, Analytics codes, custom head tags, and all site configurations. This backup is compatible with the latest system features.
               </p>
               <Button
                 onClick={handleExport}
@@ -149,9 +172,9 @@ export default function BackupManager() {
             {/* Import Section */}
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold mb-2">Import Backup</h3>
+                <h3 className="text-lg font-semibold mb-2">Import & Restore Backup</h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Upload a previously exported backup file. Note: This will validate the backup but won't immediately restore data due to memory storage architecture.
+                  Upload a previously exported backup file. In local/development environment, data will be automatically restored to files. In production, manual file updates are required.
                 </p>
                 <div className="relative">
                   <input
@@ -196,18 +219,60 @@ export default function BackupManager() {
             </Alert>
           )}
 
-          {/* Import Instructions */}
+          {/* Import Instructions and Auto-Restore Status */}
           {importInstructions && (
-            <Alert className="border-blue-200 bg-blue-50">
-              <AlertCircle className="h-4 w-4 text-blue-600" />
-              <AlertDescription className="text-blue-800">
-                <div className="space-y-2">
-                  <p className="font-semibold">Manual Restore Required:</p>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    {importInstructions.map((instruction, index) => (
-                      <li key={index}>{instruction}</li>
-                    ))}
-                  </ul>
+            <Alert className={
+              restoreResult?.autoRestored 
+                ? "border-green-200 bg-green-50" 
+                : "border-blue-200 bg-blue-50"
+            }>
+              {restoreResult?.autoRestored ? (
+                <CheckCircle className="h-4 w-4 text-green-600" />
+              ) : (
+                <AlertCircle className="h-4 w-4 text-blue-600" />
+              )}
+              <AlertDescription className={
+                restoreResult?.autoRestored ? "text-green-800" : "text-blue-800"
+              }>
+                <div className="space-y-3">
+                  {restoreResult?.autoRestored && (
+                    <div className="space-y-2">
+                      <p className="font-semibold text-lg">🎉 Auto-Restore Completed!</p>
+                      {restoreResult?.stats && (
+                        <div className="bg-green-100 p-3 rounded border text-sm">
+                          <p className="font-medium mb-2">Restored Data Summary:</p>
+                          <ul className="space-y-1">
+                            <li>• {restoreResult.stats.games} games</li>
+                            <li>• {restoreResult.stats.categories} categories</li>
+                            <li>• {restoreResult.stats.friendlyLinks} friendly links</li>
+                            <li>• SEO & Analytics settings</li>
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {restoreResult?.restoreErrors && restoreResult.restoreErrors.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="font-semibold text-red-700">⚠️ Restore Errors:</p>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-red-700">
+                        {restoreResult.restoreErrors.map((error, index) => (
+                          <li key={index}>{error}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  <div className="space-y-2">
+                    <p className="font-semibold">
+                      {restoreResult?.autoRestored ? "Next Steps:" : "Manual Restore Instructions:"}
+                    </p>
+                    <div className="bg-gray-100 p-3 rounded border">
+                      <pre className="text-xs whitespace-pre-wrap font-mono">
+                        {importInstructions.join('\n')}
+                      </pre>
+                    </div>
+                  </div>
                 </div>
               </AlertDescription>
             </Alert>
@@ -220,11 +285,13 @@ export default function BackupManager() {
               <div className="space-y-2">
                 <p className="font-semibold">Important Information:</p>
                 <ul className="list-disc list-inside space-y-1 text-sm text-gray-600">
-                  <li>Backups include all games, categories, and site settings</li>
-                  <li>Data is stored in memory for cloud deployment compatibility</li>
-                  <li>Server restart will reset data to default values from JSON files</li>
-                  <li>For permanent storage, manually update the /data/*.json files as instructed</li>
-                  <li>Regular backups are recommended before making major changes</li>
+                  <li><strong>Complete Data Coverage:</strong> Games, categories, SEO settings, Analytics tracking codes</li>
+                  <li><strong>Analytics Integration:</strong> Google Analytics, Search Console, Yandex, Baidu configurations</li>
+                  <li><strong>Custom Code Support:</strong> HTML verification tags, custom head tags, tracking scripts</li>
+                  <li><strong>Cloud Compatible:</strong> Memory-based storage for seamless deployment</li>
+                  <li><strong>Version Control:</strong> Backup format versioning for compatibility</li>
+                  <li><strong>Manual Restore:</strong> JSON file updates required for permanent changes</li>
+                  <li><strong>Best Practice:</strong> Export backups before major configuration changes</li>
                 </ul>
               </div>
             </AlertDescription>

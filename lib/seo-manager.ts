@@ -23,8 +23,13 @@ export interface SEOSettings {
     sameAs?: string[]
   }
   googleAnalyticsId?: string
+  googleAnalyticsTrackingCode?: string
   googleSearchConsoleId?: string
+  googleSearchConsoleHtmlTag?: string
   bingWebmasterToolsId?: string
+  yandexWebmasterToolsId?: string
+  baiduWebmasterToolsId?: string
+  customHeadTags?: string
   metaTags: {
     viewport: string
     themeColor: string

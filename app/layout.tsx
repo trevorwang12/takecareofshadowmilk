@@ -93,9 +93,10 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-// Analytics组件
+// Analytics组件 - 支持完整tracking code和ID
 async function AnalyticsScript() {
   let googleAnalyticsId = null
+  let googleAnalyticsTrackingCode = null
   
   try {
     const fs = require('fs').promises
@@ -106,14 +107,22 @@ async function AnalyticsScript() {
       const fileContent = await fs.readFile(seoFilePath, 'utf8')
       const data = JSON.parse(fileContent)
       googleAnalyticsId = data.seoSettings?.googleAnalyticsId
+      googleAnalyticsTrackingCode = data.seoSettings?.googleAnalyticsTrackingCode
     } catch (error) {
       // SEO文件不存在，使用默认值
     }
   } catch (error) {
-    console.error('Failed to load Analytics ID:', error)
+    console.error('Failed to load Analytics settings:', error)
   }
   
-  if (!googleAnalyticsId || googleAnalyticsId === 'GA_MEASUREMENT_ID') {
+  // 优先使用完整的tracking code，如果没有则使用ID生成代码
+  if (googleAnalyticsTrackingCode && googleAnalyticsTrackingCode.trim() !== '') {
+    return (
+      <div dangerouslySetInnerHTML={{ __html: googleAnalyticsTrackingCode }} />
+    )
+  }
+  
+  if (!googleAnalyticsId || googleAnalyticsId === 'GA_MEASUREMENT_ID' || googleAnalyticsId === 'G-XXXXXXXXXX') {
     return null
   }
   
@@ -134,6 +143,58 @@ async function AnalyticsScript() {
   )
 }
 
+// 自定义Head标签组件
+async function CustomHeadTags() {
+  let customHeadTags = null
+  let googleSearchConsoleHtmlTag = null
+  let yandexWebmasterToolsId = null
+  let baiduWebmasterToolsId = null
+  
+  try {
+    const fs = require('fs').promises
+    const path = require('path')
+    const seoFilePath = path.join(process.cwd(), 'data', 'seo-settings.json')
+    
+    try {
+      const fileContent = await fs.readFile(seoFilePath, 'utf8')
+      const data = JSON.parse(fileContent)
+      const seoSettings = data.seoSettings || {}
+      customHeadTags = seoSettings.customHeadTags
+      googleSearchConsoleHtmlTag = seoSettings.googleSearchConsoleHtmlTag
+      yandexWebmasterToolsId = seoSettings.yandexWebmasterToolsId
+      baiduWebmasterToolsId = seoSettings.baiduWebmasterToolsId
+    } catch (error) {
+      // SEO文件不存在
+    }
+  } catch (error) {
+    console.error('Failed to load custom head tags:', error)
+  }
+  
+  return (
+    <>
+      {/* Google Search Console HTML Meta Tag */}
+      {googleSearchConsoleHtmlTag && googleSearchConsoleHtmlTag.trim() !== '' && (
+        <div dangerouslySetInnerHTML={{ __html: googleSearchConsoleHtmlTag }} />
+      )}
+      
+      {/* Yandex Webmaster Tools */}
+      {yandexWebmasterToolsId && yandexWebmasterToolsId.trim() !== '' && (
+        <meta name="yandex-verification" content={yandexWebmasterToolsId} />
+      )}
+      
+      {/* Baidu Webmaster Tools */}
+      {baiduWebmasterToolsId && baiduWebmasterToolsId.trim() !== '' && (
+        <meta name="baidu-site-verification" content={baiduWebmasterToolsId} />
+      )}
+      
+      {/* Custom Head Tags */}
+      {customHeadTags && customHeadTags.trim() !== '' && (
+        <div dangerouslySetInnerHTML={{ __html: customHeadTags }} />
+      )}
+    </>
+  )
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -145,6 +206,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="format-detection" content="telephone=no" />
         <AnalyticsScript />
+        <CustomHeadTags />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
