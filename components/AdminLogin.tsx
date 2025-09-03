@@ -141,7 +141,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
               <div>密码: admin123</div>
             </div>
             <p className="text-xs text-gray-500 mt-2 border-t pt-2">
-              生产环境请通过环境变量 NEXT_PUBLIC_ADMIN_USERNAME 和 NEXT_PUBLIC_ADMIN_PASSWORD 设置强密码
+              生产环境请通过环境变量 ADMIN_USERNAME 和 ADMIN_PASSWORD 设置强密码
             </p>
           </div>
         </CardContent>
