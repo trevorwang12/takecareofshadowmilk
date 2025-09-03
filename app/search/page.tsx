@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Search, Play, Star, ArrowLeft, Gamepad2 } from "lucide-react"
 import { dataManager } from "@/lib/data-manager"
 import AdSlot from "@/components/ImprovedAdSlot"
+import PageH1 from "@/components/PageH1"
 import YouMightAlsoLike from "@/components/YouMightAlsoLike"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
@@ -72,6 +73,13 @@ export default function SearchPage() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <Header />
+      
+      {/* Page H1 - SEO优化的主标题 */}
+      <PageH1 
+        pageType="homepage" 
+        template="Search Games - {siteName}"
+        data={{ siteName: 'GAMES' }} 
+      />
 
       {/* Ad Slot - Header Position */}
       <AdSlot position="header" className="max-w-7xl mx-auto px-4 py-2" />
@@ -91,9 +99,9 @@ export default function SearchPage() {
               
               {query && (
                 <div className="mb-4">
-                  <h1 className="text-2xl font-bold text-gray-800 mb-2">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
                     Search Results for "{query}"
-                  </h1>
+                  </h2>
                   <p className="text-gray-600">
                     {isLoading ? 'Searching...' : `Found ${searchResults.length} games`}
                   </p>

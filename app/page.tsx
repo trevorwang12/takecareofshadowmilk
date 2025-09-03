@@ -15,6 +15,7 @@ import GamePlayer from '@/components/GamePlayer'
 import YouMightAlsoLike from '@/components/YouMightAlsoLike'
 import InstantSearch from '@/components/InstantSearch'
 import SEOHead from '@/components/SEOHead'
+import PageH1 from '@/components/PageH1'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FriendlyLinks from '@/components/FriendlyLinks'
@@ -189,6 +190,12 @@ export default function HomePage() {
       
       {/* Header */}
       <Header />
+      
+      {/* Page H1 - SEO优化的主标题 */}
+      <PageH1 
+        pageType="homepage" 
+        data={{ siteName: 'GAMES' }} 
+      />
 
       {/* Ad Slot - Header Position */}
       <AdSlot position="header" className="max-w-7xl mx-auto px-4 py-2" />
@@ -243,9 +250,9 @@ export default function HomePage() {
                         
                         {/* Dynamic Loading Text */}
                         <div className="space-y-4">
-                          <h1 className="text-3xl font-bold animate-pulse">
+                          <h2 className="text-3xl font-bold animate-pulse">
                             Loading {featuredGame.name}...
-                          </h1>
+                          </h2>
                           <p className="text-white/90 text-lg animate-pulse">
                             Preparing your gaming experience!
                           </p>
@@ -269,7 +276,7 @@ export default function HomePage() {
                       <div className="w-20 h-20 bg-white/20 rounded-xl mb-6 flex items-center justify-center text-3xl">
                         {featuredGame.emoji}
                       </div>
-                      <h1 className="text-4xl font-bold mb-4 max-w-md">{featuredGame.name}</h1>
+                      <h2 className="text-4xl font-bold mb-4 max-w-md">{featuredGame.name}</h2>
                       <p className="mb-8 opacity-90 text-lg max-w-lg px-4">{featuredGame.description}</p>
                       <Button 
                         onClick={startFeaturedGame}
@@ -286,7 +293,7 @@ export default function HomePage() {
                   <div className="w-16 h-16 bg-white/20 rounded-lg mx-auto mb-4 flex items-center justify-center text-2xl">
                     🎮
                   </div>
-                  <h1 className="text-3xl font-bold mb-2">FEATURED GAME</h1>
+                  <h2 className="text-3xl font-bold mb-2">FEATURED GAME</h2>
                   <p className="mb-4 opacity-90">Configure a featured game in the admin panel to display here!</p>
                   <Button className="bg-white text-orange-500 hover:bg-gray-100 px-6 py-2 font-semibold" disabled>
                     <Play className="w-4 h-4 mr-2" />

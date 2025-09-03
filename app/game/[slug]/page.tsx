@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Star, Play, Users, Tag, Calendar, Gamepad2 } from "lucide-react"
 import { dataManager } from "@/lib/data-manager"
 import GamePlayer from "@/components/GamePlayer"
+import PageH1 from "@/components/PageH1"
 import AdSlot from "@/components/ImprovedAdSlot"
 import YouMightAlsoLike from "@/components/YouMightAlsoLike"
 import Header from "@/components/Header"
@@ -76,7 +77,7 @@ export default function GamePage({ params }: PageProps) {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <Card className="max-w-md mx-auto">
           <CardContent className="p-6 text-center">
-            <h1 className="text-2xl font-bold mb-4">Game Not Found</h1>
+            <h2 className="text-2xl font-bold mb-4">Game Not Found</h2>
             <p className="text-gray-600 mb-4">Sorry, we couldn't find the game you're looking for.</p>
             <Link href="/">
               <Button>
@@ -106,6 +107,12 @@ export default function GamePage({ params }: PageProps) {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <Header />
+      
+      {/* Page H1 - SEO优化的主标题 */}
+      <PageH1 
+        pageType="gamePage" 
+        data={{ gameName: game?.name }} 
+      />
 
       {/* Ad Slot - Header Position */}
       <AdSlot position="header" className="max-w-7xl mx-auto px-4 py-2" />
@@ -157,9 +164,9 @@ export default function GamePage({ params }: PageProps) {
                     
                     {/* Dynamic Loading Text */}
                     <div className="space-y-4">
-                      <h1 className="text-3xl font-bold animate-pulse">
+                      <h2 className="text-3xl font-bold animate-pulse">
                         Loading {game.name}...
-                      </h1>
+                      </h2>
                       <p className="text-white/90 text-lg animate-pulse">
                         Preparing your gaming experience!
                       </p>
@@ -187,7 +194,7 @@ export default function GamePage({ params }: PageProps) {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h1 className="text-4xl font-bold mb-4 max-w-md">{game.name}</h1>
+                  <h2 className="text-4xl font-bold mb-4 max-w-md">{game.name}</h2>
                   <p className="mb-8 opacity-90 text-lg max-w-lg px-4">
                     {game.gradientDescription || (game.description.length > 100 
                       ? game.description.substring(0, 100) + '...' 

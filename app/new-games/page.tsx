@@ -53,7 +53,7 @@ export default function NewGamesPage() {
       <div className="max-w-7xl mx-auto p-4 py-8">
         {/* Page Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-800 mb-4">Latest Games</h1>
+          <h2 className="text-3xl font-bold text-slate-800 mb-4">Latest Games</h2>
           <p className="text-lg text-slate-600">
             Discover the newest games on our platform with cutting-edge gameplay and creative design
           </p>

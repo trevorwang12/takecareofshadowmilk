@@ -137,9 +137,10 @@ export default function SEOManager() {
       )}
 
       <Tabs defaultValue="general" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="general">General SEO</TabsTrigger>
           <TabsTrigger value="meta">Meta Tags</TabsTrigger>
+          <TabsTrigger value="headings">Headings (H1-H3)</TabsTrigger>
           <TabsTrigger value="structured">Structured Data</TabsTrigger>
           <TabsTrigger value="game-pages">Game Pages</TabsTrigger>
           <TabsTrigger value="category-pages">Category Pages</TabsTrigger>
@@ -423,6 +424,168 @@ export default function SEOManager() {
               <div className="flex justify-end">
                 <Button onClick={handleSEOSubmit} disabled={isLoading}>
                   {isLoading ? 'Saving...' : 'Save Meta Tags Settings'}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="headings" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Code className="w-5 h-5" />
+                Headings Structure (H1-H3)
+              </CardTitle>
+              <p className="text-sm text-gray-600">
+                Optimize heading structure for better SEO. Each page should have only one H1.
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold mb-3">Homepage Headings</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label htmlFor="homepageH1">H1 Template</Label>
+                      <Input
+                        id="homepageH1"
+                        value={seoFormData.headingStructure?.homepage?.h1 || ''}
+                        onChange={(e) => setSEOFormData(prev => ({
+                          ...prev,
+                          headingStructure: {
+                            ...prev.headingStructure,
+                            homepage: {
+                              ...prev.headingStructure?.homepage,
+                              h1: e.target.value
+                            }
+                          }
+                        }))}
+                        placeholder="{siteName} - Best Free Online Games"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Use {"{siteName}"} placeholder</p>
+                    </div>
+                    <div>
+                      <Label htmlFor="homepageH2">H2 Templates (comma separated)</Label>
+                      <Input
+                        id="homepageH2"
+                        value={seoFormData.headingStructure?.homepage?.h2?.join(', ') || ''}
+                        onChange={(e) => setSEOFormData(prev => ({
+                          ...prev,
+                          headingStructure: {
+                            ...prev.headingStructure,
+                            homepage: {
+                              ...prev.headingStructure?.homepage,
+                              h2: e.target.value.split(',').map(s => s.trim()).filter(s => s)
+                            }
+                          }
+                        }))}
+                        placeholder="Featured Games, New Games, Popular Categories"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3">Game Page Headings</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label htmlFor="gamePageH1">H1 Template</Label>
+                      <Input
+                        id="gamePageH1"
+                        value={seoFormData.headingStructure?.gamePage?.h1 || ''}
+                        onChange={(e) => setSEOFormData(prev => ({
+                          ...prev,
+                          headingStructure: {
+                            ...prev.headingStructure,
+                            gamePage: {
+                              ...prev.headingStructure?.gamePage,
+                              h1: e.target.value
+                            }
+                          }
+                        }))}
+                        placeholder="{gameName}"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Use {"{gameName}"} placeholder</p>
+                    </div>
+                    <div>
+                      <Label htmlFor="gamePageH2">H2 Templates (comma separated)</Label>
+                      <Input
+                        id="gamePageH2"
+                        value={seoFormData.headingStructure?.gamePage?.h2?.join(', ') || ''}
+                        onChange={(e) => setSEOFormData(prev => ({
+                          ...prev,
+                          headingStructure: {
+                            ...prev.headingStructure,
+                            gamePage: {
+                              ...prev.headingStructure?.gamePage,
+                              h2: e.target.value.split(',').map(s => s.trim()).filter(s => s)
+                            }
+                          }
+                        }))}
+                        placeholder="How to Play, Game Controls, Similar Games"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3">Category Page Headings</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label htmlFor="categoryPageH1">H1 Template</Label>
+                      <Input
+                        id="categoryPageH1"
+                        value={seoFormData.headingStructure?.categoryPage?.h1 || ''}
+                        onChange={(e) => setSEOFormData(prev => ({
+                          ...prev,
+                          headingStructure: {
+                            ...prev.headingStructure,
+                            categoryPage: {
+                              ...prev.headingStructure?.categoryPage,
+                              h1: e.target.value
+                            }
+                          }
+                        }))}
+                        placeholder="{categoryName} Games"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Use {"{categoryName}"} placeholder</p>
+                    </div>
+                    <div>
+                      <Label htmlFor="categoryPageH2">H2 Templates (comma separated)</Label>
+                      <Input
+                        id="categoryPageH2"
+                        value={seoFormData.headingStructure?.categoryPage?.h2?.join(', ') || ''}
+                        onChange={(e) => setSEOFormData(prev => ({
+                          ...prev,
+                          headingStructure: {
+                            ...prev.headingStructure,
+                            categoryPage: {
+                              ...prev.headingStructure?.categoryPage,
+                              h2: e.target.value.split(',').map(s => s.trim()).filter(s => s)
+                            }
+                          }
+                        }))}
+                        placeholder="Popular {categoryName} Games, New Releases"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3">General Guidelines</h3>
+                  <div className="bg-blue-50 p-4 rounded-lg space-y-2 text-sm">
+                    <div><strong>H1:</strong> Only one per page, main topic/title</div>
+                    <div><strong>H2:</strong> Section headings, multiple allowed</div>
+                    <div><strong>H3:</strong> Sub-section headings under H2</div>
+                    <div><strong>Best Practice:</strong> Follow H1 → H2 → H3 hierarchy</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <Button onClick={handleSEOSubmit} disabled={isLoading}>
+                  {isLoading ? 'Saving...' : 'Save Heading Structure Settings'}
                 </Button>
               </div>
             </CardContent>
