@@ -58,11 +58,12 @@ export default function YouMightAlsoLike() {
               className="group block"
             >
               <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 group-hover:scale-105">
-                <div className="aspect-square relative">
+                <div className="aspect-square relative overflow-hidden">
                   <img
                     src={game.thumbnailUrl || "/placeholder.svg"}
                     alt={game.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center"
+                    style={{ aspectRatio: '1/1' }}
                   />
                   
                   {/* Overlay on hover */}

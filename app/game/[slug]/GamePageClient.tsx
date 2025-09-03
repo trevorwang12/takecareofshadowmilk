@@ -322,11 +322,12 @@ export default function GamePageClient({ params }: GamePageClientProps) {
                     >
                       <Card className="border border-gray-200 hover:border-orange-300 transition-colors group-hover:shadow-md">
                         <CardContent className="p-2">
-                          <div className="aspect-square mb-2 rounded overflow-hidden bg-gray-100">
+                          <div className="aspect-square mb-2 rounded overflow-hidden bg-gray-100 relative">
                             <img 
                               src={relatedGame.thumbnailUrl || "/placeholder.svg"} 
                               alt={relatedGame.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform absolute inset-0"
+                              style={{ aspectRatio: '1/1' }}
                             />
                           </div>
                           <h3 className="font-medium text-gray-900 text-xs mb-1 line-clamp-2 leading-tight">
