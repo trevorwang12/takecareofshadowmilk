@@ -125,4 +125,66 @@ export class SeoService {
       return {}
     }
   }
+
+  static async getCustomHeadTags(): Promise<string | null> {
+    try {
+      const { seoSettings } = await DataService.getSeoSettings()
+      
+      const customTags = seoSettings.customHeadTags
+      if (!customTags || customTags.trim() === '') {
+        return null
+      }
+      
+      // 基本的安全检查 - 确保是合法的分析和验证代码
+      const allowedDomains = [
+        'plausible',
+        'analytics.google.com',
+        'googletagmanager.com', 
+        'googlesyndication.com',
+        'google-analytics.com',
+        'hotjar.com',
+        'mixpanel.com',
+        'segment.com',
+        'facebook.com',
+        'twitter.com'
+      ]
+      
+      const hasAllowedDomain = allowedDomains.some(domain => 
+        customTags.toLowerCase().includes(domain.toLowerCase())
+      )
+      
+      // 检查危险内容
+      const dangerousPatterns = [
+        'javascript:',
+        'data:',
+        'vbscript:',
+        'onload=',
+        'onerror=',
+        'onclick=',
+        'eval(',
+        'document.write('
+      ]
+      
+      const hasDangerousContent = dangerousPatterns.some(pattern =>
+        customTags.toLowerCase().includes(pattern.toLowerCase())
+      )
+      
+      if (hasDangerousContent) {
+        console.warn('Custom head tags rejected: contains dangerous content')
+        return null
+      }
+      
+      // 如果包含允许的域名或者看起来是标准的meta标签，则允许
+      if (hasAllowedDomain || customTags.includes('<meta ') || customTags.includes('<script defer') || customTags.includes('<script async')) {
+        return customTags
+      }
+      
+      console.warn('Custom head tags rejected: no recognized analytics domain')
+      return null
+      
+    } catch (error) {
+      console.error('Failed to get custom head tags:', error)
+      return null
+    }
+  }
 }

@@ -6,6 +6,7 @@ import HydrationFix from '@/components/HydrationFix'
 import SafePreloadManager from '@/components/optimization/SafePreloadManager'
 import SafeAnalytics from '@/components/SafeAnalytics'
 import SafeVerificationTags from '@/components/SafeVerificationTags'
+import SafeCustomHeadTags from '@/components/SafeCustomHeadTags'
 import { SeoService } from '@/lib/seo-service'
 import './globals.css'
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         
         <SafeAnalytics />
         <SafeVerificationTags />
+        <SafeCustomHeadTags />
         
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
