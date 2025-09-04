@@ -55,14 +55,20 @@ export default function SEOManager() {
     setIsLoading(true)
     
     try {
-      const validation = seoManager.validateSEOSettings(seoFormData)
+      // Merge current form data with existing settings to ensure required fields are present
+      const completeSettings = {
+        ...seoSettings, // Start with existing complete settings
+        ...seoFormData  // Override with form changes
+      }
+      
+      const validation = seoManager.validateSEOSettings(completeSettings)
       if (!validation.isValid) {
         showAlert('error', validation.errors.join(', '))
         setIsLoading(false)
         return
       }
       
-      const success = await seoManager.updateSEOSettings(seoFormData)
+      const success = await seoManager.updateSEOSettings(completeSettings)
       if (success) {
         showAlert('success', 'SEO settings updated successfully!')
         loadSEOData()
