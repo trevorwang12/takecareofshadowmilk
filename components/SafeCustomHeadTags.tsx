@@ -4,16 +4,21 @@ import { SeoService } from '@/lib/seo-service'
 export default async function SafeCustomHeadTags() {
   const customHeadTags = await SeoService.getCustomHeadTags()
   
+  console.log('[DEBUG SafeCustomHeadTags] Custom head tags:', customHeadTags)
+  
   if (!customHeadTags) {
+    console.log('[DEBUG SafeCustomHeadTags] No custom head tags, returning null')
     return null
   }
   
-  // 使用dangerouslySetInnerHTML渲染经过安全验证的自定义标签
-  // 这些内容已经通过SeoService的安全检查
+  // 直接渲染 HTML 内容 - Next.js 会在 head 中正确处理 dangerouslySetInnerHTML
+  console.log('[DEBUG SafeCustomHeadTags] Rendering custom head tags directly')
+  
   return (
-    <div
-      suppressHydrationWarning={true}
-      dangerouslySetInnerHTML={{ __html: customHeadTags }}
+    <div 
+      dangerouslySetInnerHTML={{
+        __html: customHeadTags
+      }}
     />
   )
 }

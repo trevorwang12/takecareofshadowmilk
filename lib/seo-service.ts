@@ -131,7 +131,9 @@ export class SeoService {
       const { seoSettings } = await DataService.getSeoSettings()
       
       const customTags = seoSettings.customHeadTags
+      console.log('[DEBUG] Custom tags from settings:', customTags)
       if (!customTags || customTags.trim() === '') {
+        console.log('[DEBUG] No custom tags found')
         return null
       }
       
@@ -152,6 +154,7 @@ export class SeoService {
       const hasAllowedDomain = allowedDomains.some(domain => 
         customTags.toLowerCase().includes(domain.toLowerCase())
       )
+      console.log('[DEBUG] Has allowed domain:', hasAllowedDomain)
       
       // 检查危险内容
       const dangerousPatterns = [
@@ -168,14 +171,21 @@ export class SeoService {
       const hasDangerousContent = dangerousPatterns.some(pattern =>
         customTags.toLowerCase().includes(pattern.toLowerCase())
       )
+      console.log('[DEBUG] Has dangerous content:', hasDangerousContent)
       
       if (hasDangerousContent) {
         console.warn('Custom head tags rejected: contains dangerous content')
         return null
       }
       
+      const hasScriptDefer = customTags.includes('<script defer')
+      const hasScriptAsync = customTags.includes('<script async')
+      const hasMeta = customTags.includes('<meta ')
+      console.log('[DEBUG] Has script defer:', hasScriptDefer, 'Has script async:', hasScriptAsync, 'Has meta:', hasMeta)
+      
       // 如果包含允许的域名或者看起来是标准的meta标签，则允许
-      if (hasAllowedDomain || customTags.includes('<meta ') || customTags.includes('<script defer') || customTags.includes('<script async')) {
+      if (hasAllowedDomain || hasMeta || hasScriptDefer || hasScriptAsync) {
+        console.log('[DEBUG] Custom head tags approved')
         return customTags
       }
       
