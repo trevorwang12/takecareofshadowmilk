@@ -76,6 +76,37 @@ export default function SEOManager() {
     setIsLoading(false)
   }
 
+  const handleMetaTagsSubmit = async () => {
+    setIsLoading(true)
+    
+    try {
+      // Merge current form data with existing settings to ensure required fields are present
+      const completeSettings = {
+        ...seoSettings, // Start with existing complete settings
+        ...seoFormData  // Override with form changes
+      }
+      
+      const validation = seoManager.validateSEOSettings(completeSettings)
+      if (!validation.isValid) {
+        showAlert('error', validation.errors.join(', '))
+        setIsLoading(false)
+        return
+      }
+      
+      const success = await seoManager.updateSEOSettings(completeSettings)
+      if (success) {
+        showAlert('success', 'Meta Tags settings updated successfully!')
+        loadSEOData()
+      } else {
+        showAlert('error', 'Failed to update Meta Tags settings')
+      }
+    } catch (error) {
+      showAlert('error', 'An error occurred while saving Meta Tags settings')
+    }
+    
+    setIsLoading(false)
+  }
+
   const handleGamePageSEOSubmit = async () => {
     setIsLoading(true)
     
@@ -505,7 +536,7 @@ export default function SEOManager() {
               </div>
 
               <div className="flex justify-end">
-                <Button onClick={handleSEOSubmit} disabled={isLoading}>
+                <Button onClick={handleMetaTagsSubmit} disabled={isLoading}>
                   {isLoading ? 'Saving...' : 'Save Meta Tags Settings'}
                 </Button>
               </div>
