@@ -57,8 +57,8 @@ ENABLE_ADMIN=false
 #### 如果需要启用Admin功能 / If Admin functionality is needed
 ```
 ENABLE_ADMIN=true
-NEXT_PUBLIC_ADMIN_USERNAME=your_admin_username
-NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password
+ADMIN_USERNAME=your_admin_username
+ADMIN_PASSWORD=your_secure_password
 ADMIN_TOKEN=your_secure_token
 ```
 

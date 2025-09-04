@@ -115,7 +115,7 @@ export const getAdminCredentials = (): { username: string; hasConfig: boolean } 
   const hasValidConfig = config.securityQuestions.some(q => q.answer?.trim())
   
   return {
-    username: process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin',
+    username: process.env.ADMIN_USERNAME || 'admin',
     hasConfig: hasValidConfig
   }
 }

@@ -459,8 +459,8 @@ vercel
 
 # 3. Set Environment Variables in Vercel Dashboard:
 NEXT_PUBLIC_SITE_URL=https://yourdomain.vercel.app
-NEXT_PUBLIC_ADMIN_USERNAME=admin
-NEXT_PUBLIC_ADMIN_PASSWORD=your-secure-password
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your-secure-password
 ADMIN_TOKEN=your-secure-api-token
 ```
 
@@ -490,8 +490,8 @@ NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 NEXT_PUBLIC_SITE_NAME=Your Game Site
 
 # Admin Access
-NEXT_PUBLIC_ADMIN_USERNAME=your_admin
-NEXT_PUBLIC_ADMIN_PASSWORD=secure_password_123
+ADMIN_USERNAME=your_admin
+ADMIN_PASSWORD=secure_password_123
 ADMIN_TOKEN=your-secure-api-token-here
 
 # Optional Configuration
@@ -967,7 +967,7 @@ Access `/admin` for | 访问 `/admin` 获取:
 
 **Admin panel security | 管理面板安全:**
 - Default credentials are `admin`/`admin123` - change them immediately | 默认凭据是 `admin`/`admin123` - 请立即修改
-- Set `NEXT_PUBLIC_ADMIN_USERNAME` and `NEXT_PUBLIC_ADMIN_PASSWORD` in environment variables | 在环境变量中设置 `NEXT_PUBLIC_ADMIN_USERNAME` 和 `NEXT_PUBLIC_ADMIN_PASSWORD`
+- Set `ADMIN_USERNAME` and `ADMIN_PASSWORD` in environment variables | 在环境变量中设置 `ADMIN_USERNAME` 和 `ADMIN_PASSWORD`
 - Admin routes are blocked from search engines via robots.txt | 通过 robots.txt 阻止搜索引擎收录管理路由
 - Rate limiting protects against brute force attacks | 速率限制防止暴力破解攻击
 

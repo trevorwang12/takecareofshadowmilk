@@ -37,8 +37,8 @@ npm run dev
 2. **Set Environment Variables in Vercel Dashboard:**
    ```bash
    NEXT_PUBLIC_SITE_URL=https://yourdomain.vercel.app
-   NEXT_PUBLIC_ADMIN_USERNAME=your_admin
-   NEXT_PUBLIC_ADMIN_PASSWORD=secure_password_123
+   ADMIN_USERNAME=your_admin
+   ADMIN_PASSWORD=secure_password_123
    ADMIN_TOKEN=your-secure-token-here
    ```
 

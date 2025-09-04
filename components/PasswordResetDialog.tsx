@@ -88,8 +88,8 @@ export default function PasswordResetDialog({ trigger }: PasswordResetDialogProp
                       <div><strong>方式1：环境变量</strong></div>
                       <div>检查项目根目录的 .env.local 文件：</div>
                       <code className="block bg-white p-2 rounded text-xs">
-                        NEXT_PUBLIC_ADMIN_USERNAME=admin<br/>
-                        NEXT_PUBLIC_ADMIN_PASSWORD=你的密码
+                        ADMIN_USERNAME=admin<br/>
+                        ADMIN_PASSWORD=你的密码
                       </code>
                       
                       <div className="mt-3"><strong>方式2：默认凭据</strong></div>
@@ -198,7 +198,7 @@ export default function PasswordResetDialog({ trigger }: PasswordResetDialogProp
                   <div><strong>用户名：</strong> {username}</div>
                   <div><strong>当前密码位置：</strong></div>
                   <div className="bg-gray-50 p-3 rounded text-xs">
-                    <div>1. 环境变量 NEXT_PUBLIC_ADMIN_PASSWORD</div>
+                    <div>1. 环境变量 ADMIN_PASSWORD</div>
                     <div>2. 或使用默认密码: admin123</div>
                   </div>
                   <div className="text-xs text-gray-500 mt-2">

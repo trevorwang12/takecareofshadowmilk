@@ -6,8 +6,8 @@ interface AdminAuth {
   logout: () => Promise<void>
 }
 
-const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin'
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123'
+// 注意：客户端不再直接使用环境变量验证
+// 认证现在通过服务端API进行，使用 ADMIN_USERNAME 和 ADMIN_PASSWORD 环境变量
 const AUTH_KEY = 'admin_auth_token'
 const AUTH_EXPIRY_KEY = 'admin_auth_expiry'
 const LOGIN_ATTEMPTS_KEY = 'admin_login_attempts'

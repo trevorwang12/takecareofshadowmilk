@@ -39,8 +39,8 @@ NEXT_PUBLIC_SITE_NAME=Your Games Site
 ADMIN_TOKEN=your-super-secure-token-here
 
 # 管理员登录
-NEXT_PUBLIC_ADMIN_USERNAME=admin
-NEXT_PUBLIC_ADMIN_PASSWORD=your-secure-password
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your-secure-password
 
 # 可选配置
 NEXT_PUBLIC_FEATURED_GAMES_COUNT=8
@@ -114,8 +114,8 @@ npm start
 ### 管理员配置
 | 变量名 | 描述 | 默认值 |
 |--------|------|--------|
-| `NEXT_PUBLIC_ADMIN_USERNAME` | 管理员用户名 | `admin` |
-| `NEXT_PUBLIC_ADMIN_PASSWORD` | 管理员密码 | `password` |
+| `ADMIN_USERNAME` | 管理员用户名 | `admin` |
+| `ADMIN_PASSWORD` | 管理员密码 | `password` |
 
 ### 功能配置
 | 变量名 | 描述 | 默认值 |
@@ -174,7 +174,7 @@ npm start
    - 修改后需要重新部署
 
 3. **管理面板无法访问**
-   - 检查 `NEXT_PUBLIC_ADMIN_USERNAME/PASSWORD` 设置
+   - 检查 `ADMIN_USERNAME/PASSWORD` 设置
    - 确保在 `/admin` 路径访问
 
 4. **文件上传失败**
