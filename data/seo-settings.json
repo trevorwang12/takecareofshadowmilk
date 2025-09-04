@@ -39,10 +39,10 @@
       "appleMobileWebAppCapable": "yes"
     },
     "createdAt": "2025-08-29T11:10:41.564Z",
-    "updatedAt": "2025-09-04T02:17:01.522Z",
+    "updatedAt": "2025-09-04T05:58:38.222Z",
     "canonicalUrl": "https://worldguessr.pro/",
     "googleAnalyticsId": "468424498",
-    "customHeadTags": "<script defer data-domain=\"worldguessr.pro\" src=\"https://plausible-plausible-46f14b-155-138-228-206.traefik.me/js/script.outbound-links.js\"></script>\n<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>\n"
+    "customHeadTags": "<script defer data-domain=\"worldguessr.pro\" src=\"http://plausible-plausible-46f14b-155-138-228-206.traefik.me/js/script.tagged-events.js\"></script>\n<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>\n\n"
   },
   "gamePageSEO": {
     "titleTemplate": "{gameName} - Play Free Online | {siteName}",

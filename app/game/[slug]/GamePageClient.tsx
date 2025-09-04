@@ -11,7 +11,7 @@ import { ArrowLeft, Star, Play, Users, Tag, Calendar, Gamepad2 } from "lucide-re
 import { dataManager } from "@/lib/data-manager"
 import GamePlayer from "@/components/GamePlayer"
 import PageH1 from "@/components/PageH1"
-import AdSlot from "@/components/ImprovedAdSlot"
+import AdSlot from "@/components/SafeAdSlot"
 import YouMightAlsoLike from "@/components/YouMightAlsoLike"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"

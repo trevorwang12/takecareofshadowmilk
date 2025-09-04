@@ -10,7 +10,7 @@ import { Search, Star, Play, Users, Gamepad2 } from "lucide-react"
 import { dataManager } from '@/lib/data-manager'
 import { featuredGamesManager } from '@/lib/feature-games-manager'
 import { homepageManager } from '@/lib/homepage-manager'
-import AdSlot from '@/components/ImprovedAdSlot'
+import AdSlot from '@/components/SafeAdSlot'
 import GamePlayer from '@/components/GamePlayer'
 import YouMightAlsoLike from '@/components/YouMightAlsoLike'
 import InstantSearch from '@/components/InstantSearch'
@@ -339,7 +339,7 @@ export default function HomePage() {
                             alt={game.name} 
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                             loading={index < 4 ? "eager" : "lazy"}
-                            fetchpriority={index < 2 ? "high" : "auto"}
+                            fetchPriority={index < 2 ? "high" : "auto"}
                             onError={(e) => {
                               const img = e.target as HTMLImageElement;
                               if (img.src.includes('.webp')) {

@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users, Target, Heart, Gamepad2 } from "lucide-react"
-import AdSlot from "@/components/ImprovedAdSlot"
+import AdSlot from "@/components/SafeAdSlot"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import { aboutManager, type AboutContent } from '@/lib/about-manager'

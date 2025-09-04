@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Home, Search, RefreshCw, Gamepad2, Star, Frown, Play } from "lucide-react"
 import { dataManager } from "@/lib/data-manager"
-import AdSlot from "@/components/ImprovedAdSlot"
+import AdSlot from "@/components/SafeAdSlot"
 import YouMightAlsoLike from "@/components/YouMightAlsoLike"
 
 export default function NotFound() {
