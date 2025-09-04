@@ -34,5 +34,14 @@
     "id": "ad_1756947605557_75b1yunvi",
     "createdAt": "2025-09-04T01:00:05.557Z",
     "updatedAt": "2025-09-04T01:00:05.557Z"
+  },
+  {
+    "name": "adsense auto",
+    "htmlContent": "<amp-auto-ads type=\"adsense\"\n        data-ad-client=\"ca-pub-4861826910865457\">\n</amp-auto-ads>",
+    "position": "adsense-auto",
+    "isActive": true,
+    "id": "ad_1756990667563_32tlp0s5r",
+    "createdAt": "2025-09-04T12:57:47.563Z",
+    "updatedAt": "2025-09-04T12:57:47.563Z"
   }
 ]
