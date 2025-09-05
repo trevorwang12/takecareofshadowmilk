@@ -11,14 +11,30 @@ export default async function SafeCustomHeadTags() {
     return null
   }
   
-  // 直接渲染 HTML 内容 - Next.js 会在 head 中正确处理 dangerouslySetInnerHTML
-  console.log('[DEBUG SafeCustomHeadTags] Rendering custom head tags directly')
+  // 解析 HTML 并返回合适的 script 标签
+  console.log('[DEBUG SafeCustomHeadTags] Rendering custom head tags as script elements')
+  
+  // 提取 script 标签的 src 和内容
+  const scriptSrcMatch = customHeadTags.match(/<script[^>]+src="([^"]+)"[^>]*>/);
+  const scriptContentMatch = customHeadTags.match(/<script>([^<]+)<\/script>/);
+  const dataDomainMatch = customHeadTags.match(/data-domain="([^"]+)"/);
   
   return (
-    <div 
-      dangerouslySetInnerHTML={{
-        __html: customHeadTags
-      }}
-    />
+    <>
+      {scriptSrcMatch && (
+        <script 
+          defer 
+          data-domain={dataDomainMatch ? dataDomainMatch[1] : "worldguessr.pro"}
+          src={scriptSrcMatch[1]}
+        />
+      )}
+      {scriptContentMatch && (
+        <script 
+          dangerouslySetInnerHTML={{
+            __html: scriptContentMatch[1]
+          }}
+        />
+      )}
+    </>
   )
 }
