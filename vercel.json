@@ -145,6 +145,10 @@
       "destination": "/api/sitemap"
     },
     {
+      "source": "/sitemapindex.xml",
+      "destination": "/api/sitemapindex"
+    },
+    {
       "source": "/robots.txt", 
       "destination": "/api/robots"
     }
