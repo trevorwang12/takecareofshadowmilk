@@ -23,7 +23,7 @@ interface GameFormData {
   gradientDescription: string
   thumbnailUrl: string
   category: string
-  tags: string[]
+  tags: string
   rating: number
   developer: string
   releaseDate: string
@@ -31,7 +31,7 @@ interface GameFormData {
   gameUrl: string
   externalUrl: string
   embedCode: string
-  controls: string[]
+  controls: string
   platforms: string[]
   languages: string[]
   features: string[]
@@ -45,7 +45,7 @@ const initialFormData: GameFormData = {
   gradientDescription: '',
   thumbnailUrl: '',
   category: '',
-  tags: [],
+  tags: '',
   rating: 4.0,
   developer: '',
   releaseDate: new Date().getFullYear().toString(),
@@ -53,7 +53,7 @@ const initialFormData: GameFormData = {
   gameUrl: '',
   externalUrl: '',
   embedCode: '',
-  controls: [],
+  controls: '',
   platforms: ['web'],
   languages: ['en'],
   features: [],
@@ -161,7 +161,8 @@ export default function GamesManager() {
     }))
   }
 
-  const handleArrayInputChange = (field: keyof GameFormData, value: string) => {
+  const handleStringToArrayInputChange = (field: keyof GameFormData, value: string) => {
+    // For platforms, languages, features that need to remain as arrays
     const items = value.split(',').map(item => item.trim()).filter(item => item !== '')
     setFormData(prev => ({
       ...prev,
@@ -184,7 +185,10 @@ export default function GamesManager() {
         developer: sanitizeInput(formData.developer),
         gameUrl: formData.gameUrl.trim(),
         externalUrl: formData.externalUrl.trim(),
-        embedCode: formData.embedCode.trim()
+        embedCode: formData.embedCode.trim(),
+        // Convert string fields back to arrays for saving
+        tags: formData.tags.split(',').map(item => item.trim()).filter(item => item !== ''),
+        controls: formData.controls.split(',').map(item => item.trim()).filter(item => item !== '')
       }
 
       const validation = validateGameData(sanitizedData)
@@ -225,7 +229,7 @@ export default function GamesManager() {
       gradientDescription: game.gradientDescription || '',
       thumbnailUrl: game.thumbnailUrl,
       category: game.category,
-      tags: game.tags,
+      tags: game.tags.join(', '),
       rating: game.rating,
       developer: game.developer || '',
       releaseDate: game.releaseDate,
@@ -233,7 +237,7 @@ export default function GamesManager() {
       gameUrl: game.gameUrl || '',
       externalUrl: game.externalUrl || '',
       embedCode: game.embedCode || '',
-      controls: game.controls,
+      controls: game.controls.join(', '),
       platforms: game.platforms,
       languages: game.languages,
       features: game.features,
@@ -617,8 +621,8 @@ export default function GamesManager() {
                       <Label htmlFor="tags">Tags (comma separated)</Label>
                       <Input
                         id="tags"
-                        value={formData.tags.join(', ')}
-                        onChange={(e) => handleArrayInputChange('tags', e.target.value)}
+                        value={formData.tags}
+                        onChange={(e) => handleInputChange('tags', e.target.value)}
                         placeholder="action, adventure, puzzle"
                       />
                     </div>
@@ -626,8 +630,8 @@ export default function GamesManager() {
                       <Label htmlFor="controls">Controls (comma separated)</Label>
                       <Input
                         id="controls"
-                        value={formData.controls.join(', ')}
-                        onChange={(e) => handleArrayInputChange('controls', e.target.value)}
+                        value={formData.controls}
+                        onChange={(e) => handleInputChange('controls', e.target.value)}
                         placeholder="mouse, keyboard, touch"
                       />
                     </div>

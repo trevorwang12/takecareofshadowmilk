@@ -1,9 +1,9 @@
 {
   "branding": {
     "showLogo": true,
-    "logoText": "Worldguessr fan page",
+    "logoText": "Take Care of Shadow Milk",
     "logoIcon": "gamepad2",
-    "description": "Explore the World, Test Your Geography Knowledge, and Have Fun!",
+    "description": "Virtual Pet Simulator featuring Shadow Milk Cookie!",
     "customDescription": ""
   },
   "navigation": {
@@ -123,7 +123,7 @@
   },
   "copyright": {
     "isVisible": true,
-    "text": "@copyright 2025 {siteName}. All rights reserved.",
+    "text": "@{siteName}. Take Care of Shadow Milk is an independent website. It is not affiliated with any organizations.All rights reserved.",
     "customText": ""
   },
   "friendlyLinks": {

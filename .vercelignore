@@ -3,6 +3,7 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # Local development
 .env.local
@@ -13,14 +14,22 @@ yarn-error.log*
 # Testing
 coverage
 .nyc_output
+__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+jest.config.js
+jest.config.mjs
 
-# IDE
+# IDE and Editor files
 .vscode
 .idea
 *.swp
 *.swo
+*.tmp
 
-# OS
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -35,3 +44,26 @@ out
 
 # Debug logs
 *.log
+
+# Documentation and development files
+README.md
+CHANGELOG.md
+docs/
+*.md
+
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Development scripts
+scripts/
+tools/
+
+# Cache directories
+.cache
+.parcel-cache
+
+# Temporary files
+tmp/
+temp/

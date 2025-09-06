@@ -1,6 +1,6 @@
 {
   "settings": {
-    "baseUrl": "https://worldguessr.pro",
+    "baseUrl": "https://takecareofshadowmilk.cc",
     "defaultChangeFreq": "weekly",
     "defaultPriority": 0.5,
     "includeStaticPages": true,
@@ -13,7 +13,8 @@
       "/test"
     ],
     "autoGenerate": true,
-    "lastGenerated": "2025-09-02T02:26:24.074Z"
+    "generateSitemapIndex": true,
+    "lastGenerated": "2025-09-06T03:12:21.271Z"
   },
-  "updatedAt": "2025-09-02T02:26:24.075Z"
+  "updatedAt": "2025-09-06T03:12:21.278Z"
 }

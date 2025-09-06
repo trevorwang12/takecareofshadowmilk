@@ -3,15 +3,26 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
+  "outputDirectory": ".next",
   "functions": {
+    "app/api/upload/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/admin/check-iframe/route.ts": {
+      "maxDuration": 15
+    },
+    "app/api/admin/backup/route.ts": {
+      "maxDuration": 60
+    },
     "app/api/**/*.ts": {
       "maxDuration": 10
     }
   },
+  "regions": ["sin1"],
   "env": {
     "NODE_ENV": "production",
-    "ENABLE_ADMIN": "false",
-    "NEXT_PUBLIC_DEBUG_ADS": "true"
+    "ENABLE_ADMIN": "true",
+    "NEXT_PUBLIC_DEBUG_ADS": "false"
   },
   "headers": [
     {
@@ -28,6 +39,41 @@
         {
           "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-DNS-Prefetch-Control",
+          "value": "on"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        }
+      ]
+    },
+    {
+      "source": "/api/games/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=300, stale-while-revalidate=600"
+        }
+      ]
+    },
+    {
+      "source": "/api/categories/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=3600, stale-while-revalidate=7200"
+        }
+      ]
+    },
+    {
+      "source": "/api/admin/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     },
@@ -36,7 +82,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "s-maxage=0, stale-while-revalidate"
+          "value": "s-maxage=60, stale-while-revalidate=300"
         }
       ]
     },
@@ -50,11 +96,38 @@
       ]
     },
     {
+      "source": "/_next/image(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/uploads/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(jpg|jpeg|png|gif|ico|svg|webp|avif))$",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
       "source": "/_next/static/css/(.*).css",
       "headers": [
         {
           "key": "Content-Type",
-          "value": "text/css"
+          "value": "text/css; charset=utf-8"
         }
       ]
     },
@@ -63,14 +136,14 @@
       "headers": [
         {
           "key": "Content-Type",
-          "value": "application/javascript"
+          "value": "application/javascript; charset=utf-8"
         }
       ]
     }
   ],
   "redirects": [
     {
-      "source": "/admin/(.*)",
+      "source": "/admin",
       "destination": "/admin",
       "permanent": false
     }
@@ -84,5 +157,7 @@
       "source": "/robots.txt", 
       "destination": "/api/robots"
     }
-  ]
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
