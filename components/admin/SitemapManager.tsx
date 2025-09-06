@@ -110,14 +110,24 @@ export default function SitemapManager() {
       const result = await response.json()
       
       if (result.success) {
-        // 同时生成静态sitemap-0.xml
-        const staticResponse = await fetch('/api/generate-sitemap-static')
-        const staticResult = await staticResponse.json()
-        
         setData(result.data)
+        
+        // 检查是否为.cc域名，只有.cc域名才生成静态sitemap-0.xml
+        const isCcDomain = data?.settings?.baseUrl?.includes('.cc')
+        let message = `Sitemap生成成功！动态sitemap: ${result.totalUrls}个URL`
+        
+        if (isCcDomain) {
+          const staticResponse = await fetch('/api/generate-sitemap-static')
+          const staticResult = await staticResponse.json()
+          
+          if (staticResult.success) {
+            message += `，静态sitemap-0.xml: ${staticResult.urls}个URL`
+          }
+        }
+        
         toast({
           title: "成功", 
-          description: `Sitemap生成成功！动态sitemap: ${result.totalUrls}个URL，静态sitemap-0.xml: ${staticResult.urls || 0}个URL`
+          description: message
         })
       } else {
         toast({
@@ -376,7 +386,10 @@ export default function SitemapManager() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {data?.settings.generateSitemapIndex ? (
+                  {/* 检查是否为.cc域名来决定显示内容 */}
+                  {(() => {
+                    const isCcDomain = data?.settings?.baseUrl?.includes('.cc')
+                    return data?.settings.generateSitemapIndex && isCcDomain ? (
                     <>
                       <div className="space-y-2">
                         <h4 className="font-medium text-green-600">Google Search Console</h4>
@@ -428,14 +441,23 @@ export default function SitemapManager() {
                         </div>
                       </div>
                     </div>
-                  )}
+                  })()}
                 </div>
                 <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                   <p className="text-sm text-yellow-800">
                     <strong>提示：</strong>
-                    {data?.settings.generateSitemapIndex 
-                      ? '已启用sitemap索引，sitemapindex.xml指向sitemap.xml，适用于.cc域名' 
-                      : '如果你的网站使用.cc域名，建议启用"生成Sitemap索引"选项'}
+                    {(() => {
+                      const isCcDomain = data?.settings?.baseUrl?.includes('.cc')
+                      if (isCcDomain && data?.settings.generateSitemapIndex) {
+                        return '已启用.cc域名优化：sitemapindex.xml指向sitemap-0.xml，双sitemap策略提升搜索引擎收录'
+                      } else if (isCcDomain && !data?.settings.generateSitemapIndex) {
+                        return '检测到.cc域名，建议启用"生成Sitemap索引"选项以优化Google搜索收录'
+                      } else if (data?.settings.generateSitemapIndex) {
+                        return '已启用sitemap索引，使用标准sitemap.xml即可'
+                      } else {
+                        return '使用标准sitemap.xml，适用于大多数域名'
+                      }
+                    })()}
                   </p>
                 </div>
               </CardContent>
