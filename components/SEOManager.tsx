@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator"
 import { Globe, Search, Eye, Code, Smartphone, Settings, Link } from "lucide-react"
 import { seoManager, type SEOSettings, type GamePageSEO, type CategoryPageSEO } from "@/lib/seo-manager"
 import ImageUploader from "@/components/ImageUploader"
+import CanonicalChecker from "@/components/admin/CanonicalChecker"
 
 export default function SEOManager() {
   const [seoSettings, setSEOSettings] = useState<SEOSettings | null>(null)
@@ -174,8 +175,9 @@ export default function SEOManager() {
       )}
 
       <Tabs defaultValue="general" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="general">General SEO</TabsTrigger>
+          <TabsTrigger value="canonical">Canonical URLs</TabsTrigger>
           <TabsTrigger value="meta">Meta Tags</TabsTrigger>
           <TabsTrigger value="headings">Headings (H1-H3)</TabsTrigger>
           <TabsTrigger value="structured">Structured Data</TabsTrigger>
@@ -313,6 +315,10 @@ export default function SEOManager() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="canonical" className="space-y-6">
+          <CanonicalChecker />
         </TabsContent>
 
         <TabsContent value="meta" className="space-y-6">

@@ -13,6 +13,7 @@ import PageH1 from "@/components/PageH1"
 import YouMightAlsoLike from "@/components/YouMightAlsoLike"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import DynamicSEO from '@/components/DynamicSEO'
 
 export default function SearchPage() {
   const searchParams = useSearchParams()
@@ -72,6 +73,11 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <DynamicSEO 
+        title={query ? `Search Results for "${query}" - GAMES` : 'Search Games - GAMES'}
+        description={query ? `Find games related to "${query}". Search through our collection of free online games.` : 'Search for your favorite free online games. Find action, puzzle, adventure and more games.'}
+        canonical={`https://worldguessr.pro/search${query ? `?q=${encodeURIComponent(query)}` : ''}`}
+      />
       {/* Header */}
       <Header />
       

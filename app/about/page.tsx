@@ -9,6 +9,7 @@ import AdSlot from "@/components/SafeAdSlot"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import { aboutManager, type AboutContent } from '@/lib/about-manager'
+import DynamicSEO from '@/components/DynamicSEO'
 
 export default function AboutPage() {
   const [aboutContent, setAboutContent] = useState<AboutContent | null>(null)
@@ -64,6 +65,11 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <DynamicSEO 
+        title="About Us - GAMES"
+        description="Learn about our mission to provide the best free online gaming experience. Discover our story and values."
+        canonical="https://worldguessr.pro/about"
+      />
       {/* Header */}
       <Header />
 
