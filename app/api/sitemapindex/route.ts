@@ -27,11 +27,7 @@ export async function GET(request: NextRequest) {
       sitemapIndexContent = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>${settings.baseUrl}/api/sitemap/pages</loc>
-    <lastmod>${now.split('T')[0]}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${settings.baseUrl}/api/sitemap/games</loc>
+    <loc>${settings.baseUrl}/sitemap-0.xml</loc>
     <lastmod>${now.split('T')[0]}</lastmod>
   </sitemap>
 </sitemapindex>`
@@ -55,11 +51,7 @@ export async function GET(request: NextRequest) {
     const errorSitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://takecareofshadowmilk.cc/api/sitemap/pages</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://takecareofshadowmilk.cc/api/sitemap/games</loc>
+    <loc>https://takecareofshadowmilk.cc/sitemap-0.xml</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
   </sitemap>
 </sitemapindex>`
