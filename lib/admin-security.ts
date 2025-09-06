@@ -6,9 +6,22 @@
  * 检查admin功能是否启用
  */
 export function isAdminEnabled(): boolean {
-  // Admin is always enabled - protected by username/password auth
-  // Admin始终启用 - 由用户名/密码认证保护
-  return true
+  // Check environment variable first
+  // 首先检查环境变量
+  const enableAdmin = process.env.ENABLE_ADMIN
+  if (enableAdmin === 'false') {
+    return false
+  }
+  
+  // In development, always enabled
+  // 开发环境总是启用
+  if (process.env.NODE_ENV === 'development') {
+    return true
+  }
+  
+  // In production, check ENABLE_ADMIN environment variable
+  // 生产环境检查ENABLE_ADMIN环境变量
+  return enableAdmin === 'true'
 }
 
 /**
