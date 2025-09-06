@@ -82,6 +82,14 @@ export class DataService {
     return this.saveToFile('ads.json', ads)
   }
 
+  static async getGames() {
+    return this.loadFromFile<any[]>('games.json', [])
+  }
+
+  static async getCategories() {
+    return this.loadFromFile<any[]>('categories.json', [])
+  }
+
   static async getSeoSettings() {
     const defaultSettings = {
       seoSettings: {
