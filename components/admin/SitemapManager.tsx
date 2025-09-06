@@ -110,10 +110,14 @@ export default function SitemapManager() {
       const result = await response.json()
       
       if (result.success) {
+        // 同时生成静态sitemap-0.xml
+        const staticResponse = await fetch('/api/generate-sitemap-static')
+        const staticResult = await staticResponse.json()
+        
         setData(result.data)
         toast({
-          title: "成功",
-          description: `Sitemap生成成功，包含${result.totalUrls}个URL`
+          title: "成功", 
+          description: `Sitemap生成成功！动态sitemap: ${result.totalUrls}个URL，静态sitemap-0.xml: ${staticResult.urls || 0}个URL`
         })
       } else {
         toast({
@@ -387,6 +391,7 @@ export default function SitemapManager() {
                             <span>{data.settings.baseUrl}/sitemapindex.xml</span>
                             <ExternalLink className="w-3 h-3" />
                           </a>
+                          <p className="text-xs text-gray-500 mt-2">此文件指向 sitemap-0.xml，包含所有页面</p>
                         </div>
                       </div>
                       <div className="space-y-2">
