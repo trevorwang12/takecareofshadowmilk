@@ -216,13 +216,15 @@ export default function SitemapManager() {
         </CardHeader>
         <CardContent>
           <p>无法加载sitemap数据</p>
-          <Button onClick={loadData} className="mt-4">
+          <Button onClick={() => loadData()} className="mt-4">
             重试
           </Button>
         </CardContent>
       </Card>
     )
   }
+
+  const isCcDomain = data?.settings?.baseUrl?.includes('.cc')
 
   return (
     <div className="space-y-6">
@@ -376,7 +378,6 @@ export default function SitemapManager() {
 
         <TabsContent value="preview">
           <div className="space-y-4">
-            {/* Sitemap提交地址 */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
@@ -386,10 +387,7 @@ export default function SitemapManager() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* 检查是否为.cc域名来决定显示内容 */}
-                  {(() => {
-                    const isCcDomain = data?.settings?.baseUrl?.includes('.cc')
-                    return data?.settings.generateSitemapIndex && isCcDomain ? (
+                  {data?.settings.generateSitemapIndex && isCcDomain ? (
                     <>
                       <div className="space-y-2">
                         <h4 className="font-medium text-green-600">Google Search Console</h4>
@@ -441,29 +439,23 @@ export default function SitemapManager() {
                         </div>
                       </div>
                     </div>
-                  })()}
+                  )}
                 </div>
                 <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                   <p className="text-sm text-yellow-800">
                     <strong>提示：</strong>
-                    {(() => {
-                      const isCcDomain = data?.settings?.baseUrl?.includes('.cc')
-                      if (isCcDomain && data?.settings.generateSitemapIndex) {
-                        return '已启用.cc域名优化：sitemapindex.xml指向sitemap-0.xml，双sitemap策略提升搜索引擎收录'
-                      } else if (isCcDomain && !data?.settings.generateSitemapIndex) {
-                        return '检测到.cc域名，建议启用"生成Sitemap索引"选项以优化Google搜索收录'
-                      } else if (data?.settings.generateSitemapIndex) {
-                        return '已启用sitemap索引，使用标准sitemap.xml即可'
-                      } else {
-                        return '使用标准sitemap.xml，适用于大多数域名'
-                      }
-                    })()}
+                    {isCcDomain && data?.settings.generateSitemapIndex
+                      ? '已启用.cc域名优化：sitemapindex.xml指向sitemap-0.xml，双sitemap策略提升搜索引擎收录'
+                      : isCcDomain && !data?.settings.generateSitemapIndex
+                      ? '检测到.cc域名，建议启用"生成Sitemap索引"选项以优化Google搜索收录'
+                      : data?.settings.generateSitemapIndex
+                      ? '已启用sitemap索引，使用标准sitemap.xml即可'
+                      : '使用标准sitemap.xml，适用于大多数域名'}
                   </p>
                 </div>
               </CardContent>
             </Card>
 
-            {/* URL预览 */}
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -491,63 +483,63 @@ export default function SitemapManager() {
                   )}
                 </div>
               </CardHeader>
-            <CardContent>
-              {data.generatedUrls.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-gray-500">暂无生成的sitemap</p>
-                  <Button onClick={generateSitemap} className="mt-4">
-                    立即生成
-                  </Button>
-                </div>
-              ) : (
-                <div className="space-y-2 max-h-96 overflow-y-auto">
-                  {data.generatedUrls.map((url, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50">
-                      <div className="flex-1 min-w-0">
-                        <a 
-                          href={url.url}
-                          target="_blank"
-                          rel="noopener noreferrer" 
-                          className="text-blue-600 hover:underline flex items-center space-x-1 truncate"
-                        >
-                          <span className="truncate">{url.url}</span>
-                          <ExternalLink className="w-3 h-3 flex-shrink-0" />
-                        </a>
-                        <div className="flex items-center space-x-4 text-xs text-gray-500 mt-1">
-                          <span>优先级: {url.priority || 0.5}</span>
-                          <span>频率: {url.changeFrequency || 'weekly'}</span>
-                          {url.lastModified && (
-                            <span>更新: {url.lastModified}</span>
-                          )}
+              <CardContent>
+                {data.generatedUrls.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">暂无生成的sitemap</p>
+                    <Button onClick={generateSitemap} className="mt-4">
+                      立即生成
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-2 max-h-96 overflow-y-auto">
+                    {data.generatedUrls.map((url, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50">
+                        <div className="flex-1 min-w-0">
+                          <a 
+                            href={url.url}
+                            target="_blank"
+                            rel="noopener noreferrer" 
+                            className="text-blue-600 hover:underline flex items-center space-x-1 truncate"
+                          >
+                            <span className="truncate">{url.url}</span>
+                            <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                          </a>
+                          <div className="flex items-center space-x-4 text-xs text-gray-500 mt-1">
+                            <span>优先级: {url.priority || 0.5}</span>
+                            <span>频率: {url.changeFrequency || 'weekly'}</span>
+                            {url.lastModified && (
+                              <span>更新: {url.lastModified}</span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                  {!showAllUrls && data.totalUrls > 10 && (
-                    <div className="text-center pt-4">
-                      <p className="text-sm text-gray-500 mb-2">
-                        还有 {data.totalUrls - 10} 个URL未显示
-                      </p>
-                      <Button 
-                        variant="outline" 
-                        onClick={toggleShowAllUrls}
-                        disabled={loadingAllUrls}
-                      >
-                        {loadingAllUrls ? (
-                          <>
-                            <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                            加载中...
-                          </>
-                        ) : (
-                          '查看全部'
-                        )}
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                    ))}
+                    {!showAllUrls && data.totalUrls > 10 && (
+                      <div className="text-center pt-4">
+                        <p className="text-sm text-gray-500 mb-2">
+                          还有 {data.totalUrls - 10} 个URL未显示
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          onClick={toggleShowAllUrls}
+                          disabled={loadingAllUrls}
+                        >
+                          {loadingAllUrls ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                              加载中...
+                            </>
+                          ) : (
+                            '查看全部'
+                          )}
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
       </Tabs>
