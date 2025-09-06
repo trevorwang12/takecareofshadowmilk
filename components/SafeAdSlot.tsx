@@ -45,9 +45,14 @@ export default function SafeAdSlot({ position, className = '' }: AdSlotProps) {
     )
     
     if (fetchError) {
-      ErrorHandler.logError(fetchError, `AdSlot-${position}`)
-      setError(fetchError)
-      setAdData(null)
+      // 对于AbortError，静默处理，不显示错误
+      if (fetchError.type === 'NETWORK' && fetchError.message.includes('aborted')) {
+        setAdData(null)
+      } else {
+        ErrorHandler.logError(fetchError, `AdSlot-${position}`)
+        setError(fetchError)
+        setAdData(null)
+      }
     } else {
       const ad = data?.find((ad: SafeAdData) => ad.position === position && ad.isActive)
       setAdData(ad || null)

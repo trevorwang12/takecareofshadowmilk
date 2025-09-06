@@ -37,7 +37,10 @@ export class ErrorHandler {
 
   // 处理API错误
   static handleApiError(error: any, context: string): AppError {
-    console.error(`API Error in ${context}:`, error)
+    // 只在非AbortError时输出错误日志，避免正常取消操作的噪音
+    if (error.name !== 'AbortError') {
+      console.error(`API Error in ${context}:`, error)
+    }
     
     if (error.name === 'AbortError') {
       return this.createError(
