@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import HotGamesClient from './HotGamesClient'
 import { promises as fs } from 'fs'
 import path from 'path'
+import { SITE_CONSTANTS } from '@/lib/constants'
 
 async function loadSEOSettings() {
   try {
@@ -12,7 +13,7 @@ async function loadSEOSettings() {
     console.error('Failed to load SEO settings:', error)
     return {
       seoSettings: {
-        siteName: 'GAMES',
+        siteName: SITE_CONSTANTS.DEFAULT_SITE_NAME,
         siteUrl: 'https://worldguessr.pro',
         author: 'Gaming Platform',
         ogImage: '/og-image.png',
@@ -26,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const seoData = await loadSEOSettings()
   const { seoSettings } = seoData
   
-  const title = `Hot Games - ${seoSettings?.siteName || 'GAMES'}`
+  const title = `Hot Games - ${seoSettings?.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME}`
   const description = 'Play the hottest and most popular games! Discover trending games that everyone is playing.'
   const pageUrl = `${(seoSettings?.siteUrl || 'https://worldguessr.pro').replace(/\/$/, '')}/hot-games`
   
@@ -40,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       url: pageUrl,
-      siteName: seoSettings?.siteName || 'GAMES',
+      siteName: seoSettings?.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME,
       images: [{
         url: seoSettings?.ogImage || '/og-image.png',
         width: 1200,

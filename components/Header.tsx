@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Gamepad2, Search } from "lucide-react"
+import { SITE_CONSTANTS } from '@/lib/constants'
 
 interface SEOSettings {
   siteName?: string
@@ -13,7 +14,7 @@ interface SEOSettings {
 export default function Header() {
   const [searchTerm, setSearchTerm] = useState("")
   const [seoSettings, setSeoSettings] = useState<SEOSettings>({
-    siteName: 'GAMES',
+    siteName: SITE_CONSTANTS.DEFAULT_SITE_NAME,
     siteDescription: 'Best Online Gaming Platform'
   })
   const router = useRouter()
@@ -26,7 +27,7 @@ export default function Header() {
           const data = await response.json()
           if (data.seoSettings) {
             setSeoSettings({
-              siteName: data.seoSettings.siteName || 'GAMES',
+              siteName: data.seoSettings.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME,
               siteDescription: data.seoSettings.siteDescription || 'Best Online Gaming Platform'
             })
           }

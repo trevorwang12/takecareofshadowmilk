@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { SITE_CONSTANTS } from '@/lib/constants'
 
 interface SEOHeadProps {
   pageType?: 'home' | 'game' | 'category'
@@ -26,12 +27,12 @@ export default function SEOHead({ pageType = 'home', gameData, categoryData }: S
         } else {
           // 使用默认设置
           setSeoSettings({
-            siteName: 'GAMES',
-            siteDescription: 'Best Online Gaming Platform - Play hundreds of free browser games',
+            siteName: SITE_CONSTANTS.DEFAULT_SITE_NAME,
+            siteDescription: SITE_CONSTANTS.DEFAULT_SITE_DESCRIPTION,
             keywords: ['online games', 'browser games', 'free games'],
             author: 'Gaming Platform',
-            ogTitle: 'GAMES - Best Free Online Games',
-            ogDescription: 'Play the best free online games. No download required!',
+            ogTitle: SITE_CONSTANTS.DEFAULT_OG_TITLE,
+            ogDescription: SITE_CONSTANTS.DEFAULT_OG_DESCRIPTION,
             metaTags: {
               themeColor: '#475569'
             }
@@ -41,12 +42,12 @@ export default function SEOHead({ pageType = 'home', gameData, categoryData }: S
         console.log('SEO settings load error:', error)
         // 使用默认设置
         setSeoSettings({
-          siteName: 'GAMES',
-          siteDescription: 'Best Online Gaming Platform - Play hundreds of free browser games',
+          siteName: SITE_CONSTANTS.DEFAULT_SITE_NAME,
+          siteDescription: SITE_CONSTANTS.DEFAULT_SITE_DESCRIPTION,
           keywords: ['online games', 'browser games', 'free games'],
           author: 'Gaming Platform',
-          ogTitle: 'GAMES - Best Free Online Games',
-          ogDescription: 'Play the best free online games. No download required!',
+          ogTitle: SITE_CONSTANTS.DEFAULT_OG_TITLE,
+          ogDescription: SITE_CONSTANTS.DEFAULT_OG_DESCRIPTION,
           metaTags: {
             themeColor: '#475569'
           }
@@ -75,7 +76,7 @@ export default function SEOHead({ pageType = 'home', gameData, categoryData }: S
 
     try {
       // 更新document title
-      let title = seoSettings.siteName || 'GAMES'
+      let title = seoSettings.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME
       let description = seoSettings.siteDescription || 'Play the best free online games'
 
       // 根据页面类型调整标题和描述

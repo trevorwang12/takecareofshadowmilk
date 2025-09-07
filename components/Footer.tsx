@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Gamepad2, Settings, Twitter, Facebook, Instagram, Youtube, MessageCircle } from "lucide-react"
 import FriendlyLinks from './FriendlyLinks'
 import type { FooterContent } from '@/lib/footer-manager'
+import { SITE_CONSTANTS } from '@/lib/constants'
 
 interface SEOSettings {
   siteName?: string
@@ -23,7 +24,7 @@ const socialIcons = {
 
 export default function Footer() {
   const [seoSettings, setSeoSettings] = useState<SEOSettings>({
-    siteName: 'GAMES',
+    siteName: SITE_CONSTANTS.DEFAULT_SITE_NAME,
     siteDescription: 'Best Online Gaming Platform'
   })
   const [footerContent, setFooterContent] = useState<FooterContent | null>(null)
@@ -36,7 +37,7 @@ export default function Footer() {
           const data = await response.json()
           if (data.seoSettings) {
             setSeoSettings({
-              siteName: data.seoSettings.siteName || 'GAMES',
+              siteName: data.seoSettings.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME,
               siteDescription: data.seoSettings.siteDescription || 'Best Online Gaming Platform'
             })
           }
@@ -224,7 +225,7 @@ export default function Footer() {
             <div className="text-center text-sm text-gray-500">
               <p>
                 {footerContent.copyright.customText || 
-                 footerContent.copyright.text.replace('{siteName}', displaySiteName || 'GAMES')}
+                 footerContent.copyright.text.replace('{siteName}', displaySiteName || SITE_CONSTANTS.DEFAULT_SITE_NAME)}
               </p>
             </div>
           )}

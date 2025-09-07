@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { SITE_CONSTANTS } from '@/lib/constants'
 
 interface PageH1Props {
   pageType: 'homepage' | 'gamePage' | 'categoryPage'
@@ -57,7 +58,7 @@ export default function PageH1({ pageType, template, data = {}, className = '' }
             text = headingStructure.categoryPage?.h1 || '{categoryName} Games'
             break
           default:
-            text = data.siteName || 'GAMES'
+            text = data.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME
         }
       } else {
         // 如果没有headingStructure配置，使用默认模板
@@ -72,32 +73,32 @@ export default function PageH1({ pageType, template, data = {}, className = '' }
             text = '{categoryName} Games'
             break
           default:
-            text = data.siteName || 'GAMES'
+            text = data.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME
         }
       }
     }
     
     // 替换占位符
     if (text) {
-      text = text.replace('{siteName}', data.siteName || 'GAMES')
+      text = text.replace('{siteName}', data.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME)
       text = text.replace('{gameName}', data.gameName || 'Game')
       text = text.replace('{categoryName}', data.categoryName || 'Category')
     }
     
-    setHeadingText(text || data.siteName || 'GAMES')
+    setHeadingText(text || data.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME)
   }
   
   // 生成fallback标题，确保总是有内容显示
   const getFallbackTitle = () => {
     switch (pageType) {
       case 'homepage':
-        return `${data.siteName || 'GAMES'} - Best Free Online Games`
+        return `${data.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME} - Best Free Online Games`
       case 'gamePage':
         return data.gameName || 'Game'
       case 'categoryPage':
         return `${data.categoryName || 'Category'} Games`
       default:
-        return data.siteName || 'GAMES'
+        return data.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME
     }
   }
   

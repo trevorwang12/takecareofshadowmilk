@@ -4,6 +4,7 @@ import GamePageClient from './GamePageClient'
 import gamesData from '@/data/games.json'
 import { promises as fs } from 'fs'
 import path from 'path'
+import { SITE_CONSTANTS } from '@/lib/constants'
 
 interface PageProps {
   params: { slug: string }
@@ -37,7 +38,7 @@ async function loadSEOSettings() {
     console.error('Failed to load SEO settings:', error)
     return {
       seoSettings: {
-        siteName: 'GAMES',
+        siteName: SITE_CONSTANTS.DEFAULT_SITE_NAME,
         siteUrl: 'https://worldguessr.pro',
         author: 'Gaming Platform',
         ogImage: '/og-image.png',
@@ -63,7 +64,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   
   if (!game) {
     return {
-      title: 'Game Not Found - GAMES',
+      title: `Game Not Found - ${SITE_CONSTANTS.DEFAULT_SITE_NAME}`,
       description: 'Sorry, the game you are looking for could not be found.',
     }
   }
@@ -75,7 +76,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // 生成动态标题
   const title = gamePageSEO?.titleTemplate
     ?.replace('{gameName}', game.name)
-    ?.replace('{siteName}', seoSettings?.siteName || 'GAMES') || `${game.name} - Play Free Online | GAMES`
+    ?.replace('{siteName}', seoSettings?.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME) || `${game.name} - Play Free Online | ${SITE_CONSTANTS.DEFAULT_SITE_NAME}`
     
   // 生成动态描述
   const description = gamePageSEO?.descriptionTemplate
@@ -102,7 +103,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     "applicationCategory": "Game",
     "publisher": {
       "@type": "Organization",
-      "name": seoSettings?.siteName || "GAMES"
+      "name": seoSettings?.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME
     }
   }
   
@@ -116,7 +117,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: gameUrl,
-      siteName: seoSettings?.siteName || 'GAMES',
+      siteName: seoSettings?.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME,
       images: [{
         url: game.thumbnailUrl || seoSettings?.ogImage || '/placeholder-game.png',
         width: 1200,
