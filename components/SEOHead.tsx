@@ -71,69 +71,26 @@ export default function SEOHead({ pageType = 'home', gameData, categoryData }: S
   }, [])
 
   useEffect(() => {
-    // 只在客户端执行，并且SEO设置存在时
+    // 只更新 document.title，其他 meta 标签由 Next.js 处理
     if (typeof window === 'undefined' || typeof document === 'undefined' || !seoSettings) return
 
     try {
-      // 更新document title
       let title = seoSettings.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME
-      let description = seoSettings.siteDescription || 'Play the best free online games'
 
-      // 根据页面类型调整标题和描述
+      // 根据页面类型调整标题
       if (pageType === 'game' && gameData) {
         title = `${gameData.name} - Play Free Online | ${seoSettings.siteName}`
-        description = `Play ${gameData.name} for free online! ${gameData.description} No download required.`
       } else if (pageType === 'category' && categoryData) {
         title = `${categoryData.name} Games - Free Online | ${seoSettings.siteName}`
-        description = `Play the best ${categoryData.name} games for free! Discover hundreds of exciting ${categoryData.name} games.`
       }
 
+      // 只更新标题，不操作 meta 标签
       document.title = title
-
-      // 更新meta标签
-      updateMetaTag('description', description)
-      updateMetaTag('keywords', seoSettings.keywords?.join(', ') || '')
-      updateMetaTag('author', seoSettings.author || '')
-      
-      // 更新Open Graph标签
-      updateMetaTag('og:title', seoSettings.ogTitle || title, 'property')
-      updateMetaTag('og:description', seoSettings.ogDescription || description, 'property')
-      updateMetaTag('og:site_name', seoSettings.siteName, 'property')
-      updateMetaTag('og:type', 'website', 'property')
-
-      // 更新Twitter Card标签
-      updateMetaTag('twitter:card', 'summary_large_image')
-      updateMetaTag('twitter:title', seoSettings.ogTitle || title)
-      updateMetaTag('twitter:description', seoSettings.ogDescription || description)
-
-      // 更新theme-color
-      updateMetaTag('theme-color', seoSettings.metaTags?.themeColor || '#475569')
     } catch (error) {
       console.log('SEO update error:', error)
     }
   }, [seoSettings, pageType, gameData, categoryData])
 
-  const updateMetaTag = (name: string, content: string, attribute: 'name' | 'property' = 'name') => {
-    if (!content) return
-
-    try {
-      // 查找现有的meta标签
-      let metaTag = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement
-      
-      if (metaTag) {
-        // 更新现有标签
-        metaTag.content = content
-      } else {
-        // 创建新标签
-        metaTag = document.createElement('meta')
-        metaTag.setAttribute(attribute, name)
-        metaTag.content = content
-        document.head.appendChild(metaTag)
-      }
-    } catch (error) {
-      console.log(`Meta tag update error for ${name}:`, error)
-    }
-  }
 
   return null
 }
