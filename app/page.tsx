@@ -19,6 +19,8 @@ import PageH1 from '@/components/PageH1'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FriendlyLinks from '@/components/FriendlyLinks'
+import ClientOnly from '@/components/ClientOnly'
+import { SITE_CONSTANTS } from '@/lib/constants'
 
 export default function HomePage() {
   const [featuredGame, setFeaturedGame] = useState<any>(null)
@@ -27,7 +29,6 @@ export default function HomePage() {
   const [hotGames, setHotGames] = useState<any[]>([])
   const [newGames, setNewGames] = useState<any[]>([])
   const [allGames, setAllGames] = useState<any[]>([])
-  const [isClient, setIsClient] = useState(false)
   const [seoData, setSeoData] = useState<any>(null)
   const [homepageContent, setHomepageContent] = useState<any>(null)
   const [loadingTipIndex, setLoadingTipIndex] = useState(0)
@@ -109,8 +110,6 @@ export default function HomePage() {
 
   // Load featured game and games data on component mount and listen for updates
   useEffect(() => {
-    // Set client flag to prevent hydration mismatch
-    setIsClient(true)
     
     const loadFeaturedGame = async () => {
       const activeFeaturedGame = await featuredGamesManager.getActiveFeaturedGame()
@@ -203,18 +202,45 @@ export default function HomePage() {
       <SEOHead pageType="home" />
       
       {/* Header */}
-      <Header />
+      <ClientOnly fallback={
+        <header className="bg-white border-b border-gray-200">
+          <div className="max-w-6xl mx-auto px-4 py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Gamepad2 className="w-6 h-6 text-blue-600" />
+                <span className="text-lg font-bold text-gray-800">{SITE_CONSTANTS.DEFAULT_SITE_NAME}</span>
+              </div>
+              <nav className="flex items-center gap-4">
+                <span className="text-gray-600 text-sm font-medium">Home</span>
+                <span className="text-gray-600 text-sm font-medium">New Games</span>
+                <span className="text-gray-600 text-sm font-medium">Hot Games</span>
+                <div className="border border-gray-300 rounded-md pl-3 pr-8 py-1 text-sm w-48">
+                  <span className="text-gray-400">Search games...</span>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </header>
+      }>
+        <Header />
+      </ClientOnly>
       
       {/* Ad Slot - Header Position */}
       <AdSlot position="header" className="max-w-7xl mx-auto px-4 py-2" />
 
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Main H1 Title */}
-        <PageH1 
-          pageType="homepage" 
-          data={{ siteName: seoData?.seoSettings?.siteName || 'Game Portal' }} 
-          className="text-center mb-8"
-        />
+        <ClientOnly fallback={
+          <h1 className="text-center mb-8 text-3xl font-bold text-gray-800">
+            {SITE_CONSTANTS.DEFAULT_SITE_NAME} - Best Free Online Games
+          </h1>
+        }>
+          <PageH1 
+            pageType="homepage" 
+            data={{ siteName: seoData?.seoSettings?.siteName || SITE_CONSTANTS.DEFAULT_SITE_NAME }} 
+            className="text-center mb-8"
+          />
+        </ClientOnly>
 
         <div className="flex gap-6">
           {/* Main Content */}
@@ -591,7 +617,17 @@ export default function HomePage() {
       <YouMightAlsoLike />
 
       {/* Footer */}
-      <Footer />
+      <ClientOnly fallback={
+        <footer className="bg-gray-50 border-t border-gray-200 py-8 mt-12">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center text-sm text-gray-500">
+              <p>© 2025 {SITE_CONSTANTS.DEFAULT_SITE_NAME}. All rights reserved.</p>
+            </div>
+          </div>
+        </footer>
+      }>
+        <Footer />
+      </ClientOnly>
     </div>
   )
 }
