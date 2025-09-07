@@ -45,13 +45,50 @@ const nextConfig = {
     ],
   },
   compiler: {
-    // Temporarily disable console removal for debugging
-    // removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === 'production',
+    // Use modern JS target to reduce polyfills
+    styledComponents: true,
   },
+  
+  // Output modern ES modules
+  output: 'standalone',
   // Performance optimizations
   swcMinify: true,
   poweredByHeader: false,
   compress: true,
+  
+  // Modern JavaScript target to reduce polyfills
+  target: 'server',
+  
+  // Bundle analyzer for debugging
+  webpack: (config, { isServer }) => {
+    // Reduce polyfills for modern browsers
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    
+    // Optimize bundle splitting
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      },
+    };
+    
+    return config;
+  },
   
   // SEO and metadata optimizations
   generateEtags: true,

@@ -203,7 +203,7 @@ export default function HomePage() {
       
       {/* Header */}
       <ClientOnly fallback={
-        <header className="bg-white border-b border-gray-200">
+        <header className="bg-white border-b border-gray-200 header-skeleton">
           <div className="max-w-6xl mx-auto px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -231,7 +231,7 @@ export default function HomePage() {
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Main H1 Title */}
         <ClientOnly fallback={
-          <h1 className="text-center mb-8 text-3xl font-bold text-gray-800">
+          <h1 className="text-center mb-8 text-3xl font-bold text-gray-800 h1-skeleton">
             {SITE_CONSTANTS.DEFAULT_SITE_NAME} - Best Free Online Games
           </h1>
         }>
@@ -618,7 +618,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <ClientOnly fallback={
-        <footer className="bg-gray-50 border-t border-gray-200 py-8 mt-12">
+        <footer className="bg-gray-50 border-t border-gray-200 py-8 mt-12 footer-skeleton">
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center text-sm text-gray-500">
               <p>© 2025 {SITE_CONSTANTS.DEFAULT_SITE_NAME}. All rights reserved.</p>
