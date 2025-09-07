@@ -86,32 +86,13 @@ export default function RootLayout({
                 transform: scale(1.05);
               }
               
-              /* Critical CSS for CLS prevention */
-              .bg-white { background-color: #ffffff; }
-              .border-b { border-bottom-width: 1px; }
-              .border-gray-200 { border-color: #e5e7eb; }
-              .text-center { text-align: center; }
-              .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
-              .font-bold { font-weight: 700; }
-              .text-gray-800 { color: #1f2937; }
-              .gap-4 { gap: 1rem; }
-              .gap-6 { gap: 1.5rem; }
-              .flex { display: flex; }
-              .items-center { align-items: center; }
-              .justify-between { justify-content: space-between; }
-              .h-full { height: 100%; }
-              .w-full { width: 100%; }
-              .rounded-lg { border-radius: 0.5rem; }
-              .overflow-hidden { overflow: hidden; }
-              .aspect-\\[4\\/3\\] { aspect-ratio: 4/3; }
-              
-              /* Layout skeleton to prevent CLS */
+              /* Minimal critical CSS - only essential layout fixes */
               .header-skeleton { height: 60px; }
               .footer-skeleton { height: 200px; }
               .h1-skeleton { height: 60px; }
               
-              /* Prevent layout shift from images */
-              img[loading="lazy"] {
+              /* Prevent layout shift from images - more specific */
+              img[loading="lazy"]:not(.game-thumbnail) {
                 content-visibility: auto;
                 contain-intrinsic-size: 300px 225px;
               }
