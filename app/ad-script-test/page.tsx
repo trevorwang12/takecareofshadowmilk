@@ -1,4 +1,17 @@
-"use client"
+import type { Metadata } from 'next'
+
+// 防止搜索引擎收录测试页面
+export const metadata: Metadata = {
+  title: 'Ad Script Test - Internal Testing Only',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    noarchive: true,
+    nosnippet: true,
+    noimageindex: true,
+  }
+}
 
 export default function AdScriptTestPage() {
   return (

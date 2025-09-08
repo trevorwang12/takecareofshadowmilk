@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Disallow test and internal pages
+Disallow: /ad-script-test
+Disallow: /admin
+Disallow: /_next/
+Disallow: /api/
+
+# Allow important pages
+Allow: /game/
+Allow: /hot-games
+Allow: /new-games
+Allow: /about
+
+# Sitemap
+Sitemap: https://takecareofshadowmilk.cc/sitemap.xml
