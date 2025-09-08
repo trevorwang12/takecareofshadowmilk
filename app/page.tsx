@@ -24,6 +24,7 @@ import { SITE_CONSTANTS } from '@/lib/constants'
 
 export default function HomePage() {
   const [featuredGame, setFeaturedGame] = useState<any>(null)
+  const [featuredGameInitialLoading, setFeaturedGameInitialLoading] = useState(true)
   const [isPlayingFeatured, setIsPlayingFeatured] = useState(false)
   const [featuredGameLoading, setFeaturedGameLoading] = useState(false)
   const [hotGames, setHotGames] = useState<any[]>([])
@@ -114,6 +115,7 @@ export default function HomePage() {
     const loadFeaturedGame = async () => {
       const activeFeaturedGame = await featuredGamesManager.getActiveFeaturedGame()
       setFeaturedGame(activeFeaturedGame)
+      setFeaturedGameInitialLoading(false)
     }
 
     const loadSEOData = async () => {
@@ -247,7 +249,17 @@ export default function HomePage() {
           <div className="flex-1">
             {/* Featured Game */}
             <div className="mb-8">
-              {featuredGame ? (
+              {featuredGameInitialLoading ? (
+                // Loading state - elegant skeleton
+                <div className="bg-gradient-to-r from-orange-400 to-pink-500 rounded-lg text-white h-[600px] flex flex-col items-center justify-center text-center">
+                  <div className="w-20 h-20 bg-white/20 rounded-xl mb-6 flex items-center justify-center animate-pulse">
+                    <Gamepad2 className="w-10 h-10 text-white/60" />
+                  </div>
+                  <div className="h-12 bg-white/20 rounded-lg w-64 mb-4 animate-pulse"></div>
+                  <div className="h-6 bg-white/10 rounded w-96 mb-8 animate-pulse"></div>
+                  <div className="h-12 bg-white/30 rounded-lg w-32 animate-pulse"></div>
+                </div>
+              ) : featuredGame ? (
                 <>
                   {/* Featured Game Player or Preview */}
                   {isPlayingFeatured && featuredGame.gameUrl ? (
@@ -330,15 +342,17 @@ export default function HomePage() {
                   )}
                 </>
               ) : (
-                <div className="bg-gradient-to-r from-orange-400 to-pink-500 rounded-lg p-8 text-white text-center">
-                  <div className="w-16 h-16 bg-white/20 rounded-lg mx-auto mb-4 flex items-center justify-center text-2xl">
-                    🎮
+                <div className="bg-gradient-to-r from-orange-400 to-pink-500 rounded-lg p-8 text-white text-center h-[600px] flex flex-col items-center justify-center">
+                  <div className="w-20 h-20 bg-white/20 rounded-xl mb-6 flex items-center justify-center text-3xl">
+                    🎲
                   </div>
-                  <h2 className="text-3xl font-bold mb-2">FEATURED GAME</h2>
-                  <p className="mb-4 opacity-90">Configure a featured game in the admin panel to display here!</p>
-                  <Button className="bg-white text-orange-500 hover:bg-gray-100 px-6 py-2 font-semibold" disabled>
-                    <Play className="w-4 h-4 mr-2" />
-                    NO GAME CONFIGURED
+                  <h2 className="text-4xl font-bold mb-4">DISCOVER AMAZING GAMES</h2>
+                  <p className="mb-8 opacity-90 text-lg max-w-lg">Explore our collection of exciting games below! More featured content coming soon.</p>
+                  <Button className="bg-white text-orange-500 hover:bg-gray-100 px-8 py-3 font-semibold text-lg shadow-lg" onClick={() => {
+                    document.querySelector('.grid')?.scrollIntoView({ behavior: 'smooth' });
+                  }}>
+                    <Gamepad2 className="w-5 h-5 mr-2" />
+                    BROWSE GAMES
                   </Button>
                 </div>
               )}
